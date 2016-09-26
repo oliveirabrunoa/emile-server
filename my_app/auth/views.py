@@ -1,13 +1,9 @@
-import ldap3
-from flask import  url_for, Blueprint, g
-from flask_login import current_user, login_user, \
-    logout_user, login_required
-from my_app import login_manager, db
-from my_app.auth.models import User
+from flask import  Blueprint
 from functools import wraps
 from flask import request, redirect, current_app
-import json
-
+from ldap3 import Server, Connection, ALL
+import my_app
+from flask_login import login_required
 auth = Blueprint('auth', __name__)
 
 def ssl_required(fn):
@@ -23,7 +19,9 @@ def ssl_required(fn):
 
     return decorated_view
 
+
 @ssl_required
+@login_required
 @auth.route('/login', methods=['GET', 'POST'])
 def login_ssl():
 
@@ -31,28 +29,18 @@ def login_ssl():
         user = request.form.get('user')
         password = request.form.get('password')
         try:
-            User.try_login(user, password)
+            server = Server(my_app.app.config['LDAP_PROVIDER_URL'], get_info=ALL)
+            Connection(server,'uid={0}, cn=users, cn=accounts, dc=demo1, dc=freeipa, dc=org'.format(user),
+                              password, auto_bind=True)
         except:
-            return 'credenciais invalidas!'
+            return 'Invalid credentials!'
 
-        return 'Login efetuado'
+        return 'Login successfully!'
 
     else:
-        return 'Método não permitido'
+        return 'Method Not Allowed'
 
 
-@login_manager.user_loader
-def load_user(id):
-    return User.query.get(int(id))
-
-
-@auth.before_request
-def get_current_user():
-    g.user = current_user
-
-
-@auth.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('auth.login'))
+@auth.route("/")
+def hello():
+    return "Hello World from GitHub!"
