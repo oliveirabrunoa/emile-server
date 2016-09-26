@@ -1,14 +1,5 @@
-from ldap3 import Server, Connection, ALL, NTLM
-from flask_wtf import Form
-from wtforms import TextField, PasswordField
-from wtforms.validators import InputRequired
+from ldap3 import Server, Connection, ALL
 from my_app import db, app
-
-
-# def get_ldap_connection():
-#     server = Server(app.config['LDAP_PROVIDER_URL'], get_info=ALL)
-#     conn = Connection(server, user="Domain\\User", password="password", authentication=NTLM)
-#     return conn
 
 
 class User(db.Model):
@@ -36,8 +27,3 @@ class User(db.Model):
 
     def get_id(self):
         return str(self.id)
-
-
-class LoginForm(Form):
-    username = TextField('Username', [InputRequired()])
-    password = PasswordField('Password', [InputRequired()])
