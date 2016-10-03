@@ -1,10 +1,8 @@
 from flask import  Blueprint
-from functools import wraps
-from flask import request, redirect, current_app, Response
-from ldap3 import Server, Connection, ALL
-from my_app import login_manager
-from flask_login import logout_user, login_required, login_user, current_user
-from my_app.auth.models import User
+from flask import request
+from auth.app import login_manager
+from flask_login import logout_user, login_required, login_user
+from auth.models import User
 
 
 auth = Blueprint('auth', __name__)
