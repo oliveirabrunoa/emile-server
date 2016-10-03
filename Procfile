@@ -1,1 +1,1 @@
-web: gunicorn emile_server.py --log-file -
+web: gunicorn emile_server:emile_server --log-file -
