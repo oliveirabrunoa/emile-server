@@ -1,5 +1,4 @@
-from flask import Flask
-from flask import request
+from flask import Flask, request
 from ldap3 import Server, Connection, ALL, ALL_ATTRIBUTES, SUBTREE
 import json
 
@@ -16,11 +15,9 @@ def login():
         conn.search(search_base='DC=intranet, DC=cefetba, DC=br',search_filter='(sAMAccountName={0})'.format(str(email).split('@')[0]),search_scope=SUBTREE, attributes=ALL_ATTRIBUTES)
         entry = conn.entries[0]
         data = [{'firstName': str(entry.givenName), 'lastName': str(entry.sn)}]
-        print("OK")
         return json.dumps(data)
     except:
-        print("ERRO")
-        return json.dumps([{"result":"Invalid credentials!"}])
+        return "", 401
 
 if __name__=='__main__':
-  app.run(debug=True)
+    app.run(debug=True)
