@@ -15,10 +15,12 @@ def login():
         conn = Connection(server, user=email, password=password, auto_bind=True)
         conn.search(search_base='DC=intranet, DC=cefetba, DC=br',search_filter='(sAMAccountName={0})'.format(str(email).split('@')[0]),search_scope=SUBTREE, attributes=ALL_ATTRIBUTES)
         entry = conn.entries[0]
-        data = {'firstName': str(entry.givenName), 'lastName': str(entry.sn)}
+        data = [{'firstName': str(entry.givenName), 'lastName': str(entry.sn)}]
+        print("OK")
         return json.dumps(data)
     except:
-        return json.dumps({"result":"Invalid credentials!"})
+        print("ERRO")
+        return json.dumps([{"result":"Invalid credentials!"}])
 
 if __name__=='__main__':
   app.run(debug=True)
