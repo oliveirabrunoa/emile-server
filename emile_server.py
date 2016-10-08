@@ -13,10 +13,9 @@ def login():
         server = Server(host='10.1.0.4', get_info=ALL)
         conn = Connection(server, user=email, password=password, auto_bind=True)
         conn.search(search_base='DC=intranet, DC=cefetba, DC=br', search_filter='(sAMAccountName={0})'.format(str(email).split('@')[0]), attributes=ALL_ATTRIBUTES)
-        entry = conn.entries[0]
-        data = [{'firstName': str(entry.givenName), 'lastName': str(entry.sn)}]
-        return json.dumps(data)
-    except:
+        return "[" + conn.entries[0].entry_to_json() + "]"
+    except Exception as e:
+        print(e)
         return "", 401
 
 if __name__=='__main__':
