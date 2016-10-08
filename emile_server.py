@@ -1,22 +1,21 @@
 from flask import Flask, request
-from ldap3 import Server, Connection, ALL, ALL_ATTRIBUTES, SUBTREE
 import json
+import settings
 
 app = Flask(__name__)
-app.secret_key = 'dsajifjwq98f9qw8f98qw9fqwfkjqwofjw9qf89qw'
 
 @app.route('/login', methods=['POST'])
 def login():
+    parts = settings.AUTHENTICATION_BACKEND.split('.')
+    module = ".".join(parts[:-1])
+    m = __import__( module )
+    for comp in parts[1:]:
+        m = getattr(m, comp)            
+
     email = request.form.get('email')
     password = request.form.get('password')
-    try:
-        server = Server(host='10.1.0.4', get_info=ALL)
-        conn = Connection(server, user=email, password=password, auto_bind=True)
-        conn.search(search_base='DC=intranet, DC=cefetba, DC=br', search_filter='(sAMAccountName={0})'.format(str(email).split('@')[0]), attributes=ALL_ATTRIBUTES)
-        return "[" + conn.entries[0].entry_to_json() + "]"
-    except Exception as e:
-        print(e)
-        return "", 401
+
+    return m().authenticate(email, password)
 
 if __name__=='__main__':
     app.run(debug=True)
