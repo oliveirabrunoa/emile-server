@@ -4,6 +4,7 @@ import importlib
 from models import db, User
 from flask import jsonify
 
+
 def create_app(backend_path=''):
     app = Flask("emile")
     app.config['SQLALCHEMY_DATABASE_URI'] = backend_path
@@ -13,6 +14,7 @@ def create_app(backend_path=''):
     return app
 
 app = create_app(settings.BACKEND_PATH)
+
 
 @app.route('/login', methods=['POST'])
 def login():
