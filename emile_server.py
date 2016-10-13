@@ -3,14 +3,19 @@ import settings
 import importlib
 from models import db, User
 from flask import jsonify
+from pathlib import Path
 
 
 def create_app(backend_path=''):
     app = Flask("emile")
     app.config['SQLALCHEMY_DATABASE_URI'] = backend_path
+
     db.init_app(app)
-    with app.app_context():
-        db.create_all()
+    my_file = Path(settings.DB_PATH)
+
+    if not my_file.is_file():
+        with app.app_context():
+            db.create_all()
     return app
 
 app = create_app(settings.BACKEND_PATH)
