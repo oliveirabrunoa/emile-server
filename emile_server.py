@@ -3,22 +3,10 @@ import settings
 import importlib
 from models import db, User
 from flask import jsonify
-from pathlib import Path
 
-
-def create_app(backend_path=''):
-    app = Flask("emile")
-    app.config['SQLALCHEMY_DATABASE_URI'] = backend_path
-
-    db.init_app(app)
-    my_file = Path(settings.DB_PATH)
-
-    if not my_file.is_file():
-        with app.app_context():
-            db.create_all()
-    return app
-
-app = create_app(settings.BACKEND_PATH)
+app = Flask("emile")
+app.config['SQLALCHEMY_DATABASE_URI'] = settings.BACKEND_PATH
+db.init_app(app)
 
 
 @app.route('/login', methods=['POST'])
@@ -35,19 +23,54 @@ def login():
 
 @app.route('/users', methods=['GET'])
 def get_users():
-    return jsonify(users=[user.serialize() for user in User.query.all()])
+    return jsonify(users=[dict(id=user.id, username=user.username) for user in User.query.all()])
 
 
 @app.route('/add_user', methods=['POST'])
 def add_users():
-    username = request.form.get('username')
-    email = request.form.get('email')
+    """ This method it was implemented considering that all fields are required in client """
 
-    if username and email:
-        user = User(username, email)
-        db.session.add(user)
+    user = User()
+
+    for attr in request.form.keys():
+        setattr(user, attr, request.form.get(attr))
+
+    db.session.add(user)
+    db.session.commit()
+
+    return jsonify(user=[user.serialize() for user in User.query.filter_by(username=user.username)])
+
+
+@app.route('/user_details/<user_id>', methods=['GET'])
+def user_details(user_id):
+    return jsonify(user=[user.serialize() for user in User.query.filter_by(id=user_id)])
+
+
+@app.route('/update_user/<user_id>', methods=['POST'])
+def update_user(user_id):
+    """ This method allows to update from kwargs """
+
+    user = User.query.get(user_id)
+
+    if user:
+        for attr in request.form.keys():
+            if getattr(user, attr) != request.form.get(attr):
+                setattr(user, attr, request.form.get(attr))
         db.session.commit()
-        return jsonify(user=[user.serialize() for user in User.query.filter_by(username=username)])
+        return jsonify(user=[user.serialize() for user in User.query.filter_by(id=user_id)])
+    return jsonify(result='invalid user id')
+
+
+@app.route('/delete_user/<user_id>', methods=['POST'])
+def delete_user(user_id):
+    user = User.query.get(user_id)
+
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify(users=[user.serialize() for user in User.query.all()])
+    return jsonify(result='invalid user id')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

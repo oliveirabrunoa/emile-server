@@ -3,3 +3,5 @@ gunicorn==19.6.0
 python3-ldap==0.9.8.4
 ldap3==1.4.0
 flask_sqlalchemy==2.1
+Flask-Migrate==2.0.0
+
