@@ -5,10 +5,23 @@ import importlib
 from models import db, User
 from flask import jsonify
 import datetime
+from pathlib import Path
 
-app = Flask("emile")
-app.config['SQLALCHEMY_DATABASE_URI'] = settings.BACKEND_PATH
-db.init_app(app)
+
+def create_app(backend_path=''):
+    app = Flask("emile")
+    app.config['SQLALCHEMY_DATABASE_URI'] = backend_path
+
+    db.init_app(app)
+    my_file = Path(settings.DB_PATH)
+
+    if not my_file.is_file():
+        with app.app_context():
+            db.create_all()
+    return app
+
+
+app = create_app(settings.BACKEND_PATH)
 
 
 @app.route('/login', methods=['POST'])
