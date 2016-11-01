@@ -1,8 +1,10 @@
+
 from flask import Flask, request
 import settings
 import importlib
 from models import db, User
 from flask import jsonify
+import datetime
 
 app = Flask("emile")
 app.config['SQLALCHEMY_DATABASE_URI'] = settings.BACKEND_PATH
@@ -13,7 +15,7 @@ db.init_app(app)
 def login():
     module_name, class_name = settings.AUTHENTICATION_BACKEND.rsplit('.', maxsplit=1)
     m = importlib.import_module(module_name)
-    cls = getattr(m, class_name)            
+    cls = getattr(m, class_name)
 
     email = request.form.get('email')
     password = request.form.get('password')
@@ -33,7 +35,10 @@ def add_users():
     user = User()
 
     for attr in request.form.keys():
-        setattr(user, attr, request.form.get(attr))
+        if attr == "birth_date":
+            setattr(user, attr, datetime.datetime.strptime(request.form.get('birth_date'), "%m-%d-%Y").date())
+        else:
+            setattr(user, attr, request.form.get(attr))
 
     db.session.add(user)
     db.session.commit()
@@ -54,7 +59,10 @@ def update_user(user_id):
 
     if user:
         for attr in request.form.keys():
-            if getattr(user, attr) != request.form.get(attr):
+            if attr == "birth_date":
+                setattr(user, attr,
+                        datetime.datetime.strptime(request.form.get('birth_date'), "%m-%d-%Y").date())
+            else:
                 setattr(user, attr, request.form.get(attr))
         db.session.commit()
         return jsonify(user=[user.serialize() for user in User.query.filter_by(id=user_id)])
