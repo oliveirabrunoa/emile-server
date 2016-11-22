@@ -1,7 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
 import datetime
-
-db = SQLAlchemy()
+from backend import db
 
 
 class User(db.Model):
@@ -13,10 +11,6 @@ class User(db.Model):
     gender = db.Column(db.String(1))
     address = db.Column(db.String(250))
 
-    def __init__(self, username='', email=''):
-        self.username = username
-        self.email = email
-
     def serialize(self):
         return {
             'id': self.id,
@@ -27,3 +21,12 @@ class User(db.Model):
             'gender': self.gender,
             'address': self.address
         }
+
+    def set_fields(self, fields):
+        self.username = fields['username']
+        self.email = fields['email']
+        self.name = fields['name']
+        self.birth_date = fields['birth_date']
+        self.gender = fields['gender']
+        self.address = fields['address']
+        self.birth_date = datetime.datetime.strptime(fields['birth_date'], "%m-%d-%Y").date()
