@@ -1,6 +1,5 @@
 from flask import jsonify, Blueprint, request
 from . import models
-import datetime
 from backend import db
 
 
@@ -52,3 +51,5 @@ def delete_user(user_id):
         db.session.commit()
         return jsonify(users=[user.serialize() for user in models.User.query.all()])
     return jsonify(result='invalid user id')
+
+
