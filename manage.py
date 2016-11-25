@@ -1,6 +1,6 @@
 from flask_migrate import Manager, Migrate, MigrateCommand
 from emile_server import app
-from models import db
+from backend import db
 
 migrate = Migrate(app, db)
 manager = Manager(app)
