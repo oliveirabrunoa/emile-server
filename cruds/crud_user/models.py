@@ -23,7 +23,6 @@ class User(db.Model):
             'gender': self.gender,
             'address': self.address,
             'tipo': self.tipo,
-            'turmas': [turma.serialize() for turma in self._turmas.all()]
         }
 
     def set_fields(self, fields):

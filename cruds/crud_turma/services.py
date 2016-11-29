@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from . import models
 from backend import db
-from cruds.crud_aluno.models import User
+from cruds.crud_user.models import User
 
 
 turma = Blueprint("turma", __name__)

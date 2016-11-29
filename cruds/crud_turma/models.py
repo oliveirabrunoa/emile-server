@@ -1,6 +1,6 @@
 from backend import db
 from cruds.crud_disciplina.models import Disciplina
-from cruds.crud_aluno.models import User
+from cruds.crud_user.models import User
 
 aluno_turma_table = db.Table('aluno_turma_table',
                              db.Column('turma_id', db.Integer, db.ForeignKey('turma.id'), nullable=False),
@@ -22,7 +22,6 @@ class Turma(db.Model):
             'codigo': self.codigo,
             'nome': self.nome,
             'disciplina_id': Disciplina.query.get(self.disciplina_id).serialize(),
-            'alunos': [aluno.serialize() for aluno in self.alunos if aluno.tipo=='aluno'],
             'professor_id':  self.professor_id
         }
 
