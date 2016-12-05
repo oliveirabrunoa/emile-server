@@ -2,8 +2,8 @@ from flask import Flask
 import backend
 import os
 from cruds.crud_user import services as user_services
-from cruds.crud_disciplina import services as disciplina_services
-from cruds.crud_turma import services as turma_services
+from cruds.crud_subject import services as subject_services
+from cruds.crud_classes import services as classes_services
 
 
 def create_app():
@@ -18,8 +18,8 @@ def create_app():
 
 app = create_app()
 app.register_blueprint(user_services.user)
-app.register_blueprint(disciplina_services.disciplina)
-app.register_blueprint(turma_services.turma)
+app.register_blueprint(subject_services.subject)
+app.register_blueprint(classes_services.classes)
 
 if __name__ == '__main__':
     app.run()

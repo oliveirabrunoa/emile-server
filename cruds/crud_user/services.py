@@ -53,9 +53,9 @@ def delete_user(user_id):
     return jsonify(result='invalid user id')
 
 
-@user.route('/turmas_professor/<professor_id>', methods=['GET'])
-def turmas_professor(professor_id):
-    professor = models.User.query.filter_by(id=professor_id, tipo="professor").first()
-    if professor:
-        return jsonify(turmas_professor=[turma.serialize() for turma in professor._turmas.all()])
-    return jsonify(result='invalid professor id')
+@user.route('/classes_teacher/<teacher_id>', methods=['GET'])
+def classes_teacher(teacher_id):
+    teacher = models.User.query.filter_by(id=teacher_id, type="teacher").first()
+    if teacher:
+        return jsonify(classes_teacher=[classes.serialize() for classes in teacher._classes.all()])
+    return jsonify(result='invalid teacher id')
