@@ -2,10 +2,11 @@ from backend import db
 from cruds.crud_disciplina.models import Disciplina
 from cruds.crud_user.models import User
 
-aluno_turma_table = db.Table('aluno_turma_table',
-                             db.Column('turma_id', db.Integer, db.ForeignKey('turma.id'), nullable=False),
-                             db.Column('user_id', db.Integer, db.ForeignKey('user.id'), nullable=False),
-                             db.PrimaryKeyConstraint('turma_id', 'user_id'))
+
+aluno_turma = db.Table('aluno_turma',
+                       db.Column('turma_id', db.Integer, db.ForeignKey('turma.id'), nullable=False),
+                       db.Column('user_id', db.Integer, db.ForeignKey('user.id'), nullable=False),
+                       db.PrimaryKeyConstraint('turma_id', 'user_id'))
 
 
 class Turma(db.Model):
@@ -13,7 +14,7 @@ class Turma(db.Model):
     codigo = db.Column(db.String(20), unique=True)
     nome = db.Column(db.String(50))
     disciplina_id = db.Column(db.Integer, db.ForeignKey('disciplina.id'))
-    alunos = db.relationship('User', secondary=aluno_turma_table, backref='turmas')
+    alunos = db.relationship('User', secondary=aluno_turma, backref='turmas')
     professor_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def serialize(self):
