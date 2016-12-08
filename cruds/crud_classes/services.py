@@ -2,9 +2,11 @@ from flask import Blueprint, jsonify, request
 from . import models
 from backend import db
 from cruds.crud_user.models import User
+from cruds.crud_lesson.models import Lesson
+import datetime
+from sqlalchemy import and_, or_
 
-
-classes = Blueprint("turma", __name__)
+classes = Blueprint("classes", __name__)
 
 
 @classes.route('/classes', methods=['GET'])
@@ -37,3 +39,31 @@ def add_student_classes(classes_id, user_id):
 def classes_details(classes_id):
     return jsonify(classes=models.Classes.query.get(classes_id).serialize())
 
+
+@classes.route('/add_lesson_classes/<classes_id>', methods=['POST'])
+def add_lesson_classes(classes_id):
+    classes = models.Classes.query.get(classes_id)
+
+    lesson_start_date = datetime.datetime.strptime(request.form.get('lesson_start_date'), '%d/%m/%Y-%H:%M:%S')
+    lesson_finish_date = datetime.datetime.strptime(request.form.get('lesson_finish_date'), '%d/%m/%Y-%H:%M:%S')
+
+    if not (db.session.query(Lesson).filter(models.Classes.id== Lesson.classes_id).
+                                       filter(or_(and_(lesson_start_date > Lesson.lesson_start_date,
+                                                       lesson_start_date < Lesson.lesson_finish_date),
+                                                  and_(lesson_finish_date > Lesson.lesson_start_date,
+                                                       lesson_finish_date < Lesson.lesson_finish_date))).all()):
+
+        lesson = Lesson(lesson_start_date=lesson_start_date, lesson_finish_date=lesson_finish_date)
+        classes.lessons.append(lesson)
+
+        db.session.commit()
+
+        return jsonify(classes=classes.serialize())
+
+    return jsonify(result='invalid period')
+
+
+@classes.route('/students_classes/<classes_id>', methods=['GET'])
+def students_classes(classes_id):
+    classes = models.Classes.query.get(classes_id)
+    return jsonify(students_classes=[dict(id=student.id, email=student.email) for student in classes.students])

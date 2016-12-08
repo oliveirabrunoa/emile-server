@@ -16,6 +16,7 @@ class Classes(db.Model):
     subject_id = db.Column(db.Integer, db.ForeignKey('subject.id'))
     students = db.relationship('User', secondary=student_class, backref='classes')
     teacher_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    lessons =  db.relationship("Lesson", backref='classes_lesson', lazy='dynamic')
 
     def serialize(self):
         return {

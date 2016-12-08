@@ -5,6 +5,7 @@ from backend import db
 
 subject = Blueprint("subject", __name__)
 
+
 @subject.route('/subjects', methods=['GET'])
 def get_subjects():
     return jsonify(subjects=[dict(id=subject.id, code=subject.code) for subject in models.Subject.query.all()])
