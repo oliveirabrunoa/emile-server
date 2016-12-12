@@ -1,10 +1,7 @@
 from flask import Flask
 import backend
 import os
-from cruds.crud_user import services as user_services
-from cruds.crud_subject import services as subject_services
-from cruds.crud_classes import services as classes_services
-from cruds.crud_lesson import services as lesson_services
+import importlib
 
 
 def create_app():
@@ -17,11 +14,16 @@ def create_app():
     return app
 
 
+def register_blueprints(app):
+    for crud in os.listdir(os.getcwd() + '/cruds/'):
+        if 'crud' in crud:
+            blueprint = getattr(importlib.import_module('cruds.{0}.services'.format(crud)), crud.replace('crud_', ''))
+            app.register_blueprint(blueprint)
+
+
 app = create_app()
-app.register_blueprint(user_services.user)
-app.register_blueprint(subject_services.subject)
-app.register_blueprint(classes_services.classes)
-app.register_blueprint(lesson_services.lesson)
+register_blueprints(app)
+
 
 if __name__ == '__main__':
     app.run()
