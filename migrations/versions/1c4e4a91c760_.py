@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: 835d594b5702
+Revision ID: 1c4e4a91c760
 Revises: None
-Create Date: 2017-01-16 15:03:53.890179
+Create Date: 2017-01-16 15:48:28.169875
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '835d594b5702'
+revision = '1c4e4a91c760'
 down_revision = None
 
 from alembic import op
@@ -48,11 +48,12 @@ def upgrade():
     sa.UniqueConstraint('code')
     )
     op.create_table('course_section_students',
+    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('course_section_id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['course_section_id'], ['course_sections.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('course_section_id', 'user_id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('section_times',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -66,11 +67,11 @@ def upgrade():
     op.create_table('student_attendance',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('section_time_id', sa.Integer(), nullable=True),
-    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('course_section_student_id', sa.Integer(), nullable=True),
     sa.Column('status', sa.String(length=1), nullable=True),
     sa.Column('section_time_date', sa.Date(), nullable=True),
+    sa.ForeignKeyConstraint(['course_section_student_id'], ['course_section_students.id'], ),
     sa.ForeignKeyConstraint(['section_time_id'], ['section_times.id'], ),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
