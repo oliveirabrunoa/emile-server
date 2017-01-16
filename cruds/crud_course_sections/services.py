@@ -3,6 +3,7 @@ from . import models
 from backend import db
 from cruds.crud_users.models import Users
 from cruds.crud_section_times.models import SectionTimes
+from cruds.crud_course_section_students.models import CourseSectionStudents
 import datetime
 from sqlalchemy import and_, or_
 
@@ -32,7 +33,12 @@ def add_course_section():
 @course_sections.route('/add_student_course_section/<course_section_id>/<user_id>', methods=['POST'])
 def add_student_course_section(course_section_id, user_id):
     course_section = models.CourseSections.query.get(course_section_id)
-    course_section.students.append(Users.query.get(user_id))
+    student = models.Users.query.filter_by(id=user_id, type="student").first()
+
+    course_section_students = CourseSectionStudents(course_section_id=course_section_id, user_id=user_id)
+    course_section_students.course_section = course_section
+    student.course_sections.append(course_section_students)
+
     db.session.commit()
     return jsonify(course_section=models.CourseSections.query.get(course_section_id).serialize())
 

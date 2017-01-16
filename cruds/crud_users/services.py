@@ -132,3 +132,12 @@ def course_sections_teacher(teacher_id):
     if teacher:
         return jsonify(course_sections_teacher=[course_sections.serialize() for course_sections in teacher.course_sections.all()])
     return jsonify(result='invalid teacher id')
+
+
+@users.route('/students_course_sections/<student_id>', methods=['GET'])
+def students_course_sections(student_id):
+    student = models.Users.query.filter_by(id=student_id, type="student").first()
+
+    if student:
+        return jsonify(course_sections_teacher=[course_sections_students.course_section.serialize() for course_sections_students in student.course_sections])
+    return jsonify(result='invalid student id')
