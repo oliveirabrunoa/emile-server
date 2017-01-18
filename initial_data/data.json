@@ -1,0 +1,14 @@
+[
+  {
+    "model": "cruds.crud_users.models.Users",
+    "fields":{
+            "username": "eliakincosta",
+            "email": "eliakincosta@ifba.edu.br",
+            "name": "Eliakin Costa",
+            "birth_date": "11-12-1993",
+            "gender": "M",
+            "address": "Rua Teste",
+            "type": "student"
+    }
+  }
+]
