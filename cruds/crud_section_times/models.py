@@ -23,6 +23,6 @@ class SectionTimes(db.Model):
 
     def set_fields(self, fields):
         self.course_section_id = fields['course_section_id']
-        self.section_time_start_time = datetime.time.strptime("%H:%M:%S",fields['section_time_start_time'])
-        self.section_time_finish_time = datetime.time.strptime("%H:%M:%S", fields['section_time_finish_time'])
+        self.section_time_start_time = datetime.datetime.strptime(fields['section_time_start_time'], "%H:%M:%S").time()
+        self.section_time_finish_time = datetime.datetime.strptime(fields['section_time_finish_time'], "%H:%M:%S", ).time()
         self.week_day = fields['week_day']
