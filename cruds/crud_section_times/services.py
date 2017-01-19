@@ -19,7 +19,8 @@ def section_time_in_progress(teacher_id):
     section_times = (db.session.query(models.SectionTimes).filter(Users.id == CourseSections.teacher_id).
                        filter(CourseSections.id == models.SectionTimes.course_section_id).
                        filter(Users.id == teacher_id).
-                       filter(and_(models.SectionTimes.section_time_start_time <= now, models.SectionTimes.section_time_finish_time >= now)).all())
+                       filter(and_(models.SectionTimes.section_time_start_time <= now, models.SectionTimes.section_time_finish_time >= now)).
+                       filter(models.SectionTimes.week_day == datetime.datetime.now().weekday()).all())
 
     return jsonify(section_times=[section_time.serialize() for section_time in section_times])
 
