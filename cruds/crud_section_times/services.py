@@ -12,6 +12,10 @@ import pytz
 
 section_times = Blueprint("section_times", __name__)
 
+@section_times.route('/section_times', methods=['GET'])
+def get_section_times():
+    return jsonify(section_times=[section_times.serialize() for section_times in models.SectionTimes.query.all()])
+
 
 @section_times.route('/section_time_in_progress/<teacher_id>', methods=['GET'])
 def section_time_in_progress(teacher_id):
