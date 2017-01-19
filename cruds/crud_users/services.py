@@ -29,6 +29,9 @@ def get_users():
     """
     return jsonify(users=[dict(id=user.id, username=user.username) for user in models.Users.query.all()])
 
+@users.route('/students', methods=['GET'])
+def get_students():
+    return jsonify(users=[dict(id=user.id, username=user.username) for user in models.Users.query.filter_by(type='student')])
 
 @users.route('/add_user', methods=['POST'])
 def add_users():
