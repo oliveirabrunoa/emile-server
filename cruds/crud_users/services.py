@@ -1,6 +1,7 @@
 from flask import jsonify, Blueprint, request
 from . import models
 from backend import db
+from cruds.crud_course_sections.models import CourseSections
 
 
 users = Blueprint("user", __name__)
@@ -130,7 +131,8 @@ def delete_user(user_id):
 def teachers_course_sections(teacher_id):
     teacher = models.Users.query.filter_by(id=teacher_id, type="teacher").first()
     if teacher:
-        return jsonify(course_sections_teacher=[course_sections.serialize() for course_sections in teacher.course_sections])
+        teachers_course_sections = CourseSections.query.filter_by(teacher_id=teacher_id)
+        return jsonify(teachers_course_sections=[course_section.serialize() for course_section in teachers_course_sections])
     return jsonify(result='invalid teacher id')
 
 
