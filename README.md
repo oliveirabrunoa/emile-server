@@ -50,6 +50,13 @@ Execute scripts saved in the migrations directory to create the tables
 python manage.py db upgrade
 ```
 
+Load initial data
+
+```
+python load_data.py #Execute just one time
+```
+
+
 Run the main python module
 
 ```
