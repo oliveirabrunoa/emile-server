@@ -10,5 +10,51 @@
             "address": "Rua Teste",
             "type": "student"
     }
+  },
+  {
+    "model": "cruds.crud_users.models.Users",
+    "fields":{
+            "username": "enoquejoseneas",
+            "email": "enoquejoseneas@ifba.edu.br",
+            "name": "Enoque Joseneas",
+            "birth_date": "11-12-1990",
+            "gender": "M",
+            "address": "Rua Teste",
+            "type": "student"
+    }
+  },
+  {
+    "model": "cruds.crud_users.models.Users",
+    "fields":{
+            "username": "emanoel",
+            "email": "emanoel@ifba.edu.br",
+            "name": "Emanoel",
+            "birth_date": "11-12-1993",
+            "gender": "M",
+            "address": "Rua Teste",
+            "type": "student"
+    }
+  },{
+    "model": "cruds.crud_users.models.Users",
+    "fields":{
+            "username": "sandroandrade",
+            "email": "sandroandrade@ifba.edu.br",
+            "name": "Sandro Andrade",
+            "birth_date": "11-12-1981",
+            "gender": "M",
+            "address": "Rua Teste",
+            "type": "teacher"
+    }
+  },{
+    "model": "cruds.crud_users.models.Users",
+    "fields":{
+            "username": "manoelnetom",
+            "email": "manoelnetom@ifba.edu.br",
+            "name": "Manoel Neto",
+            "birth_date": "11-12-1993",
+            "gender": "M",
+            "address": "Rua Teste",
+            "type": "teacher"
+    }
   }
 ]
