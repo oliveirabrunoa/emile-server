@@ -34,7 +34,8 @@
             "address": "Rua Teste",
             "type": "student"
     }
-  },{
+  },
+  {
     "model": "cruds.crud_users.models.Users",
     "fields":{
             "username": "sandroandrade",
@@ -45,16 +46,129 @@
             "address": "Rua Teste",
             "type": "teacher"
     }
-  },{
+  },
+  {
     "model": "cruds.crud_users.models.Users",
     "fields":{
-            "username": "manoelnetom",
-            "email": "manoelnetom@ifba.edu.br",
-            "name": "Manoel Neto",
-            "birth_date": "11-12-1993",
+            "username": "renatonovais",
+            "email": "renatonovais@ifba.edu.br",
+            "name": "Renato Novais",
+            "birth_date": "08-23-1980",
             "gender": "M",
             "address": "Rua Teste",
             "type": "teacher"
+    }
+  },
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
+            "code": "INF022",
+            "name": "Tópicos Avançados"
+    }
+  },
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
+            "code": "INF011",
+            "name": "Padrões de Projeto"
+    }
+  },
+  {
+    "model": "cruds.crud_course_sections.models.CourseSections",
+    "fields":{
+            "code": "INF011 - T01",
+            "name": "Turma de Sandro",
+            "course_id": 2,
+            "teacher_id": 4
+    }
+  },
+  {
+    "model": "cruds.crud_course_sections.models.CourseSections",
+    "fields":{
+            "code": "INF022 - T01",
+            "name": "Turma de Renato",
+            "course_id": 1,
+            "teacher_id": 5
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 2,
+            "section_time_start_time": "20:20:00",
+            "section_time_finish_time": "22:00:00",
+            "week_day": 2
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 2,
+            "section_time_start_time": "20:20:00",
+            "section_time_finish_time": "22:00:00",
+            "week_day": 4
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 1,
+            "section_time_start_time": "18:40:00",
+            "section_time_finish_time": "20:20:00",
+            "week_day": 0
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 1,
+            "section_time_start_time": "20:20:00",
+            "section_time_finish_time": "22:00:00",
+            "week_day": 1
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 1,
+            "section_time_start_time": "20:20:00",
+            "section_time_finish_time": "22:00:00",
+            "week_day": 2
+    }
+  },
+  {
+    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
+    "fields":{
+            "course_section_id": 1,
+            "user_id": 1
+    }
+  },
+  {
+    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
+    "fields":{
+            "course_section_id": 1,
+            "user_id": 2
+    }
+  },
+  {
+    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
+    "fields":{
+            "course_section_id": 1,
+            "user_id": 3
+    }
+  },
+  {
+    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
+    "fields":{
+            "course_section_id": 2,
+            "user_id": 1
+    }
+  },
+  {
+    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
+    "fields":{
+            "course_section_id": 2,
+            "user_id": 2
     }
   }
 ]

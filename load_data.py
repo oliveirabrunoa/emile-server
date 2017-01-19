@@ -28,9 +28,9 @@ def load_data():
             model = getattr(importlib.import_module(module_path), model_name)
 
             kwargs = item['fields']
-            object = model()
-            object.set_fields(kwargs)
-            session.add(object)
+            obj = model()
+            obj.set_fields(kwargs)
+            session.add(obj)
             session.commit()
 
 
