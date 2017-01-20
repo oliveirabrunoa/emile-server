@@ -1,11 +1,13 @@
-from emile_server import app
 import importlib
-from flask import request
+from flask import request, Blueprint
 import settings
 
 
-@app.route('/login', methods=['POST'])
-def login():
+login = Blueprint("login", __name__)
+
+
+@login.route('/login', methods=['POST'])
+def login_service():
     module_name, class_name = settings.AUTHENTICATION_BACKEND.rsplit('.', maxsplit=1)
     m = importlib.import_module(module_name)
     cls = getattr(m, class_name)
