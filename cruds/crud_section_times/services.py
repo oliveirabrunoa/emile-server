@@ -37,29 +37,33 @@ def section_time_in_progress(teacher_id):
     return jsonify(section_times=[section_time.serialize() for section_time in section_times])
 
 
-@section_times.route('/student_attendance_register/<section_time_id>', methods=['POST'])
-def student_attendance_register(section_time_id):
+@section_times.route('/student_attendance_register/<course_section_id>', methods=['POST'])
+def student_attendance_register(course_section_id):
     student_attendance_list = request.get_json()['student_attendance']
     section_time_date = request.get_json()['section_time_date']
 
-    section_time = models.SectionTimes.query.get(section_time_id)
-    student_attendance_registered = StudentAttendance.query.filter_by(section_time_id=section_time_id).all()
+    section_time = models.SectionTimes.query.filter_by(week_day=datetime.datetime.strptime(section_time_date, "%m-%d-%Y").date().weekday(), course_section_id=course_section_id).first()
 
-    if not student_attendance_registered:
-        course_section_id = section_time.course_section_id
-        try:
-            with db.session.no_autoflush:
-                for register in student_attendance_list:
-                    student_attendance = StudentAttendance(status=register['status'], section_time_date=datetime.datetime.strptime(section_time_date, "%m-%d-%Y").date())
-                    student_attendance.course_section_student_id = CourseSectionStudents.query.filter_by(user_id=register['student_id'],course_section_id=course_section_id).first().id
-                    section_time.student_attendance.append(student_attendance)
+    if not section_time:
+        return jsonify(result="Invalid request"), 404
 
-            db.session.commit()
-            return jsonify(student_attendance=[student_attendance.serialize() for student_attendance in
-                                               section_time.student_attendance]), 200
-        except:
-            return jsonify(result="Invalid request"), 404
-    return jsonify(result="Section time already registered"), 400
+    student_attendance_registered = StudentAttendance.query.filter_by(section_time_date=datetime.datetime.strptime(section_time_date, "%m-%d-%Y").date()).all()
+    if student_attendance_registered:
+        return jsonify(result="Section time already registered"), 400
+
+    try:
+        with db.session.no_autoflush:
+            for register in student_attendance_list:
+                student_attendance = StudentAttendance(status=register['status'], section_time_date=datetime.datetime.strptime(section_time_date, "%m-%d-%Y").date())
+                student_attendance.course_section_student_id = CourseSectionStudents.query.filter_by(user_id=register['student_id'],course_section_id=course_section_id).first().id
+                section_time.student_attendance.append(student_attendance)
+
+        db.session.commit()
+        return jsonify(student_attendance=[student_attendance.serialize() for student_attendance in
+                                           section_time.student_attendance]), 200
+    except:
+        return jsonify(result="Invalid request"), 404
+
 
 
 @section_times.route('/update_section_time/<section_time_id>', methods=['POST'])

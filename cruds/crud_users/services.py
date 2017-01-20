@@ -9,25 +9,8 @@ users = Blueprint("user", __name__)
 
 @users.route('/users', methods=['GET'])
 def get_users():
-    # Docs
-    """
-           Get all Users
-           ---
-           tags:
-             - /users
-           responses:
-             200:
-               description: This is the view to get all users. Student and Teacher will be returned.
-               schema:
-                 properties:
-                   users:
-                     type: array
-                     description: User's list
-                     items:
-                       type: string
-                       default: {"id": integer, "username": string}
-    """
     return jsonify(users=[dict(id=user.id, username=user.username) for user in models.Users.query.all()])
+
 
 @users.route('/students', methods=['GET'])
 def get_students():
@@ -42,64 +25,6 @@ def get_teachers():
 @users.route('/add_user', methods=['POST'])
 def add_users():
     #This method it was implemented considering that all fields are required in client
-
-    # Docs
-    """
-           Add User
-           ---
-           tags:
-             - /users
-           parameters:
-              - name: username
-                in: formData
-                description: username of user.
-                required: true
-                type: string
-              - name: email
-                in: formData
-                description: email of user.
-                required: true
-                type: string
-              - name: name
-                in: formData
-                description: name of user.
-                required: true
-                type: string
-              - name: birth_date
-                in: formData
-                description: birth date of user. (m-d-Y)
-                required: true
-                type: string
-              - name: gender
-                in: formData
-                description: gender of user (M of F)
-                required: true
-                type: string
-              - name: address
-                in: formData
-                description: address of user.
-                required: true
-                type: string
-              - name: type
-                in: formData
-                description: type of user. (student or teacher)
-                required: true
-                type: string
-           responses:
-             200:
-               description:  This is the view to add an user.(This user can be student or teacher)
-               schema:
-                 properties:
-                   user:
-                     type: array
-                     description: User's list
-                     items:
-                       type: string
-                       default: {"id": integer, "username": string, "email":string, "name":string,
-                       "birth_date": string, "gender": string, "address": string, "type": string}
-
-    """
-
     user = models.Users()
     user.set_fields(dict(request.form.items()))
 
