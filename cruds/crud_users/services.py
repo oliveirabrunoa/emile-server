@@ -9,7 +9,7 @@ users = Blueprint("user", __name__)
 
 @users.route('/users', methods=['GET'])
 def get_users():
-    return jsonify(users=[dict(id=user.id, username=user.username) for user in models.Users.query.all()])
+    return jsonify(users=[dict(id=user.id, username=user.username) for user in models.Users.query.all()]), 200
 
 
 @users.route('/students', methods=['GET'])
@@ -26,12 +26,12 @@ def get_teachers():
 def add_users():
     #This method it was implemented considering that all fields are required in client
     user = models.Users()
-    user.set_fields(dict(request.form.items()))
+    user.set_fields(dict(request.get_json()))
 
     db.session.add(user)
     db.session.commit()
 
-    return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(username=user.username)])
+    return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(username=user.username)]), 200
 
 
 @users.route('/user_details/<user_id>', methods=['GET'])
