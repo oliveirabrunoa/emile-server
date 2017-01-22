@@ -12,34 +12,36 @@ TEST_DB = 'test.db'
 
 class BasicTests(unittest.TestCase):
 
-    ############################
-    #### setup and teardown ####
-    ############################
+    app = None
+    app_client = None
 
-    # executed prior to each test
-    def setUp(self):
+    # executed before all tests in the class
+    @classmethod
+    def setUpClass(cls):
         os.environ["DATABASE_URL"] = "sqlite:///test.db"
         os.environ["APP_SETTINGS"] = "config.TestingConfig"
 
-        self.app = self.create_app()
-        register_blueprints.register_blueprints(self.app)
-        self.app_client = self.app.test_client()
+        cls.app = cls.create_app()
+        register_blueprints.register_blueprints(cls.app)
+        cls.app_client = cls.app.test_client()
 
         my_file = Path(os.path.join(os.path.dirname(__file__), 'test.db'))
 
-        with self.app.app_context():
+        with cls.app.app_context():
             if my_file.is_file():
                 backend.db.drop_all()
             backend.db.create_all()
 
-    # executed after each test
-    def tearDown(self):
+    # executed after all tests in the class
+    @classmethod
+    def tearDownClass(cls):
         os.environ["APP_SETTINGS"] = "config.DevelopmentConfig"
-        with self.app.app_context():
+        with cls.app.app_context():
             backend.db.session.remove()
             backend.db.drop_all()
 
-    def create_app(self):
+    @staticmethod
+    def create_app():
         app = Flask("teste")
 
         app.config.from_object(os.environ['APP_SETTINGS'])
