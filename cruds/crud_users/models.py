@@ -1,5 +1,6 @@
 import datetime
 from backend import db
+from cruds.crud_user_type.models import UserType
 
 
 class Users(db.Model):
@@ -10,7 +11,7 @@ class Users(db.Model):
     birth_date = db.Column(db.Date())
     gender = db.Column(db.String(1))
     address = db.Column(db.String(250))
-    type = db.Column(db.String(50))
+    type = db.Column(db.Integer, db.ForeignKey('user_type.id'))
     course_sections = db.relationship('CourseSectionStudents', cascade="save-update, merge, delete")
 
     def serialize(self):
@@ -22,7 +23,7 @@ class Users(db.Model):
             'birth_date': datetime.date.strftime(self.birth_date, "%m-%d-%Y"),
             'gender': self.gender,
             'address': self.address,
-            'type': self.type,
+            'type': UserType.query.filter_by(id=self.type).first().serialize(),
         }
 
     def set_fields(self, fields):

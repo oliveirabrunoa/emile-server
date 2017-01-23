@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: c55db12fe717
+Revision ID: 8440fadf1349
 Revises: None
-Create Date: 2017-01-19 16:06:11.415443
+Create Date: 2017-01-23 19:17:47.700102
 
 """
 
 # revision identifiers, used by Alembic.
-revision = 'c55db12fe717'
+revision = '8440fadf1349'
 down_revision = None
 
 from alembic import op
@@ -23,6 +23,12 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('code')
     )
+    op.create_table('user_type',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=20), nullable=True),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name')
+    )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=20), nullable=True),
@@ -31,7 +37,8 @@ def upgrade():
     sa.Column('birth_date', sa.Date(), nullable=True),
     sa.Column('gender', sa.String(length=1), nullable=True),
     sa.Column('address', sa.String(length=250), nullable=True),
-    sa.Column('type', sa.String(length=50), nullable=True),
+    sa.Column('type', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['type'], ['user_type.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
@@ -85,5 +92,6 @@ def downgrade():
     op.drop_table('course_section_students')
     op.drop_table('course_sections')
     op.drop_table('users')
+    op.drop_table('user_type')
     op.drop_table('courses')
     # ### end Alembic commands ###
