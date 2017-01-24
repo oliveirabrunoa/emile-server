@@ -15,8 +15,7 @@ class UserTypeDestinations(db.Model):
         return {
             'id': self.id,
             'name':self.name,
-            'param_values_service':self.param_values_service,
-            'users_query': self.users_query
+            'param_values_service':self.param_values_service
         }
 
     def set_fields(self, fields):
