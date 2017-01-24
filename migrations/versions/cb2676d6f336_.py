@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: 8440fadf1349
+Revision ID: cb2676d6f336
 Revises: None
-Create Date: 2017-01-23 19:17:47.700102
+Create Date: 2017-01-24 15:08:28.394592
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '8440fadf1349'
+revision = 'cb2676d6f336'
 down_revision = None
 
 from alembic import op
@@ -28,6 +28,22 @@ def upgrade():
     sa.Column('name', sa.String(length=20), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
+    )
+    op.create_table('user_type_destinations',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=50), nullable=True),
+    sa.Column('param_values_service', sa.String(length=250), nullable=True),
+    sa.Column('users_query', sa.String(length=250), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('user_type_destinations_user_type',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_type_id', sa.Integer(), nullable=False),
+    sa.Column('user_type_destination_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['user_type_destination_id'], ['user_type_destinations.id'], ),
+    sa.ForeignKeyConstraint(['user_type_id'], ['user_type.id'], ),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('user_type_id', 'user_type_destination_id', name='user_type_destinations_user_type_uc')
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -92,6 +108,8 @@ def downgrade():
     op.drop_table('course_section_students')
     op.drop_table('course_sections')
     op.drop_table('users')
+    op.drop_table('user_type_destinations_user_type')
+    op.drop_table('user_type_destinations')
     op.drop_table('user_type')
     op.drop_table('courses')
     # ### end Alembic commands ###
