@@ -285,7 +285,8 @@
     "fields":{
             "name": "Alunos de uma turma",
             "param_values_service": "/teachers_course_sections/<%teacher_id%>",
-            "users_query":" "    }
+            "users_query":"from backend import db;from cruds.crud_course_section_students.models import CourseSectionStudents;from cruds.crud_users.models import Users;course_section_students = CourseSectionStudents.query.filter_by(course_section_id=$);users = [Users.query.get(course_section_student.user_id) for course_section_student in course_section_students]"
+    }
   },
   {
     "model": "cruds.crud_user_type_destinations_user_type.models.UserTypeDestinationsUserType",
