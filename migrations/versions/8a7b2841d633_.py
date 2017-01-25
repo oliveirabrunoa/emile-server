@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: 7a916e33a074
+Revision ID: 8a7b2841d633
 Revises: None
-Create Date: 2017-01-24 15:41:52.819582
+Create Date: 2017-01-25 15:06:23.014870
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '7a916e33a074'
+revision = '8a7b2841d633'
 down_revision = None
 
 from alembic import op
@@ -70,6 +70,16 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('code')
     )
+    op.create_table('wall_messages',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('date', sa.Date(), nullable=True),
+    sa.Column('sender', sa.Integer(), nullable=True),
+    sa.Column('destination', sa.Integer(), nullable=True),
+    sa.Column('message', sa.String(length=140), nullable=True),
+    sa.ForeignKeyConstraint(['destination'], ['user_type_destinations.id'], ),
+    sa.ForeignKeyConstraint(['sender'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('course_section_students',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('course_section_id', sa.Integer(), nullable=False),
@@ -106,6 +116,7 @@ def downgrade():
     op.drop_table('student_attendance')
     op.drop_table('section_times')
     op.drop_table('course_section_students')
+    op.drop_table('wall_messages')
     op.drop_table('course_sections')
     op.drop_table('users')
     op.drop_table('user_type_destinations_user_type')

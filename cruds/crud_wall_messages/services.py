@@ -21,4 +21,4 @@ def wall_push_notification():
     exec(query, _dict)
     users = _dict['users']
 
-    return jsonify(users=[user.serialize() for user in users]), 200
+    return jsonify(users=[user.serialize() for user in set(users)]), 200
