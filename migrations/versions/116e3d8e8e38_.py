@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: 8a7b2841d633
+Revision ID: 116e3d8e8e38
 Revises: None
-Create Date: 2017-01-25 15:06:23.014870
+Create Date: 2017-01-25 16:28:48.088699
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '8a7b2841d633'
+revision = '116e3d8e8e38'
 down_revision = None
 
 from alembic import op
@@ -33,7 +33,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=True),
     sa.Column('param_values_service', sa.String(length=250), nullable=True),
-    sa.Column('users_query', sa.String(length=250), nullable=True),
+    sa.Column('users_query', sa.Text(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user_type_destinations_user_type',
