@@ -17,12 +17,12 @@ class WallMessages(db.Model):
             'id': self.id,
             'date': datetime.date.strftime(self.date, "%m-%d-%Y"),
             'sender': self.sender,
-            'destination': self.destination,
+            'user_type_destination_id': self.destination,
             'message': self.message
         }
 
     def set_fields(self, fields):
         self.date = datetime.datetime.strptime(fields['date'], "%m-%d-%Y").date()
         self.sender = fields['sender']
-        self.destination = fields['destination']
+        self.destination = fields['user_type_destination_id']
         self.message = fields['message']
