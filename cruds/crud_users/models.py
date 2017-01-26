@@ -7,6 +7,7 @@ class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True)
     email = db.Column(db.String(50), unique=True)
+    password = db.Column(db.String(50))
     name = db.Column(db.String(250))
     birth_date = db.Column(db.Date())
     gender = db.Column(db.String(1))
@@ -20,6 +21,7 @@ class Users(db.Model):
             'username': self.username,
             'email': self.email,
             'name': self.name,
+            'password': self.password,
             'birth_date': datetime.date.strftime(self.birth_date, "%m-%d-%Y"),
             'gender': self.gender,
             'address': self.address,
@@ -29,6 +31,7 @@ class Users(db.Model):
     def set_fields(self, fields):
         self.username = fields['username']
         self.email = fields['email']
+        self.password = fields['password']
         self.name = fields['name']
         self.birth_date = fields['birth_date']
         self.gender = fields['gender']

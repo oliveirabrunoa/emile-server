@@ -1,1 +1,1 @@
-AUTHENTICATION_BACKEND = 'ldapauthenticationbackend.LDAPAuthenticationBackend'
+AUTHENTICATION_BACKEND = 'cruds.crud_users.basicauthenticationbackend.BasicAuthenticationBackend'
