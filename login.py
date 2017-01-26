@@ -12,7 +12,9 @@ def login_service():
     m = importlib.import_module(module_name)
     cls = getattr(m, class_name)
 
-    email = request.form.get('email')
-    password = request.form.get('password')
+    login = request.get_json()['login']
+
+    email = login['email']
+    password = login['password']
 
     return cls().authenticate(email, password)
