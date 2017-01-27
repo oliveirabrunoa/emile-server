@@ -60,6 +60,6 @@ def send_message(token, device, body):
             data=json_data, headers=headers)
         print(response)
         return True
-    except as e:
+    except Exception as e:
         print(e)
         return False

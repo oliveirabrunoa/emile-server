@@ -85,10 +85,8 @@ def token_register(user_id):
     user = models.Users.query.get(user_id)
 
     if user:
-        try:
-            user.push_notification_token = post_message['push_notification_token']
-            db.session.commit()
-            return jsonify(user= user.serialize()), 200
-        except:
-            return jsonify(result = 'invalid request'), 400
+        user.push_notification_token = post_message['push_notification_token']
+        db.session.commit()
+        return jsonify(user= user.serialize()), 200
+
     return jsonify(result = 'invalid user id'), 404
