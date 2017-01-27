@@ -11,6 +11,7 @@ class Users(db.Model):
     birth_date = db.Column(db.Date())
     gender = db.Column(db.String(1))
     address = db.Column(db.String(250))
+    push_notification_token = db.Column(db.Text(), nullable=True)
     type = db.Column(db.Integer, db.ForeignKey('user_type.id'))
     course_sections = db.relationship('CourseSectionStudents', cascade="save-update, merge, delete")
 
@@ -23,6 +24,7 @@ class Users(db.Model):
             'birth_date': datetime.date.strftime(self.birth_date, "%m-%d-%Y"),
             'gender': self.gender,
             'address': self.address,
+            'push_notification_token': self.push_notification_token,
             'type': UserType.query.filter_by(id=self.type).first().serialize(),
         }
 

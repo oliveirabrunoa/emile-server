@@ -77,3 +77,18 @@ def students_course_sections(student_id):
     if student:
         return jsonify(students_course_sections=[course_sections_students.course_section.serialize() for course_sections_students in student.course_sections])
     return jsonify(result='invalid student id')
+
+
+@users.route('/token_register/<user_id>', methods=['POST'])
+def token_register(user_id):
+    post_message = request.get_json()['post_message']
+    user = models.Users.query.get(user_id)
+
+    if user:
+        try:
+            user.push_notification_token = post_message['push_notification_token']
+            db.session.commit()
+            return jsonify(user= user.serialize()), 200
+        except:
+            return jsonify(result = 'invalid request'), 400
+    return jsonify(result = 'invalid user id'), 404
