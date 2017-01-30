@@ -10,6 +10,7 @@ class WallMessages(db.Model):
     date = db.Column(db.Date())
     sender = db.Column(db.Integer, db.ForeignKey("users.id"))
     destination = db.Column(db.Integer, db.ForeignKey("user_type_destinations.id"))
+    param_value = db.Column(db.Integer())
     message = db.Column(db.String(140))
 
     def serialize(self):
@@ -18,6 +19,7 @@ class WallMessages(db.Model):
             'date': datetime.date.strftime(self.date, "%m-%d-%Y"),
             'sender': self.sender,
             'user_type_destination_id': self.destination,
+            'param_value': self.param_value,
             'message': self.message
         }
 
@@ -25,4 +27,5 @@ class WallMessages(db.Model):
         self.date = datetime.datetime.strptime(fields['date'], "%m-%d-%Y").date()
         self.sender = fields['sender']
         self.destination = fields['user_type_destination_id']
+        self.param_value = fields['parameter']
         self.message = fields['message']

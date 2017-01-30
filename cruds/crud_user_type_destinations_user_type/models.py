@@ -7,7 +7,7 @@ class UserTypeDestinationsUserType(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_type_id = db.Column(db.Integer, db.ForeignKey('user_type.id'), nullable=False)
     user_type_destination_id = db.Column(db.Integer, db.ForeignKey('user_type_destinations.id'), nullable=False)
-    course_section = db.relationship("UserType")
+    user_type = db.relationship("UserType")
     __table_args__ = (db.UniqueConstraint('user_type_id','user_type_destination_id', name='user_type_destinations_user_type_uc'),)
 
     def set_fields(self, fields):
