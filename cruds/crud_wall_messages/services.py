@@ -13,34 +13,22 @@ import settings
 
 wall_messages = Blueprint("wall_messages", __name__)
 
+
 @wall_messages.route('/wall_messages/<user_id>', methods=['GET'])
 def get_wall_messages(user_id):
-    user_param = models.Users.query.get(user_id)
-    _dict={}
+    user = models.Users.query.get(user_id)
+    messages = []
+    today = datetime.date.today().toordinal()
     wall_messages_list = (db.session.query(models.WallMessages).
-                                 filter(UserTypeDestinationsUserType.user_type_id == UserType.id).
-                                 filter(UserTypeDestinationsUserType.user_type_destination_id == UserTypeDestinations.id).
-                                 filter(UserTypeDestinations.id == WallMessages.destination).all())
+                                 filter(models.WallMessages.date >= datetime.date.fromordinal(today-14)).all())
 
-    user_type_destination = UserTypeDestinations.query.filter_by(id=wall_messages_list[0].destination).first()
-    query = user_type_destination.users_query
-    query = str(query).replace('$', str(wall_messages_list[0].param_value))
-    exec(query, _dict)
-    users = _dict['users']
+    for message in wall_messages_list:
+        users = set(message.get_destinations() + message.get_sender())
 
+        if user in users:
+            messages.append(message)
 
-    #Ver o tipo do user
-    #usertype para UserTypeDestinationsUserType
-    #UserTypeDestinations
-    #fazer join com wall_messages
-    #fazer where:
-    #pegar as querys
-    #comparar as listas para ver se o usuário esta nelas
-    #retornas as messages de wall_messages
-
-    #verificar se o periodo da mensagem é menor que 14.
-
-    return "ok"
+    return jsonify(wall_messages=[message.serialize() for message in messages]), 200
 
 
 @wall_messages.route('/wall_push_notification', methods=['POST'])
@@ -53,16 +41,13 @@ def wall_push_notification():
     message = post_message['message']
     sender = post_message['sender']
 
-    query = UserTypeDestinations.query.filter_by(id=user_type_destination_id).first().users_query
-    query = str(query).replace('$', str(parameter))
-    exec(query, _dict)
-    users = _dict['users']
-    #send_notification
-
     today = datetime.datetime.now(tz=pytz.timezone('America/Bahia'))
     post_message['date'] = datetime.datetime.strftime(today,'%m-%d-%Y')
     wall_message = models.WallMessages()
     wall_message.set_fields(post_message)
+
+    users = set(wall_message.get_destinations() + wall_message.get_sender())
+    #send_notification
 
     db.session.add(wall_message)
     db.session.commit()

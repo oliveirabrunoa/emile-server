@@ -29,3 +29,13 @@ class WallMessages(db.Model):
         self.destination = fields['user_type_destination_id']
         self.param_value = fields['parameter']
         self.message = fields['message']
+
+    def get_sender(self):
+        return Users.query.filter_by(id=self.sender).all()
+
+    def get_destinations(self):
+        _dict = {}
+        query = UserTypeDestinations.query.filter_by(id=self.destination).first().users_query
+        query = str(query).replace('$', str(self.param_value))
+        exec(query, _dict)
+        return _dict['users']
