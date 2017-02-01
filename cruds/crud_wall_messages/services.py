@@ -9,6 +9,7 @@ import pytz
 import datetime
 import requests
 import settings
+import json
 
 
 wall_messages = Blueprint("wall_messages", __name__)
@@ -47,7 +48,8 @@ def wall_push_notification():
     wall_message.set_fields(post_message)
 
     users = set(wall_message.get_destinations() + wall_message.get_sender())
-    #send_notification
+    for user in users:
+        send_message(user.push_notification_token, message)
 
     db.session.add(wall_message)
     db.session.commit()
@@ -55,13 +57,13 @@ def wall_push_notification():
     return jsonify(wall_message=[message.serialize() for message in models.WallMessages.query.filter_by(sender=sender).all()]), 200
 
 
-def send_message(token, device, body):
+def send_message(token, body):
     try:
         post_data = dict(
             to=token,
             priority='high',
             notification=dict(
-                    title=title,
+                    title='Nova mensagem do Émile',
                     body=body,
                     sound='Default',
             ),
