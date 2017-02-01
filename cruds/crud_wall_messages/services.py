@@ -47,7 +47,7 @@ def wall_push_notification():
     wall_message = models.WallMessages()
     wall_message.set_fields(post_message)
 
-    users = set(wall_message.get_destinations() + wall_message.get_sender())
+    users = set(wall_message.get_destinations())
     for user in users:
         send_message(user.push_notification_token, message)
 
