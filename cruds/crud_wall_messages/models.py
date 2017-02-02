@@ -17,7 +17,7 @@ class WallMessages(db.Model):
         return {
             'id': self.id,
             'date': datetime.date.strftime(self.date, "%m-%d-%Y"),
-            'sender': self.sender,
+            'sender': Users.query.get(self.sender).serialize(),
             'user_type_destination_id': self.destination,
             'param_value': self.param_value,
             'message': self.message
