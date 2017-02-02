@@ -25,7 +25,7 @@ def wall_push_notification():
     query = str(query).replace('$', str(parameter))
     exec(query, _dict)
     users = _dict['users']
-    send_notification
+    send_message([user.push_notification_token for user in users], message)
 
     today = datetime.datetime.now(tz=pytz.timezone('America/Bahia'))
     post_message['date'] = datetime.datetime.strftime(today,'%m-%d-%Y')
@@ -38,28 +38,12 @@ def wall_push_notification():
     return jsonify(wall_message=[message.serialize() for message in models.WallMessages.query.filter_by(sender=sender).all()]), 200
 
 
-def send_message(token, device, body):
+def send_message(users_tokens, body):
     try:
-        post_data = dict(
-            to=token,
-            priority='high',
-            notification=dict(
-                    title=title,
-                    body=body,
-                    sound='Default',
-            ),
-        )
-        json_data = json.dumps(post_data)
-        headers = {
-            'UserAgent': "FCM-Server",
-            'Content-Type': 'application/json',
-            'Authorization': 'key={}'.format(settings.PUSH_NOTIFICATIONS_SETTINGS['API_NOTIFICATION_KEY'])}
-
-        response = requests.post(
-            url=settings.PUSH_NOTIFICATIONS_SETTINGS['PUSH_NOTIFICATION_URL'],
-            data=json_data, headers=headers)
-        print(response)
+        registration_ids = users_tokens
+        message_title = 'Nova mensagem do Émile'
+        message_body = body
+        result = push_service.notify_multiple_devices(registration_ids=registration_ids, message_title=message_title, message_body=message_body)
         return True
     except Exception as e:
-        print(e)
         return False
