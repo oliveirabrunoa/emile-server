@@ -10,9 +10,11 @@ import datetime
 import requests
 import settings
 import json
+from pyfcm import FCMNotification
 
 
 wall_messages = Blueprint("wall_messages", __name__)
+push_service = FCMNotification(api_key=settings.PUSH_NOTIFICATIONS_SETTINGS['API_NOTIFICATION_KEY'])
 
 
 @wall_messages.route('/wall_messages/<user_id>', methods=['GET'])
@@ -48,8 +50,7 @@ def wall_push_notification():
     wall_message.set_fields(post_message)
 
     users = set(wall_message.get_destinations())
-    for user in users:
-        send_message(user.push_notification_token, message)
+    send_message([user.push_notification_token for user in users], message)
 
     db.session.add(wall_message)
     db.session.commit()
@@ -57,28 +58,12 @@ def wall_push_notification():
     return jsonify(wall_message=[message.serialize() for message in models.WallMessages.query.filter_by(sender=sender).all()]), 200
 
 
-def send_message(token, body):
+def send_message(users_tokens, body):
     try:
-        post_data = dict(
-            to=token,
-            priority='high',
-            notification=dict(
-                    title='Nova mensagem do Émile',
-                    body=body,
-                    sound='Default',
-            ),
-        )
-        json_data = json.dumps(post_data)
-        headers = {
-            'UserAgent': "FCM-Server",
-            'Content-Type': 'application/json',
-            'Authorization': 'key={}'.format(settings.PUSH_NOTIFICATIONS_SETTINGS['API_NOTIFICATION_KEY'])}
-
-        response = requests.post(
-            url=settings.PUSH_NOTIFICATIONS_SETTINGS['PUSH_NOTIFICATION_URL'],
-            data=json_data, headers=headers)
-        print(response)
+        registration_ids = users_tokens
+        message_title = 'Nova mensagem do Émile'
+        message_body = body
+        result = push_service.notify_multiple_devices(registration_ids=registration_ids, message_title=message_title, message_body=message_body)
         return True
     except Exception as e:
-        print(e)
         return False
