@@ -1,5 +1,32 @@
 [
   {
+    "model": "cruds.crud_program.models.Program",
+    "fields":{
+            "name": "Análise e Desenvolvimento de Sistemas",
+            "abbreviation": "ADS",
+            "total_hours": 1000,
+            "total_credits": 100
+    }
+  },
+  {
+    "model": "cruds.crud_course_type.models.CourseType",
+    "fields":{
+            "description": "Obrigatória"
+    }
+  },
+  {
+    "model": "cruds.crud_course_type.models.CourseType",
+    "fields":{
+            "description": "Optativa"
+    }
+  },
+  {
+    "model": "cruds.crud_course_type.models.CourseType",
+    "fields":{
+            "description": "Eletiva"
+    }
+  },
+  {
     "model": "cruds.crud_user_type.models.UserType",
     "fields":{
             "name": "student"
@@ -75,14 +102,25 @@
     "model": "cruds.crud_courses.models.Courses",
     "fields":{
             "code": "INF022",
-            "name": "Tópicos Avançados"
+            "name": "Tópicos Avançados",
+            "credits": 2,
+            "hours": 60,
+            "program_section": 5,
+            "course_type_id": 1,
+            "program_id":1
+
     }
   },
   {
     "model": "cruds.crud_courses.models.Courses",
     "fields":{
             "code": "INF011",
-            "name": "Padrões de Projeto"
+            "name": "Padrões de Projeto",
+            "credits": 3,
+            "hours": 90,
+            "program_section": 4,
+            "course_type_id": 1,
+            "program_id":1
     }
   },
   {
@@ -251,14 +289,18 @@
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields":{
             "course_section_id": 3,
-            "user_id": 1
+            "user_id": 1,
+            "status": "Cursando",
+            "grade": 0
     }
   },
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields":{
             "course_section_id": 3,
-            "user_id": 2
+            "user_id": 2,
+            "status": "Cursando",
+            "grade": 0
     }
   },
 
@@ -266,35 +308,45 @@
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields":{
             "course_section_id": 1,
-            "user_id": 1
+            "user_id": 1,
+            "status": "Cursando",
+            "grade": 0
     }
   },
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields":{
             "course_section_id": 1,
-            "user_id": 2
+            "user_id": 2,
+            "status": "Cursando",
+            "grade": 0
     }
   },
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields":{
             "course_section_id": 1,
-            "user_id": 3
+            "user_id": 3,
+            "status": "Cursando",
+            "grade": 0
     }
   },
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields":{
             "course_section_id": 2,
-            "user_id": 1
+            "user_id": 1,
+            "status": "Cursando",
+            "grade": 0
     }
   },
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields":{
             "course_section_id": 2,
-            "user_id": 2
+            "user_id": 2,
+            "status": "Cursando",
+            "grade": 0
     }
   },
   {
