@@ -47,7 +47,8 @@
             "birth_date": "11-12-1993",
             "gender": "M",
             "address": "Rua Teste",
-            "type": 1
+            "type": 1,
+            "program_id": 1
     }
   },
   {
@@ -59,7 +60,8 @@
             "birth_date": "11-12-1990",
             "gender": "M",
             "address": "Rua Teste",
-            "type": 1
+            "type": 1,
+            "program_id": 1
     }
   },
   {
@@ -71,7 +73,8 @@
             "birth_date": "11-12-1993",
             "gender": "M",
             "address": "Rua Teste",
-            "type": 1
+            "type": 1,
+            "program_id": 1
     }
   },
   {
@@ -83,7 +86,8 @@
             "birth_date": "11-12-1981",
             "gender": "M",
             "address": "Rua Teste",
-            "type": 2
+            "type": 2,
+            "program_id": null
     }
   },
   {
@@ -95,7 +99,8 @@
             "birth_date": "08-23-1980",
             "gender": "M",
             "address": "Rua Teste",
-            "type": 2
+            "type": 2,
+            "program_id": null
     }
   },
   {
@@ -119,6 +124,18 @@
             "credits": 3,
             "hours": 90,
             "program_section": 4,
+            "course_type_id": 1,
+            "program_id":1
+    }
+  },
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
+            "code": "INF023",
+            "name": "Trabalho Final de Curso",
+            "credits": 3,
+            "hours": 90,
+            "program_section": 6,
             "course_type_id": 1,
             "program_id":1
     }
@@ -311,6 +328,15 @@
             "user_id": 1,
             "status": "Cursando",
             "grade": 0
+    }
+  },
+  {
+    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
+    "fields":{
+            "course_section_id": 1,
+            "user_id": 2,
+            "status": "Reprovado",
+            "grade": 4
     }
   },
   {

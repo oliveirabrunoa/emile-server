@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: edf57a87eb21
+Revision ID: faac7540f6f6
 Revises: None
-Create Date: 2017-02-07 14:45:49.361496
+Create Date: 2017-02-07 16:30:58.154981
 
 """
 
 # revision identifiers, used by Alembic.
-revision = 'edf57a87eb21'
+revision = 'faac7540f6f6'
 down_revision = None
 
 from alembic import op
@@ -75,6 +75,8 @@ def upgrade():
     sa.Column('address', sa.String(length=250), nullable=True),
     sa.Column('push_notification_token', sa.Text(), nullable=True),
     sa.Column('type', sa.Integer(), nullable=True),
+    sa.Column('program_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['program_id'], ['program.id'], ),
     sa.ForeignKeyConstraint(['type'], ['user_type.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
@@ -120,8 +122,7 @@ def upgrade():
     sa.Column('grade', sa.Float(), nullable=True),
     sa.ForeignKeyConstraint(['course_section_id'], ['course_sections.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('course_section_id', 'user_id', name='course_section_user_uc')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('section_times',
     sa.Column('id', sa.Integer(), nullable=False),
