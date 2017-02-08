@@ -9,6 +9,15 @@
     }
   },
   {
+    "model": "cruds.crud_program.models.Program",
+    "fields":{
+            "name": "Administração",
+            "abbreviation": "ADM",
+            "total_hours": 1500,
+            "total_credits": 100
+    }
+  },
+  {
     "model": "cruds.crud_course_type.models.CourseType",
     "fields":{
             "description": "Obrigatória"
@@ -104,6 +113,19 @@
     }
   },
   {
+    "model": "cruds.crud_users.models.Users",
+    "fields":{
+            "username": "Bruno",
+            "email": "bruno@ifba.edu.br",
+            "name": "Bruno",
+            "birth_date": "11-12-1993",
+            "gender": "M",
+            "address": "Rua Teste",
+            "type": 1,
+            "program_id": 2
+    }
+  },
+  {
     "model": "cruds.crud_courses.models.Courses",
     "fields":{
             "code": "INF022",
@@ -126,6 +148,31 @@
             "program_section": 4,
             "course_type_id": 1,
             "program_id":1
+    }
+  },
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
+            "code": "INF016",
+            "name": "Arquitetura de Software",
+            "credits": 3,
+            "hours": 90,
+            "program_section": 5,
+            "course_type_id": 1,
+            "program_id":1
+    }
+  },
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
+            "code": "ADM1",
+            "name": "Noções de administração pública",
+            "credits": 2,
+            "hours": 60,
+            "program_section": 1,
+            "course_type_id": 1,
+            "program_id":2
+
     }
   },
   {
@@ -154,7 +201,7 @@
     "fields":{
             "code": "INF016 - T01",
             "name": "Turma de Sandro",
-            "course_id": 2,
+            "course_id": 3,
             "teacher_id": 4
     }
   },
@@ -165,6 +212,15 @@
             "name": "Turma de Renato",
             "course_id": 1,
             "teacher_id": 5
+    }
+  },
+  {
+    "model": "cruds.crud_course_sections.models.CourseSections",
+    "fields":{
+            "code": "ADM1 - T01",
+            "name": "Turma João",
+            "course_id": 4,
+            "teacher_id": 4
     }
   },
   {
@@ -344,7 +400,7 @@
     "fields":{
             "course_section_id": 1,
             "user_id": 2,
-            "status": "Cursando",
+            "status": "Aprovado",
             "grade": 0
     }
   },
@@ -371,6 +427,15 @@
     "fields":{
             "course_section_id": 2,
             "user_id": 2,
+            "status": "Cursando",
+            "grade": 0
+    }
+  },
+  {
+    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
+    "fields":{
+            "course_section_id": 4,
+            "user_id": 6,
             "status": "Cursando",
             "grade": 0
     }

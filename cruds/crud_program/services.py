@@ -6,6 +6,7 @@ from cruds.crud_program.models import Program
 from cruds.crud_users.models import Users
 from cruds.crud_course_section_students.models import CourseSectionStudents
 from cruds.crud_course_sections.models import CourseSections
+from sqlalchemy import and_, or_
 
 
 program = Blueprint("program", __name__)
@@ -18,7 +19,7 @@ def programs_courses(program_id):
         return jsonify(result="invalid program id"), 404
     return jsonify(program=program.serialize()), 200
 
-#2. passa o id de um aluno e retorna a grade curricular, mas já dizendo quais disicplinas ele cursou.
+
 @program.route('/students_program_history/<student_id>', methods=['GET'])
 def students_program_history(student_id):
     student = Users.query.get(student_id)
@@ -32,45 +33,18 @@ def students_program_history(student_id):
 
     for course in courses:
         _dict = {"course": course.serialize()}
-        a = (db.session.query(func.count(CourseSectionStudents.id)).filter(CourseSectionStudents.course_section_id == CourseSections.id).
-                                        filter(CourseSections.course_id == Courses.id).
-                                        filter(Courses.program_id == Program.id).
-                                        filter(Program.id == student.program_id).
-                                        filter(CourseSectionStudents.user_id == student_id).
-                                        filter(Courses.id == course.id).group_by(Courses.id).all())
-        for b in a:
-            print(b)
+        course_times = (db.session.query(func.count(CourseSectionStudents.id)).filter(CourseSectionStudents.course_section_id == CourseSections.id).
+                                    filter(CourseSections.course_id == Courses.id).
+                                    filter(Courses.program_id == Program.id).
+                                    filter(Program.id == student.program_id).
+                                    filter(CourseSectionStudents.user_id == student_id).
+                                    filter(Courses.id == course.id).
+                                    filter(or_ (CourseSectionStudents.status == 'Aprovado', CourseSectionStudents.status == 'Reprovado')).
+                                           group_by(Courses.code).first())
+        if not course_times:
+            course_times = (0,)
+        _dict['times']= course_times[0]
 
-
-
-
-
-
-
-
-    # a = (db.session.query(Courses).filter(CourseSectionStudents.course_section_id == CourseSections.id).
-    #                                 filter(CourseSections.course_id == Courses.id).
-    #                                 filter(Courses.program_id == Program.id).
-    #                                 filter(Program.id == student.program_id).all())
-    # for b in a:
-        # print(b.serialize())
-    # for course in courses:
-    #     _dict = {"course": course.serialize()}
-    #     a =(db.session.query(CourseSectionStudents).join(CourseSectionStudents).
-    #                                     filter(CourseSections.course_id == Courses.id).
-    #                                     filter(Courses.program_id == Program.id).
-    #                                     filter(Program.id == student.program_id).all())
-    #
-    # for b in a:
-    #     print(a.serialize())
-
-
-
-
-
-
-
-
-
+        print(_dict)
 
     return "ok"
