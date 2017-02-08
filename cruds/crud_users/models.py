@@ -32,7 +32,6 @@ class Users(db.Model):
         self.username = fields['username']
         self.email = fields['email']
         self.name = fields['name']
-        self.birth_date = fields['birth_date']
         self.gender = fields['gender']
         self.address = fields['address']
         self.birth_date = datetime.datetime.strptime(fields['birth_date'], "%m-%d-%Y").date()

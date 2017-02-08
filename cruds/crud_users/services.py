@@ -26,7 +26,7 @@ def get_teachers():
 def add_users():
     #This method it was implemented considering that all fields are required in client
     user = models.Users()
-    user.set_fields(dict(request.form.items()))
+    user.set_fields(dict(request.get_json()))
 
     db.session.add(user)
     db.session.commit()
@@ -44,7 +44,7 @@ def update_user(user_id):
     user = models.Users.query.get(user_id)
 
     if user:
-        user.set_fields(dict(request.form.items()))
+        user.set_fields(dict(request.get_json()))
         db.session.commit()
         return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(id=user_id)])
     return jsonify(result='invalid user id')
