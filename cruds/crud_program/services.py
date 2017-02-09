@@ -7,6 +7,7 @@ from cruds.crud_users.models import Users
 from cruds.crud_course_section_students.models import CourseSectionStudents
 from cruds.crud_course_sections.models import CourseSections
 from sqlalchemy import and_, or_
+from cruds.crud_course_section_students_status.models import CourseSectionStudentsStatus
 
 
 program = Blueprint("program", __name__)
@@ -40,8 +41,8 @@ def students_program_history(student_id):
                                         filter(Program.id == student.program_id).
                                         filter(CourseSectionStudents.user_id == student_id).
                                         filter(Courses.id == course.id).
-                                        filter(or_ (CourseSectionStudents.status == 'Aprovado',
-                                                    CourseSectionStudents.status == 'Reprovado')).
+                                        filter(or_ (CourseSectionStudents.status == 2,
+                                                    CourseSectionStudents.status == 3)).
                                         group_by(Courses.code).first())
         last_status = (db.session.query(CourseSectionStudents.status).
                                         filter(CourseSectionStudents.course_section_id == CourseSections.id).
@@ -50,17 +51,17 @@ def students_program_history(student_id):
                                         filter(Program.id == student.program_id).
                                         filter(CourseSectionStudents.user_id == student_id).
                                         filter(Courses.id == course.id).
-                                        filter(or_ (CourseSectionStudents.status == 'Aprovado',
-                                                    CourseSectionStudents.status == 'Reprovado',
-                                                    CourseSectionStudents.status == 'Cursando')).
+                                        filter(or_ (CourseSectionStudents.status == 1,
+                                                    CourseSectionStudents.status == 2,
+                                                    CourseSectionStudents.status == 3)).
                                         order_by(CourseSectionStudents.id.desc()).first())
         if not course_times:
             course_times = (0,)
         if not last_status:
-            last_status = ('Não cursada',)
+            last_status = (4,)
 
         _dict['times']= course_times[0]
-        _dict['status']= last_status[0]
+        _dict['status']= CourseSectionStudentsStatus.query.get(last_status[0]).serialize()
 
         students_program_history_list.append(_dict)
 
