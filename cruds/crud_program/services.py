@@ -23,7 +23,7 @@ def programs_courses(program_id):
 @program.route('/students_program_history/<student_id>', methods=['GET'])
 def students_program_history(student_id):
     student = Users.query.get(student_id)
-    students_program_history = []
+    students_program_history_list = []
 
     if not student and student.type == 1:
         return jsonify(result="invalid student id"), 404
@@ -33,18 +33,35 @@ def students_program_history(student_id):
 
     for course in courses:
         _dict = {"course": course.serialize()}
-        course_times = (db.session.query(func.count(CourseSectionStudents.id)).filter(CourseSectionStudents.course_section_id == CourseSections.id).
-                                    filter(CourseSections.course_id == Courses.id).
-                                    filter(Courses.program_id == Program.id).
-                                    filter(Program.id == student.program_id).
-                                    filter(CourseSectionStudents.user_id == student_id).
-                                    filter(Courses.id == course.id).
-                                    filter(or_ (CourseSectionStudents.status == 'Aprovado', CourseSectionStudents.status == 'Reprovado')).
-                                           group_by(Courses.code).first())
+        course_times = (db.session.query(func.count(CourseSectionStudents.id)).
+                                        filter(CourseSectionStudents.course_section_id == CourseSections.id).
+                                        filter(CourseSections.course_id == Courses.id).
+                                        filter(Courses.program_id == Program.id).
+                                        filter(Program.id == student.program_id).
+                                        filter(CourseSectionStudents.user_id == student_id).
+                                        filter(Courses.id == course.id).
+                                        filter(or_ (CourseSectionStudents.status == 'Aprovado',
+                                                    CourseSectionStudents.status == 'Reprovado')).
+                                        group_by(Courses.code).first())
+        last_status = (db.session.query(CourseSectionStudents.status).
+                                        filter(CourseSectionStudents.course_section_id == CourseSections.id).
+                                        filter(CourseSections.course_id == Courses.id).
+                                        filter(Courses.program_id == Program.id).
+                                        filter(Program.id == student.program_id).
+                                        filter(CourseSectionStudents.user_id == student_id).
+                                        filter(Courses.id == course.id).
+                                        filter(or_ (CourseSectionStudents.status == 'Aprovado',
+                                                    CourseSectionStudents.status == 'Reprovado',
+                                                    CourseSectionStudents.status == 'Cursando')).
+                                        order_by(CourseSectionStudents.id.desc()).first())
         if not course_times:
             course_times = (0,)
+        if not last_status:
+            last_status = ('Não cursada',)
+
         _dict['times']= course_times[0]
+        _dict['status']= last_status[0]
 
-        print(_dict)
+        students_program_history_list.append(_dict)
 
-    return "ok"
+    return jsonify(students_program_history=[program_history for program_history in students_program_history_list])

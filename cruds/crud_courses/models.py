@@ -1,4 +1,5 @@
 from backend import db
+from cruds.crud_course_type.models import CourseType
 
 
 class Courses(db.Model):
@@ -20,7 +21,7 @@ class Courses(db.Model):
             'credits':self.credits,
             'hours':self.hours,
             'program_section':self.program_section,
-            'course_type_id':self.course_type_id,
+            'course_type_id':CourseType.query.get(self.course_type_id).serialize(),
             'program_id':self.program_id
         }
 
