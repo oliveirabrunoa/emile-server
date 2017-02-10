@@ -7,7 +7,7 @@ class UserTypeDestinations(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50))
     param_values_service = db.Column(db.String(250))
-    users_query  = db.Column(db.String(250))
+    users_query  = db.Column(db.Text())
     user_type_destinations_user_types = db.relationship('UserTypeDestinationsUserType', cascade="save-update, merge, delete")
 
 
