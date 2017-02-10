@@ -429,15 +429,6 @@
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields":{
             "course_section_id": 1,
-            "user_id": 2,
-            "status": 2,
-            "grade": 0
-    }
-  },
-  {
-    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
-    "fields":{
-            "course_section_id": 1,
             "user_id": 3,
             "status": 1,
             "grade": 0

@@ -10,6 +10,7 @@ class CourseSectionStudents(db.Model):
     course_section = db.relationship("CourseSections")
     status = db.Column(db.Integer, db.ForeignKey('course_section_students_status.id'), nullable=False)
     grade = db.Column(db.Float, nullable=True)
+    __table_args__ = (db.UniqueConstraint('course_section_id','user_id', name='course_section_user_uc'),)
 
     def serialize(self):
         return {

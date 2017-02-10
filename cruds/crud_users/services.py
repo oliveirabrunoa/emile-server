@@ -90,3 +90,17 @@ def token_register(user_id):
         return jsonify(user= user.serialize()), 200
 
     return jsonify(result = 'invalid user id'), 404
+
+from io import BytesIO
+from PIL import Image
+from werkzeug.utils import secure_filename
+@users.route('/send_binary_data', methods=['POST'])
+def send_binary_data():
+
+    imgfile = BytesIO(request.files['image_file'])
+
+    img = Image.open(imgfile)
+    img.save('/home/brunooliveira/Downloads/TESTE.JPEG', quality=90, optimize=True)
+
+
+    return "ok"
