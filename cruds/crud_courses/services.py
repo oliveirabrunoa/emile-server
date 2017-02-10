@@ -8,7 +8,7 @@ courses = Blueprint("subject", __name__)
 
 @courses.route('/courses', methods=['GET'])
 def get_courses():
-    return jsonify(courses=[dict(id=course.id, code=course.code) for course in models.Courses.query.all()])
+    return jsonify(courses=[course.serialize() for course in models.Courses.query.all()])
 
 
 @courses.route('/add_course', methods=['POST'])

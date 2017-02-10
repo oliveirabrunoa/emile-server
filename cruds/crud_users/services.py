@@ -26,7 +26,7 @@ def get_teachers():
 def add_users():
     #This method it was implemented considering that all fields are required in client
     user = models.Users()
-    user.set_fields(dict(request.form.items()))
+    user.set_fields(dict(request.get_json()))
 
     db.session.add(user)
     db.session.commit()
@@ -44,7 +44,7 @@ def update_user(user_id):
     user = models.Users.query.get(user_id)
 
     if user:
-        user.set_fields(dict(request.form.items()))
+        user.set_fields(dict(request.get_json()))
         db.session.commit()
         return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(id=user_id)])
     return jsonify(result='invalid user id')
@@ -77,3 +77,16 @@ def students_course_sections(student_id):
     if student:
         return jsonify(students_course_sections=[course_sections_students.course_section.serialize() for course_sections_students in student.course_sections])
     return jsonify(result='invalid student id')
+
+
+@users.route('/token_register/<user_id>', methods=['POST'])
+def token_register(user_id):
+    post_message = request.get_json()['post_message']
+    user = models.Users.query.get(user_id)
+
+    if user:
+        user.push_notification_token = post_message['push_notification_token']
+        db.session.commit()
+        return jsonify(user= user.serialize()), 200
+
+    return jsonify(result = 'invalid user id'), 404
