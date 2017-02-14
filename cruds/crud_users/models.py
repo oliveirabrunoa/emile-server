@@ -2,6 +2,9 @@ import datetime
 from backend import db
 from cruds.crud_user_type.models import UserType
 from cruds.crud_program.models import Program
+import os
+import settings
+import boto3
 
 
 class Users(db.Model):
@@ -16,6 +19,7 @@ class Users(db.Model):
     push_notification_token = db.Column(db.Text(), nullable=True)
     type = db.Column(db.Integer, db.ForeignKey('user_type.id'))
     program_id = db.Column(db.Integer, db.ForeignKey('program.id'), nullable=True)
+    image_path = db.Column(db.Text(), nullable=True)
     course_sections = db.relationship('CourseSectionStudents', cascade="save-update, merge, delete")
 
     def serialize(self):
@@ -31,6 +35,7 @@ class Users(db.Model):
             'program_id': self.program_id,
             'push_notification_token': self.push_notification_token,
             'type': UserType.query.filter_by(id=self.type).first().serialize(),
+            'image_path': self.image_path,
         }
 
     def set_fields(self, fields):
@@ -43,3 +48,10 @@ class Users(db.Model):
         self.birth_date = datetime.datetime.strptime(fields['birth_date'], "%m-%d-%Y").date()
         self.program_id = fields['program_id']
         self.type = fields['type']
+
+    def save_image(self, file, file_path):
+        s3 = boto3.resource('s3')
+        bucket = s3.create_bucket(Bucket='emile-server')
+        s3.Object('emile-server', file.filename).put(Body=file)
+
+        self.image_path = file.filename

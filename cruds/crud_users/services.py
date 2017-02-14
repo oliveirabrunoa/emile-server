@@ -1,8 +1,11 @@
-from flask import jsonify, Blueprint, request
+from flask import jsonify, Blueprint, request, url_for, send_from_directory
 from . import models
 from backend import db
 from cruds.crud_course_sections.models import CourseSections
+import os
 from werkzeug.utils import secure_filename
+import settings
+import random
 
 
 users = Blueprint("user", __name__)
@@ -93,6 +96,29 @@ def token_register(user_id):
     return jsonify(result = 'invalid user id'), 404
 
 
-@users.route('/send_binary_data', methods=['POST'])
-def send_binary_data():
-    pass
+@users.route('/update_user_image/<user_id>', methods=['POST'])
+def update_user_image(user_id):
+    user = models.Users.query.get(user_id)
+    if not user:
+        return jsonify(result='invalid user id'), 404
+    if 'image_file' not in request.files:
+        return jsonify(result='No file part'), 404
+
+    file = request.files['image_file']
+
+    if file.filename == '':
+        return jsonify(result='No selected file'), 400
+    if not file or not allowed_file(file.filename):
+        return jsonify(result='File with invalid format'), 400
+
+    filename = secure_filename(file.filename)
+    file_properties = str(filename).rsplit('.', 1)
+    user.save_image(file, os.path.join(settings.UPLOAD_FOLDER,
+                    file_properties[0] + str(random.randint(1000, 10000)) + file_properties[1]))
+
+    db.session.commit()
+    return jsonify(user=models.Users.query.get(user_id).serialize()), 200
+
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
