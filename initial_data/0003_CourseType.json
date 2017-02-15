@@ -1,0 +1,20 @@
+[
+  {
+    "model": "cruds.crud_course_type.models.CourseType",
+    "fields":{
+            "description": "Obrigatória"
+    }
+  },
+  {
+    "model": "cruds.crud_course_type.models.CourseType",
+    "fields":{
+            "description": "Optativa"
+    }
+  },
+  {
+    "model": "cruds.crud_course_type.models.CourseType",
+    "fields":{
+            "description": "Eletiva"
+    }
+  }
+]

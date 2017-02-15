@@ -1,0 +1,86 @@
+[
+  {
+    "model": "cruds.crud_users.models.Users",
+    "fields":{
+            "username": "eliakincosta",
+            "password": "teste123",
+            "email": "eliakincosta@ifba.edu.br",
+            "name": "Eliakin Costa",
+            "birth_date": "11-12-1993",
+            "gender": "M",
+            "address": "Rua Teste",
+            "type": 1,
+            "program_id": 1
+    }
+  },
+  {
+    "model": "cruds.crud_users.models.Users",
+    "fields":{
+            "username": "enoquejoseneas",
+            "email": "enoquejoseneas@ifba.edu.br",
+            "password": "teste123",
+            "name": "Enoque Joseneas",
+            "birth_date": "11-12-1990",
+            "gender": "M",
+            "address": "Rua Teste",
+            "type": 1,
+            "program_id": 1
+    }
+  },
+  {
+    "model": "cruds.crud_users.models.Users",
+    "fields":{
+            "username": "emanoel",
+            "email": "emanoel@ifba.edu.br",
+            "password": "teste123",
+            "name": "Emanoel",
+            "birth_date": "11-12-1993",
+            "gender": "M",
+            "address": "Rua Teste",
+            "type": 1,
+            "program_id": 1
+    }
+  },
+  {
+    "model": "cruds.crud_users.models.Users",
+    "fields":{
+            "username": "sandroandrade",
+            "email": "sandroandrade@ifba.edu.br",
+            "password": "teste123",
+            "name": "Sandro Andrade",
+            "birth_date": "11-12-1981",
+            "gender": "M",
+            "address": "Rua Teste",
+            "type": 2,
+            "program_id": null
+    }
+  },
+  {
+    "model": "cruds.crud_users.models.Users",
+    "fields":{
+            "username": "renatonovais",
+            "email": "renatonovais@ifba.edu.br",
+            "password": "teste123",
+            "name": "Renato Novais",
+            "birth_date": "08-23-1980",
+            "gender": "M",
+            "address": "Rua Teste",
+            "type": 2,
+            "program_id": null
+    }
+  },
+  {
+    "model": "cruds.crud_users.models.Users",
+    "fields":{
+            "username": "Bruno",
+            "email": "bruno@ifba.edu.br",
+            "password": "teste123",
+            "name": "Bruno",
+            "birth_date": "11-12-1993",
+            "gender": "M",
+            "address": "Rua Teste",
+            "type": 1,
+            "program_id": 2
+    }
+  }
+]

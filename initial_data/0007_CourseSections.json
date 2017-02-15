@@ -1,0 +1,38 @@
+[
+  {
+    "model": "cruds.crud_course_sections.models.CourseSections",
+    "fields":{
+            "code": "INF011 - T01",
+            "name": "Turma de Sandro",
+            "course_id": 2,
+            "teacher_id": 4
+    }
+  },
+  {
+    "model": "cruds.crud_course_sections.models.CourseSections",
+    "fields":{
+            "code": "INF016 - T01",
+            "name": "Turma de Sandro",
+            "course_id": 3,
+            "teacher_id": 4
+    }
+  },
+  {
+    "model": "cruds.crud_course_sections.models.CourseSections",
+    "fields":{
+            "code": "INF022 - T01",
+            "name": "Turma de Renato",
+            "course_id": 1,
+            "teacher_id": 5
+    }
+  },
+  {
+    "model": "cruds.crud_course_sections.models.CourseSections",
+    "fields":{
+            "code": "ADM1 - T01",
+            "name": "Turma João",
+            "course_id": 4,
+            "teacher_id": 4
+    }
+  }
+]

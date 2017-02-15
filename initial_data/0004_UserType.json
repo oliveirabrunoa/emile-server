@@ -1,0 +1,14 @@
+[
+  {
+    "model": "cruds.crud_user_type.models.UserType",
+    "fields":{
+            "name": "student"
+    }
+  },
+  {
+    "model": "cruds.crud_user_type.models.UserType",
+    "fields":{
+            "name": "teacher"
+    }
+  }
+]

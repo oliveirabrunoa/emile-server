@@ -1,0 +1,137 @@
+[
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 2,
+            "section_time_start_time": "20:20:00",
+            "section_time_finish_time": "22:00:00",
+            "week_day": 2
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 2,
+            "section_time_start_time": "20:20:00",
+            "section_time_finish_time": "22:00:00",
+            "week_day": 4
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 1,
+            "section_time_start_time": "18:40:00",
+            "section_time_finish_time": "20:20:00",
+            "week_day": 0
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 1,
+            "section_time_start_time": "20:20:00",
+            "section_time_finish_time": "22:00:00",
+            "week_day": 1
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 1,
+            "section_time_start_time": "20:20:00",
+            "section_time_finish_time": "22:00:00",
+            "week_day": 2
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 1,
+            "section_time_start_time": "13:00:00",
+            "section_time_finish_time": "17:00:00",
+            "week_day": 0
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 1,
+            "section_time_start_time": "13:00:00",
+            "section_time_finish_time": "17:00:00",
+            "week_day": 1
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 1,
+            "section_time_start_time": "13:00:00",
+            "section_time_finish_time": "17:00:00",
+            "week_day": 2
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 1,
+            "section_time_start_time": "13:00:00",
+            "section_time_finish_time": "17:00:00",
+            "week_day": 3
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 1,
+            "section_time_start_time": "13:00:00",
+            "section_time_finish_time": "17:00:00",
+            "week_day": 4
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 2,
+            "section_time_start_time": "13:00:00",
+            "section_time_finish_time": "17:00:00",
+            "week_day": 0
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 2,
+            "section_time_start_time": "13:00:00",
+            "section_time_finish_time": "17:00:00",
+            "week_day": 1
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 2,
+            "section_time_start_time": "13:00:00",
+            "section_time_finish_time": "17:00:00",
+            "week_day": 2
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 2,
+            "section_time_start_time": "13:00:00",
+            "section_time_finish_time": "17:00:00",
+            "week_day": 3
+    }
+  },
+  {
+    "model": "cruds.crud_section_times.models.SectionTimes",
+    "fields":{
+            "course_section_id": 2,
+            "section_time_start_time": "13:00:00",
+            "section_time_finish_time": "17:00:00",
+            "week_day": 4
+    }
+  }
+]

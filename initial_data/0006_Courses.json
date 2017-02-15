@@ -1,0 +1,64 @@
+[
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
+            "code": "INF022",
+            "name": "Tópicos Avançados",
+            "credits": 2,
+            "hours": 60,
+            "program_section": 5,
+            "course_type_id": 1,
+            "program_id":1
+
+    }
+  },
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
+            "code": "INF011",
+            "name": "Padrões de Projeto",
+            "credits": 3,
+            "hours": 90,
+            "program_section": 4,
+            "course_type_id": 1,
+            "program_id":1
+    }
+  },
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
+            "code": "INF016",
+            "name": "Arquitetura de Software",
+            "credits": 3,
+            "hours": 90,
+            "program_section": 5,
+            "course_type_id": 1,
+            "program_id":1
+    }
+  },
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
+            "code": "ADM1",
+            "name": "Noções de administração pública",
+            "credits": 2,
+            "hours": 60,
+            "program_section": 1,
+            "course_type_id": 1,
+            "program_id":2
+
+    }
+  },
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
+            "code": "INF023",
+            "name": "Trabalho Final de Curso",
+            "credits": 3,
+            "hours": 90,
+            "program_section": 6,
+            "course_type_id": 1,
+            "program_id":1
+    }
+  }
+]
