@@ -18,8 +18,8 @@ def get_course_section():
 
 @course_sections.route('/add_course_section', methods=['POST'])
 def add_course_section():
-    user = models.Users.query.get(request.form.get('teacher_id')).serialize()
-    if user['type'] == 2:
+    user = models.Users.query.get(request.form.get('teacher_id'))
+    if user.type == 2:
         course_section = models.CourseSections()
         course_section.set_fields(dict(request.form.items()))
 
@@ -35,7 +35,7 @@ def add_student_course_section(course_section_id, user_id):
     course_section = models.CourseSections.query.get(course_section_id)
     student = models.Users.query.filter_by(id=user_id, type=1).first()
 
-    course_section_students = CourseSectionStudents(course_section_id=course_section_id, user_id=user_id)
+    course_section_students = CourseSectionStudents(course_section_id=course_section_id, user_id=user_id, grade=0, status=1)
     course_section_students.course_section = course_section
     student.course_sections.append(course_section_students)
 
