@@ -44,7 +44,7 @@ def students_program_history(student_id):
                                         filter(or_ (CourseSectionStudents.status == 2,
                                                     CourseSectionStudents.status == 3,
                                                     CourseSectionStudents.status == 1)).
-                                        group_by(Courses.code).order_by(CourseSectionStudents.id.desc()).first())
+                                        group_by(Courses.code, CourseSectionStudents, Courses).order_by(CourseSectionStudents.id.desc()).first())
 
         if not course_times:
             continue
