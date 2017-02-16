@@ -348,6 +348,33 @@
             "course_type_id": 1,
             "program_id":1
     }
-  }
+  },
 
+
+
+
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
+            "code": "HUM102",
+            "name": "Psicologia aplicada ao trabalho",
+            "credits": 4,
+            "hours": 60,
+            "program_section": 2,
+            "course_type_id": 2,
+            "program_id":1
+    }
+  },
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
+            "code": "ADM545",
+            "name": "Legislação em Informática",
+            "credits": 4,
+            "hours": 60,
+            "program_section": 5,
+            "course_type_id": 2,
+            "program_id":1
+    }
+  }
 ]
