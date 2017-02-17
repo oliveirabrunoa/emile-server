@@ -2,70 +2,6 @@
   {
     "model": "cruds.crud_users.models.Users",
     "fields":{
-            "username": "eliakincosta",
-            "password": "teste123",
-            "email": "eliakincosta@ifba.edu.br",
-            "name": "Eliakin Costa",
-            "birth_date": "11-12-1993",
-            "gender": "M",
-            "address": "Rua Teste",
-            "type": 1,
-            "program_id": 1
-    }
-  },
-  {
-    "model": "cruds.crud_users.models.Users",
-    "fields":{
-            "username": "enoquejoseneas",
-            "email": "enoquejoseneas@ifba.edu.br",
-            "password": "teste123",
-            "name": "Enoque Joseneas",
-            "birth_date": "11-12-1990",
-            "gender": "M",
-            "address": "Rua Teste",
-            "type": 1,
-            "program_id": 1
-    }
-  },
-  {
-    "model": "cruds.crud_users.models.Users",
-    "fields":{
-            "username": "emanoelsales",
-            "email": "emanoelsales@ifba.edu.br",
-            "password": "teste123",
-            "name": "Emanoel Sales",
-            "birth_date": "11-12-1993",
-            "gender": "F",
-            "address": "Rua Teste",
-            "type": 1,
-            "program_id": 1
-    }
-  },
-  {
-    "model": "cruds.crud_users.models.Users",
-    "fields":{
-            "username": "brunooliveira",
-            "email": "bruno@ifba.edu.br",
-            "password": "teste123",
-            "name": "Bruno Oliveira",
-            "birth_date": "11-12-1993",
-            "gender": "M",
-            "address": "Rua Teste",
-            "type": 1,
-            "program_id": 1
-    }
-  },
-
-
-
-
-
-
-
-
-  {
-    "model": "cruds.crud_users.models.Users",
-    "fields":{
             "username": "sandroandrade",
             "email": "sandroandrade@ifba.edu.br",
             "password": "teste123",
@@ -336,5 +272,4 @@
           "program_id": null
 }
 }
-
 ]
