@@ -5,6 +5,7 @@ from cruds.crud_program.models import Program
 import os
 import settings
 import boto3
+import requests
 
 
 class Users(db.Model):
@@ -50,8 +51,11 @@ class Users(db.Model):
         self.type = fields['type']
 
     def save_image(self, file, file_path):
-        s3 = boto3.resource('s3')
-        bucket = s3.create_bucket(Bucket='emile-server')
-        s3.Object('emile-server', file.filename).put(Body=file)
-
-        self.image_path = file.filename
+        files = {'image_file': file}
+        headers = {
+            "enctype": "multipart/form-data"
+        }
+        r = requests.post('http://eliakimdjango.pythonanywhere.com/save_profile_image', files=files, headers=headers)
+        #r = requests.post('http://127.0.0.1:2000/save_profile_image', files=files)
+        print(r)
+        #self.image_path = file.filename
