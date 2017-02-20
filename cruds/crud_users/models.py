@@ -4,8 +4,8 @@ from cruds.crud_user_type.models import UserType
 from cruds.crud_program.models import Program
 import os
 import settings
-import boto3
 import requests
+import random
 
 
 class Users(db.Model):
@@ -50,12 +50,21 @@ class Users(db.Model):
         self.program_id = fields['program_id']
         self.type = fields['type']
 
-    def save_image(self, file, file_path):
+    def save_image(self, file):
+        file_name, _format = str(file.filename).rsplit('.', 1)
         files = {'image_file': file}
         headers = {
             "enctype": "multipart/form-data"
         }
-        r = requests.post('http://eliakimdjango.pythonanywhere.com/save_profile_image', files=files, headers=headers)
-        #r = requests.post('http://127.0.0.1:2000/save_profile_image', files=files)
-        print(r)
-        #self.image_path = file.filename
+
+        r = requests.post('http://eliakimdjango.pythonanywhere.com/save_profile_image',
+                          files={'file': (self.username + str(random.randint(1000, 10000)) + '.' + _format, file,
+                          headers, {'Expires': '0'})},
+                          data={'old_file_path': self.image_path})
+        # r = requests.post('http://127.0.0.1:2000/save_profile_image',
+        #                   files={'file': (self.username + str(random.randint(1000, 10000)) + '.' + _format, file,
+        #                                   headers, {'Expires': '0'})},
+        #                   data={'old_file_path': self.image_path})
+        if r.status_code==200:
+            print(r.json()['result'])
+            self.image_path = r.json()['result']

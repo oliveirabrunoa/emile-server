@@ -5,7 +5,6 @@ from cruds.crud_course_sections.models import CourseSections
 import os
 from werkzeug.utils import secure_filename
 import settings
-import random
 
 
 users = Blueprint("user", __name__)
@@ -112,9 +111,7 @@ def update_user_image(user_id):
         return jsonify(result='File with invalid format'), 400
 
     filename = secure_filename(file.filename)
-    file_properties = str(filename).rsplit('.', 1)
-    user.save_image(file, os.path.join(settings.UPLOAD_FOLDER,
-                    file_properties[0] + str(random.randint(1000, 10000)) + file_properties[1]))
+    user.save_image(file)
 
     db.session.commit()
     return jsonify(user=models.Users.query.get(user_id).serialize()), 200
