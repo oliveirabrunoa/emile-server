@@ -4,14 +4,14 @@
     "fields":{
             "name": "Todos os Alunos",
             "param_values_service": "<%users%>",
-            "users_query":"from backend import db;from cruds.crud_course_section_students.models import CourseSectionStudents;from cruds.crud_users.models import Users;from cruds.crud_course_sections.models import CourseSections;teacher_id = $;teachers_course_sections = CourseSections.query.filter_by(teacher_id=teacher_id);course_sections = [CourseSectionStudents.query.filter_by(course_section_id=course_section.id) for course_section in teachers_course_sections];users =[Users.query.get(course_section_student.user_id) for course_section in course_sections for course_section_student in course_section]"    }
+            "users_query":"from backend import db;from cruds.crud_course_section_students.models import CourseSectionStudents;from cruds.crud_users.models import Users;from cruds.crud_course_sections.models import CourseSections;teacher_id = $;teachers_course_sections = CourseSections.query.filter_by(teacher_id=teacher_id);course_sections = [CourseSectionStudents.query.filter_by(course_section_id=course_section.id, status = 1) for course_section in teachers_course_sections];users =[Users.query.get(course_section_student.user_id) for course_section in course_sections for course_section_student in course_section]"    }
   },
   {
     "model": "cruds.crud_user_type_destinations.models.UserTypeDestinations",
     "fields":{
             "name": "Alunos de uma turma",
             "param_values_service": "/teachers_course_sections/$",
-            "users_query":"from backend import db;from cruds.crud_course_section_students.models import CourseSectionStudents;from cruds.crud_users.models import Users;course_section_students = CourseSectionStudents.query.filter_by(course_section_id=$);users = [Users.query.get(course_section_student.user_id) for course_section_student in course_section_students]"
+            "users_query":"from backend import db;from cruds.crud_course_section_students.models import CourseSectionStudents;from cruds.crud_users.models import Users;course_section_students = CourseSectionStudents.query.filter_by(course_section_id=$, status=1);users = [Users.query.get(course_section_student.user_id) for course_section_student in course_section_students]"
     }
   }
 ]

@@ -77,9 +77,18 @@ def teachers_course_sections(teacher_id):
 def students_course_sections(student_id):
     student = models.Users.query.filter_by(id=student_id, type=1).first()
 
-    if student:
-        return jsonify(students_course_sections=[course_sections_students.course_section.serialize() for course_sections_students in student.course_sections])
-    return jsonify(result='invalid student id')
+    if not student:
+        return jsonify(result='invalid student id')
+
+    students_course_sections_list = student.course_sections
+    current_course_sections = []
+
+    for course_section_student in students_course_sections_list:
+        if course_section_student.status == 1:
+            current_course_sections.append(course_section_student)
+
+    return jsonify(students_course_sections=[course_sections_students.course_section.serialize() for course_sections_students in current_course_sections])
+
 
 
 @users.route('/token_register/<user_id>', methods=['POST'])
