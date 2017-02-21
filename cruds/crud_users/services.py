@@ -121,7 +121,8 @@ def update_user_image(user_id):
         return jsonify(result='File with invalid format'), 400
 
     filename = secure_filename(file.filename)
-    user.save_image(file)
+    if not user.save_image(file):
+        jsonify(user=models.Users.query.get(user_id).serialize()), 400
 
     db.session.commit()
     return jsonify(user=models.Users.query.get(user_id).serialize()), 200

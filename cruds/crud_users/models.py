@@ -6,6 +6,7 @@ import os
 import settings
 import requests
 import random
+from flask import jsonify
 
 
 class Users(db.Model):
@@ -66,5 +67,5 @@ class Users(db.Model):
         #                                   headers, {'Expires': '0'})},
         #                   data={'old_file_path': self.image_path})
         if r.status_code==200:
-            print(r.json()['result'])
             self.image_path = r.json()['result']
+            return True
