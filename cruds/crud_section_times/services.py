@@ -66,12 +66,12 @@ def student_attendance_register(course_section_id):
 
 
 
-@section_times.route('/update_section_time/<section_time_id>', methods=['POST'])
-def update_section_time(section_time_id):
-    section_time = models.SectionTimes.query.get(section_time_id)
-
-    if section_time:
-        section_time.set_fields(dict(request.form.items()))
-        db.session.commit()
-        return jsonify(section_time=[section_time.serialize() for section_time in models.SectionTimes.query.filter_by(id=section_time_id)])
-    return jsonify(result='invalid section time id')
+# @section_times.route('/update_section_time/<section_time_id>', methods=['POST'])
+# def update_section_time(section_time_id):
+#     section_time = models.SectionTimes.query.get(section_time_id)
+#
+#     if section_time:
+#         section_time.set_fields(dict(request.form.items()))
+#         db.session.commit()
+#         return jsonify(section_time=[section_time.serialize() for section_time in models.SectionTimes.query.filter_by(id=section_time_id)])
+#     return jsonify(result='invalid section time id')
