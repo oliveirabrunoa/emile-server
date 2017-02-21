@@ -11,7 +11,10 @@ class CourseSections(db.Model):
     name = db.Column(db.String(50))
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
     teacher_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    course_section_period = db.Column(db.String(6))
     section_times = db.relationship("SectionTimes", backref='course_section', lazy='dynamic')
+
+    __table_args__ = (db.UniqueConstraint('course_id','teacher_id','course_section_period','code', name='course_section_period_uc'),)
 
     def serialize(self):
         return {
@@ -19,7 +22,8 @@ class CourseSections(db.Model):
             'code': self.code,
             'name': self.name,
             'course': Courses.query.get(self.course_id).serialize(),
-            'teacher_id':  self.teacher_id
+            'teacher_id':  self.teacher_id,
+            'course_section_period': self.course_section_period
         }
 
     def set_fields(self, fields):
@@ -27,3 +31,4 @@ class CourseSections(db.Model):
         self.name = fields['name']
         self.course_id = fields['course_id']
         self.teacher_id = fields['teacher_id']
+        self.course_section_period = fields['course_section_period']

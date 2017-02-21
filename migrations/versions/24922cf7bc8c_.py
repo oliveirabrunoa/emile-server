@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: 2fb96c766be5
+Revision ID: 24922cf7bc8c
 Revises: None
-Create Date: 2017-02-14 16:58:43.904337
+Create Date: 2017-02-21 16:00:20.727062
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '2fb96c766be5'
+revision = '24922cf7bc8c'
 down_revision = None
 
 from alembic import op
@@ -105,10 +105,12 @@ def upgrade():
     sa.Column('name', sa.String(length=50), nullable=True),
     sa.Column('course_id', sa.Integer(), nullable=True),
     sa.Column('teacher_id', sa.Integer(), nullable=True),
+    sa.Column('course_section_period', sa.String(length=6), nullable=True),
     sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
     sa.ForeignKeyConstraint(['teacher_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('code')
+    sa.UniqueConstraint('code'),
+    sa.UniqueConstraint('course_id', 'teacher_id', 'course_section_period', 'code', name='course_section_period_uc')
     )
     op.create_table('wall_messages',
     sa.Column('id', sa.Integer(), nullable=False),
