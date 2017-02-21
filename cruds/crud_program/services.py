@@ -34,7 +34,7 @@ def students_program_history(student_id):
     program_details = {"credits_completed":0, "hours_completed":0 , "total_credits": program.total_credits, "total_hours": program.total_hours}
     for course in program.courses:
         _dict = {"course": course.serialize()}
-        course_times = (db.session.query(func.count(CourseSectionStudents.id),CourseSectionStudents, Courses).
+        course_aggregation = (db.session.query(func.count(CourseSectionStudents.id),CourseSectionStudents, Courses).
                                         filter(CourseSectionStudents.course_section_id == CourseSections.id).
                                         filter(CourseSections.course_id == Courses.id).
                                         filter(Courses.program_id == Program.id).
@@ -44,21 +44,20 @@ def students_program_history(student_id):
                                         filter(or_ (CourseSectionStudents.status == 2,
                                                     CourseSectionStudents.status == 3,
                                                     CourseSectionStudents.status == 1)).
-                                        group_by(Courses.code, CourseSectionStudents, Courses).order_by(CourseSectionStudents.id.desc()).first())
+                                        group_by(Courses.code, CourseSectionStudents, Courses).order_by(Courses.program_section).first())
 
-        if not course_times:
-            continue
+        if not course_aggregation:
+            _dict['status'] = CourseSectionStudentsStatus.query.get(4).serialize()
+            _dict['times']= 0
+            _dict['grade']= 0
+        else:
+            _dict['status']= CourseSectionStudentsStatus.query.get(course_aggregation[1].status).serialize()
+            _dict['grade']= course_aggregation[1].grade
+            _dict['times']= course_aggregation[0]
 
-        if course_times[1].status == 2:
-            program_details.update({'credits_completed': program_details['credits_completed'] + course_times[2].credits})
-            program_details.update({'hours_completed': program_details['hours_completed'] + course_times[2].hours})
-
-        _dict['status']= CourseSectionStudentsStatus.query.get(course_times[1].status).serialize()
-        _dict['grade']= course_times[1].grade
-        _dict['times']= course_times[0]
-
-        if course_times[1].status == 1:
-            _dict['times']= course_times[0]-1
+            if course_aggregation[1].status == 2:
+                program_details.update({'credits_completed': program_details['credits_completed'] + course_aggregation[2].credits})
+                program_details.update({'hours_completed': program_details['hours_completed'] + course_aggregation[2].hours})
 
         students_program_history_list.append(_dict)
 
