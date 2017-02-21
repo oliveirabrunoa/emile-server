@@ -11,6 +11,7 @@ import requests
 import settings
 import json
 from pyfcm import FCMNotification
+from sqlalchemy import desc
 
 
 wall_messages = Blueprint("wall_messages", __name__)
@@ -23,7 +24,8 @@ def get_wall_messages(user_id):
     messages = []
     today = datetime.date.today().toordinal()
     wall_messages_list = (db.session.query(models.WallMessages).
-                                 filter(models.WallMessages.date >= datetime.date.fromordinal(today-14)).all())
+                                 filter(models.WallMessages.date >= datetime.date.fromordinal(today-14)).
+                                 order_by(desc(models.WallMessages.id)).all())
 
     for message in wall_messages_list:
         users = set(message.get_destinations() + message.get_sender())
