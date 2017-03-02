@@ -12,8 +12,8 @@
   {
     "model": "cruds.crud_course_sections.models.CourseSections",
     "fields":{
-            "code": "LET100 - T04",
-            "name": "Turma 04",
+            "code": "LET100 - T01",
+            "name": "Turma 01",
             "course_id": 4,
             "teacher_id": 16,
             "course_section_period": "2014.1"
@@ -142,8 +142,8 @@
   {
       "model": "cruds.crud_course_sections.models.CourseSections",
       "fields":{
-              "code": "ADM500 - T03",
-              "name": "Turma 03",
+              "code": "ADM500 - T01",
+              "name": "Turma 01",
               "course_id": 14,
               "teacher_id": 26,
               "course_section_period": "2015.1"
