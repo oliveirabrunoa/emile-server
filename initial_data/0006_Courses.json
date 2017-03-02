@@ -2,6 +2,18 @@
   {
     "model": "cruds.crud_courses.models.Courses",
     "fields":{
+            "code": "INF004",
+            "name": "Introdução à Lógica de Programação",
+            "credits": 5,
+            "hours": 90,
+            "program_section": 1,
+            "course_type_id": 1,
+            "program_id":1
+    }
+  },
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
             "code": "INF027",
             "name": "Introdução à Lógica de Programação",
             "credits": 3,
@@ -10,6 +22,18 @@
             "course_type_id": 1,
             "program_id":1
 
+    }
+  },
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
+            "code": "INF003",
+            "name": "Introdução a Computação",
+            "credits": 5,
+            "hours": 90,
+            "program_section": 1,
+            "course_type_id": 1,
+            "program_id":1
     }
   },
   {
@@ -78,6 +102,18 @@
     "fields":{
             "code": "INF006",
             "name": "Estrutura de Dados e Algoritmos",
+            "credits": 5,
+            "hours": 90,
+            "program_section": 2,
+            "course_type_id": 1,
+            "program_id":1
+    }
+  },
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
+            "code": "INF005",
+            "name": "Arquitetura de Computadores e Software",
             "credits": 5,
             "hours": 90,
             "program_section": 2,
@@ -256,6 +292,18 @@
   {
     "model": "cruds.crud_courses.models.Courses",
     "fields":{
+            "code": "INF032",
+            "name": "Tópicos Avançados II",
+            "credits": 4,
+            "hours": 60,
+            "program_section": 5,
+            "course_type_id": 1,
+            "program_id":1
+    }
+  },
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
             "code": "INF030",
             "name": "Métodos Científicos em Computação",
             "credits": 2,
@@ -353,6 +401,30 @@
 
 
 
+{
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
+            "code": "HUM101",
+            "name": "Sociologia",
+            "credits": 4,
+            "hours": 60,
+            "program_section": 2,
+            "course_type_id": 2,
+            "program_id":1
+    }
+  },
+  {
+    "model": "cruds.crud_courses.models.Courses",
+    "fields":{
+            "code": "LET112",
+            "name": "LIBRAS",
+            "credits": 2,
+            "hours": 30,
+            "program_section": 2,
+            "course_type_id": 2,
+            "program_id":1
+    }
+  },
   {
     "model": "cruds.crud_courses.models.Courses",
     "fields":{

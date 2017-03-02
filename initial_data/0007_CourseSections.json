@@ -2,9 +2,179 @@
   {
     "model": "cruds.crud_course_sections.models.CourseSections",
     "fields":{
-            "code": "MAT222 - T01",
+            "code": "INF004 - T01",
+            "name": "Turma 01",
+            "course_id": 1,
+            "teacher_id": 19,
+            "course_section_period": "2012.1"
+    }
+  },
+  {
+    "model": "cruds.crud_course_sections.models.CourseSections",
+    "fields":{
+            "code": "INF003 - T01",
             "name": "Turma 01",
             "course_id": 3,
+            "teacher_id": 18,
+            "course_section_period": "2012.1"
+    }
+  },
+  {
+    "model": "cruds.crud_course_sections.models.CourseSections",
+    "fields":{
+            "code": "INF005 - T01",
+            "name": "Turma 01",
+            "course_id": 10,
+            "teacher_id": 18,
+            "course_section_period": "2012.1"
+    }
+  },
+  {
+    "model": "cruds.crud_course_sections.models.CourseSections",
+    "fields":{
+            "code": "LET100 - T01",
+            "name": "Turma 01",
+            "course_id": 6,
+            "teacher_id": 16,
+            "course_section_period": "2012.1"
+    }
+  },
+  {
+    "model": "cruds.crud_course_sections.models.CourseSections",
+    "fields":{
+            "code": "MAT222 - T01",
+            "name": "Turma 01",
+            "course_id": 5,
+            "teacher_id": 15,
+            "course_section_period": "2012.1"
+    }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "ADM545 - T01",
+              "name": "Turma 01",
+              "course_id": 37,
+              "teacher_id": 26,
+              "course_section_period": "2012.2"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "HUM102 - T01",
+              "name": "Turma 01",
+              "course_id": 36,
+              "teacher_id": 23,
+              "course_section_period": "2012.2"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "INF004 - T01",
+              "name": "Turma 01",
+              "course_id": 1,
+              "teacher_id": 19,
+              "course_section_period": "2012.2"
+      }
+  },
+  {
+    "model": "cruds.crud_course_sections.models.CourseSections",
+    "fields":{
+            "code": "LET102 - T01",
+            "name": "Turma 01",
+            "course_id": 7,
+            "teacher_id": 21,
+            "course_section_period": "2012.2"
+    }
+  },
+  {
+        "model": "cruds.crud_course_sections.models.CourseSections",
+        "fields":{
+                "code": "ADM500 - T01",
+                "name": "Turma 01",
+                "course_id": 17,
+                "teacher_id": 26,
+                "course_section_period": "2013.1"
+        }
+    },
+    {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "INF006 - T01",
+              "name": "Turma 01",
+              "course_id": 9,
+              "teacher_id": 22,
+              "course_section_period": "2013.1"
+      }
+    },
+    {
+        "model": "cruds.crud_course_sections.models.CourseSections",
+        "fields":{
+                "code": "INF008 - T01",
+                "name": "Turma 01",
+                "course_id": 13,
+                "teacher_id": 19,
+                "course_section_period": "2013.1"
+        }
+    },
+    {
+        "model": "cruds.crud_course_sections.models.CourseSections",
+        "fields":{
+                "code": "INF008 - T01",
+                "name": "Turma 01",
+                "course_id": 13,
+                "teacher_id": 19,
+                "course_section_period": "2013.2"
+        }
+    },
+    {
+        "model": "cruds.crud_course_sections.models.CourseSections",
+        "fields":{
+                "code": "LET112 - T01",
+                "name": "Turma 01",
+                "course_id": 35,
+                "teacher_id": 23,
+                "course_section_period": "2013.2"
+        }
+    },
+    {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "MAT222 - T01",
+              "name": "Turma 01",
+              "course_id": 5,
+              "teacher_id": 15,
+              "course_section_period": "2013.2"
+      }
+    },
+    {
+        "model": "cruds.crud_course_sections.models.CourseSections",
+        "fields":{
+                "code": "INF011 - T01",
+                "name": "Turma 01",
+                "course_id": 18,
+                "teacher_id": 12,
+                "course_section_period": "2014.1"
+        }
+    },
+    {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "INF031 - T01",
+              "name": "Turma 01",
+              "course_id": 12,
+              "teacher_id": 17,
+              "course_section_period": "2014.1"
+      }
+    },
+  {
+    "model": "cruds.crud_course_sections.models.CourseSections",
+    "fields":{
+            "code": "MAT222 - T01",
+            "name": "Turma 01",
+            "course_id": 5,
             "teacher_id": 15,
             "course_section_period": "2014.1"
     }
@@ -14,7 +184,7 @@
     "fields":{
             "code": "LET100 - T01",
             "name": "Turma 01",
-            "course_id": 4,
+            "course_id": 6,
             "teacher_id": 16,
             "course_section_period": "2014.1"
     }
@@ -54,7 +224,7 @@
     "fields":{
             "code": "LET102 - T01",
             "name": "Turma 01",
-            "course_id": 5,
+            "course_id": 7,
             "teacher_id": 21,
             "course_section_period": "2014.1"
     }
@@ -64,17 +234,57 @@
     "fields":{
             "code": "LET102 - T02",
             "name": "Turma 02",
-            "course_id": 5,
+            "course_id": 7,
             "teacher_id": 20,
             "course_section_period": "2014.1"
     }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "HUM100 - T01",
+              "name": "Turma 01",
+              "course_id": 28,
+              "teacher_id": 30,
+              "course_section_period": "2014.2"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "INF009 - T01",
+              "name": "Turma 01",
+              "course_id": 15,
+              "teacher_id": 24,
+              "course_section_period": "2014.2"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "INF012 - T01",
+              "name": "Turma 01",
+              "course_id": 19,
+              "teacher_id": 14,
+              "course_section_period": "2014.2"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "INF021 - T01",
+              "name": "Turma 01",
+              "course_id": 14,
+              "teacher_id": 31,
+              "course_section_period": "2014.2"
+      }
   },
   {
     "model": "cruds.crud_course_sections.models.CourseSections",
     "fields":{
             "code": "INF006 - T01",
             "name": "Turma 01",
-            "course_id": 7,
+            "course_id": 9,
             "teacher_id": 22,
             "course_section_period": "2014.2"
     }
@@ -94,7 +304,7 @@
     "fields":{
             "code": "INF031 - T01",
             "name": "Turma 01",
-            "course_id": 9,
+            "course_id": 12,
             "teacher_id": 17,
             "course_section_period": "2014.2"
     }
@@ -104,7 +314,7 @@
       "fields":{
               "code": "HUM102 - T01",
               "name": "Turma 01",
-              "course_id": 30,
+              "course_id": 36,
               "teacher_id": 23,
               "course_section_period": "2014.2"
       }
@@ -122,9 +332,59 @@
   {
       "model": "cruds.crud_course_sections.models.CourseSections",
       "fields":{
+              "code": "ADM550 - T01",
+              "name": "Turma 01",
+              "course_id": 27,
+              "teacher_id": 28,
+              "course_section_period": "2015.1"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "HUM101 - T01",
+              "name": "Turma 01",
+              "course_id": 34,
+              "teacher_id": 23,
+              "course_section_period": "2015.1"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "INF014 - T01",
+              "name": "Turma 01",
+              "course_id": 22,
+              "teacher_id": 29,
+              "course_section_period": "2015.1"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "INF015 - T01",
+              "name": "Turma 01",
+              "course_id": 20,
+              "teacher_id": 25,
+              "course_section_period": "2015.1"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "INF021 - T01",
+              "name": "Turma 01",
+              "course_id": 14,
+              "teacher_id": 31,
+              "course_section_period": "2015.1"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
               "code": "INF008 - T01",
               "name": "Turma 01",
-              "course_id": 10,
+              "course_id": 13,
               "teacher_id": 19,
               "course_section_period": "2015.1"
       }
@@ -134,7 +394,7 @@
       "fields":{
               "code": "INF009 - T01",
               "name": "Turma 01",
-              "course_id": 12,
+              "course_id": 15,
               "teacher_id": 24,
               "course_section_period": "2015.1"
       }
@@ -144,7 +404,7 @@
       "fields":{
               "code": "ADM500 - T01",
               "name": "Turma 01",
-              "course_id": 14,
+              "course_id": 17,
               "teacher_id": 26,
               "course_section_period": "2015.1"
       }
@@ -154,7 +414,7 @@
       "fields":{
               "code": "INF007 - T01",
               "name": "Turma 01",
-              "course_id": 13,
+              "course_id": 16,
               "teacher_id": 25,
               "course_section_period": "2015.1"
       }
@@ -162,11 +422,21 @@
   {
       "model": "cruds.crud_course_sections.models.CourseSections",
       "fields":{
-              "code": "INF011 - T01",
+              "code": "INF007 - T01",
               "name": "Turma 01",
-              "course_id": 15,
-              "teacher_id": 12,
-              "course_section_period": "2016.1"
+              "course_id": 16,
+              "teacher_id": 25,
+              "course_section_period": "2015.2"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "INF014 - T01",
+              "name": "Turma 01",
+              "course_id": 22,
+              "teacher_id": 29,
+              "course_section_period": "2015.2"
       }
   },
   {
@@ -174,7 +444,7 @@
       "fields":{
               "code": "INF012 - T01",
               "name": "Turma 01",
-              "course_id": 16,
+              "course_id": 19,
               "teacher_id": 14,
               "course_section_period": "2015.2"
       }
@@ -194,9 +464,39 @@
       "fields":{
               "code": "INF015 - T01",
               "name": "Turma 01",
-              "course_id": 17,
+              "course_id": 20,
               "teacher_id": 25,
               "course_section_period": "2015.2"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "INF020 - T01",
+              "name": "Turma 01",
+              "course_id": 32,
+              "teacher_id": 22,
+              "course_section_period": "2015.2"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "INF022 - T01",
+              "name": "Turma 01",
+              "course_id": 24,
+              "teacher_id": 13,
+              "course_section_period": "2015.2"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "INF011 - T01",
+              "name": "Turma 01",
+              "course_id": 18,
+              "teacher_id": 12,
+              "course_section_period": "2016.1"
       }
   },
   {
@@ -214,7 +514,7 @@
       "fields":{
               "code": "ADM550 - T01",
               "name": "Turma 01",
-              "course_id": 23,
+              "course_id": 27,
               "teacher_id": 28,
               "course_section_period": "2016.1"
       }
@@ -222,9 +522,19 @@
   {
       "model": "cruds.crud_course_sections.models.CourseSections",
       "fields":{
+              "code": "INF017 - T01",
+              "name": "Turma 01",
+              "course_id": 20,
+              "teacher_id": 18,
+              "course_section_period": "2016.2"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
               "code": "INF014 - T01",
               "name": "Turma 01",
-              "course_id": 19,
+              "course_id": 22,
               "teacher_id": 29,
               "course_section_period": "2016.2"
       }
@@ -234,7 +544,7 @@
       "fields":{
               "code": "HUM100 - T01",
               "name": "Turma 01",
-              "course_id": 24,
+              "course_id": 28,
               "teacher_id": 30,
               "course_section_period": "2016.2"
       }
@@ -244,7 +554,7 @@
       "fields":{
               "code": "INF022 - T01",
               "name": "Turma 01",
-              "course_id": 21,
+              "course_id": 24,
               "teacher_id": 13,
               "course_section_period": "2016.2"
       }
@@ -252,10 +562,50 @@
   {
       "model": "cruds.crud_course_sections.models.CourseSections",
       "fields":{
+              "code": "INF032 - T01",
+              "name": "Turma 01",
+              "course_id": 25,
+              "teacher_id": 13,
+              "course_section_period": "2016.1"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
               "code": "INF030 - T01",
               "name": "Turma 01",
-              "course_id": 22,
+              "course_id": 26,
               "teacher_id": 13,
+              "course_section_period": "2016.1"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "INF016 - T01",
+              "name": "Turma 01",
+              "course_id": 31,
+              "teacher_id": 12,
+              "course_section_period": "2016.1"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "INF018 - T01",
+              "name": "Turma 01",
+              "course_id": 29,
+              "teacher_id": 31,
+              "course_section_period": "2016.1"
+      }
+  },
+  {
+      "model": "cruds.crud_course_sections.models.CourseSections",
+      "fields":{
+              "code": "INF019 - T01",
+              "name": "Turma 01",
+              "course_id": 30,
+              "teacher_id": 24,
               "course_section_period": "2016.1"
       }
   },
@@ -264,7 +614,7 @@
       "fields":{
               "code": "INF020 - T01",
               "name": "Turma 01",
-              "course_id": 28,
+              "course_id": 32,
               "teacher_id": 22,
               "course_section_period": "2016.2"
       }
@@ -274,7 +624,7 @@
       "fields":{
               "code": "INF019 - T01",
               "name": "Turma 01",
-              "course_id": 17,
+              "course_id": 30,
               "teacher_id": 24,
               "course_section_period": "2016.2"
       }
@@ -284,7 +634,7 @@
       "fields":{
               "code": "INF016 - T01",
               "name": "Turma 01",
-              "course_id": 27,
+              "course_id": 31,
               "teacher_id": 12,
               "course_section_period": "2016.2"
       }
@@ -314,7 +664,7 @@
       "fields":{
               "code": "INF018 - T01",
               "name": "Turma 01",
-              "course_id": 25,
+              "course_id": 29,
               "teacher_id": 31,
               "course_section_period": "2016.2"
       }
@@ -329,7 +679,7 @@
       "fields":{
               "code": "INF021 - T01",
               "name": "Turma 01",
-              "course_id": 11,
+              "course_id": 14,
               "teacher_id": 31,
               "course_section_period": "2016.2"
       }
@@ -339,7 +689,7 @@
       "fields":{
               "code": "ADM545 - T01",
               "name": "Turma 01",
-              "course_id": 31,
+              "course_id": 37,
               "teacher_id": 26,
               "course_section_period": "2016.2"
       }

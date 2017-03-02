@@ -109,7 +109,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
     sa.ForeignKeyConstraint(['teacher_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('code'),
     sa.UniqueConstraint('course_id', 'teacher_id', 'course_section_period', 'code', name='course_section_period_uc')
     )
     op.create_table('wall_messages',
