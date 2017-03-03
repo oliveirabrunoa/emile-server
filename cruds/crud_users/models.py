@@ -53,6 +53,10 @@ class Users(db.Model):
 
     def save_image(self, file):
         file_name, _format = str(file.filename).rsplit('.', 1)
+
+        if not _format in settings.ALLOWED_EXTENSIONS:
+            _format = 'jpg'
+
         files = {'image_file': file}
         headers = {
             "enctype": "multipart/form-data"

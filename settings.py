@@ -5,3 +5,5 @@ PUSH_NOTIFICATIONS_SETTINGS = {'API_NOTIFICATION_KEY' : 'AIzaSyBDN7F9vBa1O8-AnzU
                                'PUSH_NOTIFICATION_URL' :'https://fcm.googleapis.com/fcm/send'}
 
 UPLOAD_FOLDER = '/media/'
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
