@@ -44,8 +44,8 @@ def students_program_history(student_id):
                                         filter(or_ (CourseSectionStudents.status == 2,
                                                     CourseSectionStudents.status == 3,
                                                     CourseSectionStudents.status == 1)).
-                                        group_by(Courses.code, CourseSectionStudents, Courses).order_by(Courses.program_section).first())
-
+                                        group_by(Courses.code, CourseSectionStudents, Courses).order_by(Courses.program_section))
+        course_aggregation = course_aggregation.order_by(CourseSectionStudents.id.desc()).first()
         if not course_aggregation:
             _dict['status'] = CourseSectionStudentsStatus.query.get(4).serialize()
             _dict['times']= 0

@@ -2,17 +2,26 @@
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields": {
-      "course_section_id": 5,
-      "user_id": 1,
+      "course_section_id": 88,
+      "user_id": 3,
       "status": 2,
-      "grade": " 9.4"
+      "grade": " 8"
     }
   },
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields": {
-      "course_section_id": 3,
-      "user_id": 1,
+      "course_section_id": 73,
+      "user_id": 3,
+      "status": 2,
+      "grade": " 5.8"
+    }
+  },
+  {
+    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
+    "fields": {
+      "course_section_id": 71,
+      "user_id": 3,
       "status": 2,
       "grade": " 8.5"
     }
@@ -20,17 +29,35 @@
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields": {
-      "course_section_id": 2,
-      "user_id": 1,
+      "course_section_id": 72,
+      "user_id": 3,
       "status": 2,
-      "grade": " 7.9"
+      "grade": " 8"
     }
   },
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields": {
-      "course_section_id": 6,
-      "user_id": 1,
+      "course_section_id": 70,
+      "user_id": 3,
+      "status": 2,
+      "grade": " 7"
+    }
+  },
+  {
+    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
+    "fields": {
+      "course_section_id": 74,
+      "user_id": 3,
+      "status": 2,
+      "grade": " 7.3"
+    }
+  },
+  {
+    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
+    "fields": {
+      "course_section_id": 75,
+      "user_id": 3,
       "status": 2,
       "grade": " 7.8"
     }
@@ -38,35 +65,53 @@
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields": {
-      "course_section_id": 1,
-      "user_id": 1,
+      "course_section_id": 76,
+      "user_id": 3,
       "status": 2,
-      "grade": " 8.9"
+      "grade": " 7.3"
     }
   },
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields": {
-      "course_section_id": 11,
-      "user_id": 1,
+      "course_section_id": 77,
+      "user_id": 3,
       "status": 2,
-      "grade": " 8"
+      "grade": " 7.2"
     }
   },
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields": {
-      "course_section_id": 8,
-      "user_id": 1,
+      "course_section_id": 78,
+      "user_id": 3,
       "status": 2,
-      "grade": " 8.2"
+      "grade": " 7.9"
     }
   },
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields": {
-      "course_section_id": 12,
-      "user_id": 1,
+      "course_section_id": 79,
+      "user_id": 3,
+      "status": 2,
+      "grade": " 8.5"
+    }
+  },
+  {
+    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
+    "fields": {
+      "course_section_id": 43,
+      "user_id": 3,
+      "status": 2,
+      "grade": " 6.9"
+    }
+  },
+  {
+    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
+    "fields": {
+      "course_section_id": 80,
+      "user_id": 3,
       "status": 2,
       "grade": " 6.3"
     }
@@ -74,116 +119,17 @@
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields": {
-      "course_section_id": 9,
-      "user_id": 1,
+      "course_section_id": 81,
+      "user_id": 3,
       "status": 2,
-      "grade": " 10"
+      "grade": " 6.9"
     }
   },
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields": {
-      "course_section_id": 10,
-      "user_id": 1,
-      "status": 2,
-      "grade": " 8.8"
-    }
-  },
-  {
-    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
-    "fields": {
-      "course_section_id": 15,
-      "user_id": 1,
-      "status": 2,
-      "grade": " 7.7"
-    }
-  },
-  {
-    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
-    "fields": {
-      "course_section_id": 16,
-      "user_id": 1,
-      "status": 2,
-      "grade": " 8.2"
-    }
-  },
-  {
-    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
-    "fields": {
-      "course_section_id": 13,
-      "user_id": 1,
-      "status": 2,
-      "grade": " 7.5"
-    }
-  },
-  {
-    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
-    "fields": {
-      "course_section_id": 14,
-      "user_id": 1,
-      "status": 2,
-      "grade": " 7.6"
-    }
-  },
-  {
-    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
-    "fields": {
-      "course_section_id": 19,
-      "user_id": 1,
-      "status": 2,
-      "grade": " 6.8"
-    }
-  },
-  {
-    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
-    "fields": {
-      "course_section_id": 18,
-      "user_id": 1,
-      "status": 2,
-      "grade": " 8.6"
-    }
-  },
-  {
-    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
-    "fields": {
-      "course_section_id": 20,
-      "user_id": 1,
-      "status": 2,
-      "grade": " 8"
-    }
-  },
-  {
-    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
-    "fields": {
-      "course_section_id": 22,
-      "user_id": 1,
-      "status": 2,
-      "grade": " 8.7"
-    }
-  },
-  {
-    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
-    "fields": {
-      "course_section_id": 17,
-      "user_id": 1,
-      "status": 2,
-      "grade": " 8.1"
-    }
-  },
-  {
-    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
-    "fields": {
-      "course_section_id": 21,
-      "user_id": 1,
-      "status": 2,
-      "grade": " 10"
-    }
-  },
-  {
-    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
-    "fields": {
-      "course_section_id": 26,
-      "user_id": 1,
+      "course_section_id": 82,
+      "user_id": 3,
       "status": 2,
       "grade": " 6.7"
     }
@@ -191,8 +137,44 @@
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields": {
-      "course_section_id": 23,
-      "user_id": 1,
+      "course_section_id": 83,
+      "user_id": 3,
+      "status": 2,
+      "grade": " 9.1"
+    }
+  },
+  {
+    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
+    "fields": {
+      "course_section_id": 84,
+      "user_id": 3,
+      "status": 2,
+      "grade": " 5.9"
+    }
+  },
+  {
+    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
+    "fields": {
+      "course_section_id": 85,
+      "user_id": 3,
+      "status": 3,
+      "grade": " 0"
+    }
+  },
+  {
+    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
+    "fields": {
+      "course_section_id": 58,
+      "user_id": 3,
+      "status": 3,
+      "grade": "4.3"
+    }
+  },
+  {
+    "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
+    "fields": {
+      "course_section_id": 86,
+      "user_id": 3,
       "status": 1,
       "grade": " 0"
     }
@@ -200,8 +182,8 @@
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields": {
-      "course_section_id": 25,
-      "user_id": 1,
+      "course_section_id": 87,
+      "user_id": 3,
       "status": 1,
       "grade": " 0"
     }
@@ -209,8 +191,8 @@
   {
     "model": "cruds.crud_course_section_students.models.CourseSectionStudents",
     "fields": {
-      "course_section_id": 24,
-      "user_id": 1,
+      "course_section_id": 53,
+      "user_id": 3,
       "status": 1,
       "grade": " 0"
     }
