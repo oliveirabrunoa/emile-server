@@ -128,7 +128,6 @@ def update_user_image(user_id):
     return jsonify(user=models.Users.query.get(user_id).serialize()), 200
 
 def allowed_file(filename):
-    asset.JPG?id=649D0877-56A2-4FCF-92B3-FFF3AE35941E&ext=JPG
     print(filename)
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
     return '.' in filename and (filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS or 'asset.JPG' in filename)
