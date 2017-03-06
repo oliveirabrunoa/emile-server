@@ -60,7 +60,7 @@ def course_times(course, student):
                                     filter(Courses.id == course.id).
                                     filter(or_ (CourseSectionStudents.status == 2,
                                                 CourseSectionStudents.status == 3)).
-                                    group_by(Courses.code).order_by(Courses.program_section).first())
+                                    group_by(Courses.code,Courses.program_section).order_by(Courses.program_section).first())
 
     return course_aggregation[0] if course_aggregation else 0
 
