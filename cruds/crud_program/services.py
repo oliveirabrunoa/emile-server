@@ -31,36 +31,65 @@ def students_program_history(student_id):
     if not student and student.type == 1:
         return jsonify(result="invalid student id"), 404
 
-    program_details = {"credits_completed":0, "hours_completed":0 , "total_credits": program.total_credits, "total_hours": program.total_hours}
+    hours_completed, credits_completed = program_current_progress(student)
+    program_details = {"hours_completed":hours_completed, "credits_completed":credits_completed ,"total_credits": program.total_credits, "total_hours": program.total_hours}
     for course in program.courses:
         _dict = {"course": course.serialize()}
-        course_aggregation = (db.session.query(func.count(CourseSectionStudents.id),CourseSectionStudents, Courses).
-                                        filter(CourseSectionStudents.course_section_id == CourseSections.id).
-                                        filter(CourseSections.course_id == Courses.id).
-                                        filter(Courses.program_id == Program.id).
-                                        filter(Program.id == student.program_id).
-                                        filter(CourseSectionStudents.user_id == student_id).
-                                        filter(Courses.id == course.id).
-                                        filter(or_ (CourseSectionStudents.status == 2,
-                                                    CourseSectionStudents.status == 3,
-                                                    CourseSectionStudents.status == 1)).
-                                        group_by(Courses.code, Courses).order_by(Courses.program_section))
+        last_course_section_student = last_course_section_students(course, student)
+        times = course_times(course, student)
 
-        course_aggregation = course_aggregation.order_by(CourseSectionStudents.id.desc()).first()
-        if not course_aggregation:
+        if not last_course_section_student:
             _dict['status'] = CourseSectionStudentsStatus.query.get(4).serialize()
-            _dict['times']= 0
             _dict['grade']= 0
         else:
-            #print(course_aggregation[0], course_aggregation[2].code)
-            _dict['status']= CourseSectionStudentsStatus.query.get(course_aggregation[1].status).serialize()
-            _dict['grade']= course_aggregation[1].grade
-            _dict['times']= course_aggregation[0]
-
-            if course_aggregation[1].status == 2:
-                program_details.update({'credits_completed': program_details['credits_completed'] + course_aggregation[2].credits})
-                program_details.update({'hours_completed': program_details['hours_completed'] + course_aggregation[2].hours})
+            _dict['status']= CourseSectionStudentsStatus.query.get(last_course_section_student.status).serialize()
+            _dict['grade']= last_course_section_student.grade
+        _dict['times']= times
 
         students_program_history_list.append(_dict)
 
     return jsonify(students_program_history=[program_history for program_history in students_program_history_list], program= program_details)
+
+def course_times(course, student):
+    course_aggregation = (db.session.query(func.count(CourseSectionStudents.id)).
+                                    filter(CourseSectionStudents.course_section_id == CourseSections.id).
+                                    filter(CourseSections.course_id == Courses.id).
+                                    filter(Courses.program_id == Program.id).
+                                    filter(Program.id == student.program_id).
+                                    filter(CourseSectionStudents.user_id == student.id).
+                                    filter(Courses.id == course.id).
+                                    filter(or_ (CourseSectionStudents.status == 2,
+                                                CourseSectionStudents.status == 3)).
+                                    group_by(Courses.code).order_by(Courses.program_section).first())
+
+    return course_aggregation[0] if course_aggregation else 0
+
+def program_current_progress(student):
+    total_hours = 0
+    total_credits = 0
+    program_progress = (db.session.query(Courses.hours, Courses.credits).
+                                    filter(CourseSectionStudents.course_section_id == CourseSections.id).
+                                    filter(CourseSections.course_id == Courses.id).
+                                    filter(Courses.program_id == Program.id).
+                                    filter(Program.id == student.program_id).
+                                    filter(CourseSectionStudents.user_id == student.id).
+                                    filter(CourseSectionStudents.status == 2).
+                                    order_by(Courses.program_section).all())
+
+    for hours,credits in program_progress:
+        total_hours = total_hours + hours
+        total_credits = total_credits + credits
+
+    return total_hours, total_credits
+
+def last_course_section_students(course, student):
+    course_section_student = (db.session.query(CourseSectionStudents).
+                                    filter(CourseSectionStudents.course_section_id == CourseSections.id).
+                                    filter(CourseSections.course_id == Courses.id).
+                                    filter(Courses.program_id == Program.id).
+                                    filter(Program.id == student.program_id).
+                                    filter(CourseSectionStudents.user_id == student.id).
+                                    filter(Courses.id == course.id).
+                                    order_by(CourseSections.course_section_period.desc()).first())
+
+    return course_section_student
