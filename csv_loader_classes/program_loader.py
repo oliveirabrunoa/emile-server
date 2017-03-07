@@ -15,3 +15,6 @@ class ProgramLoader(CSVLoader):
         obj.total_credits = row[4]
 
         return obj
+
+    def file_name(self):
+        return 'program.csv'

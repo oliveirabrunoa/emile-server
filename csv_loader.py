@@ -26,14 +26,12 @@ class CSVLoader:
     def load_data(self):
         files = sorted(os.listdir(os.getcwd() + '/initial_data/'))
 
-        for crud_csv in files:
-            if crud_csv.rsplit('.', maxsplit=1)[1] == 'csv':
-                with open('./initial_data/'+ crud_csv) as data_file:
-                    reader = csv.reader(data_file)
-                    for row in reader:
-                        obj = self.create_object(row)
-                        session.add(obj)
-                        session.commit()
+        with open('./initial_data/'+ self.file_name()) as data_file:
+            reader = csv.reader(data_file)
+            for row in reader:
+                obj = self.create_object(row)
+                session.add(obj)
+                session.commit()
 
     def import_relative_path(self, model_relative_path):
         module_path, model_name = str(model_relative_path).rsplit('.', maxsplit=1)
