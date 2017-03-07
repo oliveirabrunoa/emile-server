@@ -31,8 +31,8 @@ class CSVLoader:
             for row in reader:
                 obj = self.create_object(row)
                 if obj:
-                    session.add(obj)
-                    session.commit()
+                    self.session.add(obj)
+                    self.session.commit()
 
     def import_relative_path(self, model_relative_path):
         module_path, model_name = str(model_relative_path).rsplit('.', maxsplit=1)

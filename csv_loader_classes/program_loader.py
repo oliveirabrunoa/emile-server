@@ -1,4 +1,5 @@
 from csv_loader import CSVLoader
+from cruds.crud_program.models import Program
 
 
 class ProgramLoader(CSVLoader):
@@ -7,6 +8,11 @@ class ProgramLoader(CSVLoader):
         program_class = self.import_relative_path('cruds.crud_program.models.Program')
 
         obj = program_class()
+
+        program = self.session.query(Program).get(row[0])
+
+        if program:
+            return
 
         obj.id = row[0]
         obj.name = row[1]
