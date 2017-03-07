@@ -16,8 +16,6 @@ some_engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 Session = sessionmaker(bind=some_engine)
 
 
-# create a Session
-
 class CSVLoader:
 
     def __init__(self):
