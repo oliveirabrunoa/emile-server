@@ -17,11 +17,11 @@ Session = sessionmaker(bind=some_engine)
 
 
 # create a Session
-session = Session()
-
-
 
 class CSVLoader:
+
+    def __init__(self):
+        self.session = Session()
 
     def load_data(self):
         files = sorted(os.listdir(os.getcwd() + '/initial_data/'))
