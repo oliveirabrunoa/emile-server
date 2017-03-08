@@ -6,7 +6,7 @@ class CourseSectionStudentsStatusLoader(CSVLoader):
 
     def create_object(self, row):
         """ row[0] - id;
-            row[1] - name;
+            row[1] - description;
         """
         course_section_students_status_class = self.import_relative_path('cruds.crud_course_section_students_status.models.CourseSectionStudentsStatus')
 
@@ -17,7 +17,7 @@ class CourseSectionStudentsStatusLoader(CSVLoader):
 
         obj = course_section_students_status_class()
         obj.id = row[0]
-        obj.name = row[1]
+        obj.description = row[1]
 
         return obj
 
