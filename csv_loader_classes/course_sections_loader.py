@@ -20,7 +20,7 @@ class CourseSectionsLoader(CSVLoader):
         if course_section:
             return
 
-        obj = course_class()
+        obj = course_sections_class()
         obj.id = row[0]
         obj.code = row[1]
         obj.name = row[2]

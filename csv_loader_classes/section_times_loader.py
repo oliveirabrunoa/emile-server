@@ -1,5 +1,6 @@
 from csv_loader import CSVLoader
 from cruds.crud_course_sections.models import CourseSections
+import datetime
 
 class SectionTimesLoader(CSVLoader):
 
