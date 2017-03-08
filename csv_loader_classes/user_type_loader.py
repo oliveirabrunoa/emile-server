@@ -1,19 +1,20 @@
 from csv_loader import CSVLoader
-from cruds.crud_user_type.models import UserType
 
 
 class UserTypeLoader(CSVLoader):
 
     def create_object(self, row):
+        """ row[0] - id;
+            row[1] - name;
+        """
         user_type_class = self.import_relative_path('cruds.crud_user_type.models.UserType')
 
-        obj = user_type_class()
-
-        user_type = self.session.query(UserType).get(row[0])
+        user_type = self.session.query(user_type_class).get(row[0])
 
         if user_type:
             return
 
+        obj = user_type_class()
         obj.id = row[0]
         obj.name = row[1]
 

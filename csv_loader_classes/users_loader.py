@@ -1,36 +1,41 @@
 from csv_loader import CSVLoader
 from cruds.crud_user_type.models import UserType
 from cruds.crud_program.models import Program
-from cruds.crud_users.models import Users
 import datetime
 
 
 class UsersLoader(CSVLoader):
 
     def create_object(self, row):
+        """ row[0] - id;
+            row[1] - username;
+            row[2] - email;
+            row[3] - password;
+            row[4] - name;
+            row[5] - birth_date;
+            row[6] - gender;
+            row[7] - address;
+            row[8] - type;
+            row[9] - program_id;
+        """
         users_class = self.import_relative_path('cruds.crud_users.models.Users')
 
-        obj = users_class()
-
-        user = self.session.query(Users).get(row[0])
+        user = self.session.query(users_class).get(row[0])
 
         if user:
             return
 
-        birth_date = datetime.datetime.strptime(row[5], "%d-%m-%Y").date()
-        user_type_id = self.session.query(UserType).filter(UserType.name==row[8]).first().id
-        program_id = self.session.query(Program).filter(Program.abbreviation==row[9]).first().id
-
+        obj = users_class()
         obj.id = row[0]
         obj.username = row[1]
         obj.email = row[2]
         obj.password = row[3]
         obj.name = row[4]
-        obj.birth_date = birth_date
+        obj.birth_date = datetime.datetime.strptime(row[5], "%d-%m-%Y").date()
         obj.gender = row[6]
         obj.address = row[7]
-        obj.type = user_type_id
-        obj.program_id = program_id
+        obj.type = self.session.query(UserType).filter(UserType.name==row[8]).first().id
+        obj.program_id = self.session.query(Program).filter(Program.abbreviation==row[9]).first().id
 
         return obj
 

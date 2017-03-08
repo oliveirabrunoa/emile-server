@@ -1,20 +1,21 @@
 from csv_loader import CSVLoader
-from cruds.crud_course_type.models import CourseType
 import datetime
 
 
 class CourseTypeLoader(CSVLoader):
 
     def create_object(self, row):
+        """ row[0] - id;
+            row[1] - description;
+        """
         course_type_class = self.import_relative_path('cruds.crud_course_type.models.CourseType')
 
-        obj = course_type_class()
-
-        course_type = self.session.query(CourseType).get(row[0])
+        course_type = self.session.query(course_type_class).get(row[0])
 
         if course_type:
             return
 
+        obj = course_type_class()
         obj.id = row[0]
         obj.description = row[1]
 

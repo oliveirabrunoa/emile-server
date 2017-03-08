@@ -1,19 +1,23 @@
 from csv_loader import CSVLoader
-from cruds.crud_program.models import Program
 
 
 class ProgramLoader(CSVLoader):
 
     def create_object(self, row):
+        """ row[0] - id;
+            row[1] - name;
+            row[2] - abbreviation;
+            row[3] - total_hours;
+            row[4] - total_credits;
+        """
         program_class = self.import_relative_path('cruds.crud_program.models.Program')
 
-        obj = program_class()
-
-        program = self.session.query(Program).get(row[0])
+        program = self.session.query(program_class).get(row[0])
 
         if program:
             return
 
+        obj = program_class()
         obj.id = row[0]
         obj.name = row[1]
         obj.abbreviation = row[2]
