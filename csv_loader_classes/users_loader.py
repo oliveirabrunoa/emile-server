@@ -35,7 +35,7 @@ class UsersLoader(CSVLoader):
         obj.gender = row[6]
         obj.address = row[7]
         obj.type = self.session.query(UserType).filter(UserType.name==row[8]).first().id
-        obj.program_id = self.session.query(Program).filter(Program.abbreviation==row[9]).first().id
+        obj.program_id = self.session.query(Program).filter(Program.abbreviation==row[9]).first().id if self.session.query(Program).filter(Program.abbreviation==row[9]).first() else None
 
         return obj
 
