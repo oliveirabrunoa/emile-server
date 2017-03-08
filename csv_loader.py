@@ -25,6 +25,7 @@ class CSVLoader:
         files = sorted(os.listdir(os.getcwd() + '/initial_data/'))
 
         with open('./initial_data/'+ self.file_name()) as data_file:
+            print(self.file_name())
             reader = csv.reader(data_file, delimiter="|")
             for row in reader:
                 obj = self.create_object(row)
