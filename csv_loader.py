@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 import os
 import csv
 import csv_loader_classes
-
+from cruds.crud_course_sections.models import CourseSections
 
 # an Engine, which the Session will use for connection
 # resources
@@ -39,6 +39,7 @@ class CSVLoader:
 
     def create_object(self, row):
         raise NotImplementedError("Subclasses should implement this!")
+
 
 if __name__=='__main__':
     csv_loader = CSVLoader()
