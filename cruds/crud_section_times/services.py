@@ -1,13 +1,16 @@
 from flask import Blueprint, jsonify, request
 from . import models
 from backend import db
-from cruds.crud_users.models import Users
 from cruds.crud_course_sections.models import CourseSections
-import datetime
-from sqlalchemy import and_
 from cruds.crud_student_attendance.models import StudentAttendance
 from cruds.crud_course_section_students.models import CourseSectionStudents
+from cruds.crud_users.models import Users
+from cruds.crud_courses.models import Courses
+from cruds.crud_program.models import Program
+from cruds.crud_institution.models import Institution
 import pytz
+import datetime
+from sqlalchemy import and_
 
 
 section_times = Blueprint("section_times", __name__)
@@ -20,19 +23,28 @@ def get_section_times():
 
 @section_times.route('/teachers_section_times/<teacher_id>', methods=['GET'])
 def teachers_section_times(teacher_id):
-    section_times = (db.session.query(models.SectionTimes).filter(models.SectionTimes.course_section_id == CourseSections.id).
-                                                            filter(CourseSections.teacher_id == teacher_id).all())
+    section_times = (db.session.query(models.SectionTimes).filter(Institution.id==Program.institution_id).
+                                                            filter(Program.id==Courses.program_id).
+                                                            filter(Courses.id==CourseSections.course_id).
+                                                            filter(models.SectionTimes.course_section_id == CourseSections.id).
+                                                            filter(CourseSections.teacher_id == teacher_id).
+                                                            filter(CourseSections.course_section_period == Institution.current_program_section).all())
     return jsonify(section_times=[section_time.serialize() for section_time in section_times])
 
 
 @section_times.route('/section_time_in_progress/<teacher_id>', methods=['GET'])
 def section_time_in_progress(teacher_id):
     now = datetime.datetime.now(tz=pytz.timezone('America/Bahia')).time()
-    section_times = (db.session.query(models.SectionTimes).filter(Users.id == CourseSections.teacher_id).
+    section_times = (db.session.query(models.SectionTimes).
+                       filter(Institution.id==Program.institution_id).
+                       filter(Program.id==Courses.program_id).
+                       filter(Courses.id==CourseSections.course_id).
+                       filter(Users.id == CourseSections.teacher_id).
                        filter(CourseSections.id == models.SectionTimes.course_section_id).
                        filter(Users.id == teacher_id).
                        filter(and_(models.SectionTimes.section_time_start_time <= now, models.SectionTimes.section_time_finish_time >= now)).
-                       filter(models.SectionTimes.week_day == datetime.datetime.now(tz=pytz.timezone('America/Bahia')).weekday()).all())
+                       filter(models.SectionTimes.week_day == datetime.datetime.now(tz=pytz.timezone('America/Bahia')).weekday()).
+                       filter(CourseSections.course_section_period == Institution.current_program_section).all())
 
     return jsonify(section_times=[section_time.serialize() for section_time in section_times])
 
