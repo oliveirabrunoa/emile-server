@@ -2,6 +2,9 @@ from flask import jsonify, Blueprint, request, url_for, send_from_directory
 from . import models
 from backend import db
 from cruds.crud_course_sections.models import CourseSections
+from cruds.crud_program.models import Program
+from cruds.crud_courses.models import Courses
+from cruds.crud_institution.models import Institution
 import os
 from werkzeug.utils import secure_filename
 import settings
@@ -68,7 +71,13 @@ def user_details(user_id):
 def teachers_course_sections(teacher_id):
     teacher = models.Users.query.filter_by(id=teacher_id, type=2).first()
     if teacher:
-        teachers_course_sections = CourseSections.query.filter_by(teacher_id=teacher_id)
+        teachers_course_sections = (db.session.query(CourseSections).
+                                    filter(Institution.id==Program.institution_id).
+                                    filter(Program.id==Courses.program_id).
+                                    filter(Courses.id==CourseSections.course_id).
+                                    filter(CourseSections.teacher_id==teacher_id).
+                                    filter(CourseSections.course_section_period==Institution.current_program_section).all())
+
         return jsonify(teachers_course_sections=[course_section.serialize() for course_section in teachers_course_sections])
     return jsonify(result='invalid teacher id')
 
