@@ -6,7 +6,7 @@ class Institution(db.Model):
     name = db.Column(db.String(250))
     abbreviation =  db.Column(db.String(20))
     cnpj = db.Column(db.String(18), unique=True)
-    address = db.Column(db.String(50))
+    address = db.Column(db.String(250))
     current_program_section = db.Column(db.String(6))
     programs = db.relationship('Program', backref='institution', lazy='dynamic')
 
