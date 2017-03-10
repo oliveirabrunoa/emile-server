@@ -53,7 +53,7 @@ python manage.py db upgrade
 Load initial data
 
 ```
-python load_data.py #Execute just one time
+python csv_loader.py
 ```
 
 
