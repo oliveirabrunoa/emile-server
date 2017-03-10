@@ -1,4 +1,5 @@
-CSV_LOADER_CLASSES = ['csv_loader_classes.program_loader.ProgramLoader',
+CSV_LOADER_CLASSES = ['csv_loader_classes.institution_loader.InstitutionLoader',
+                      'csv_loader_classes.program_loader.ProgramLoader',
                       'csv_loader_classes.course_type_loader.CourseTypeLoader',
                       'csv_loader_classes.course_section_students_status_loader.CourseSectionStudentsStatusLoader',
                       'csv_loader_classes.user_type_loader.UserTypeLoader',

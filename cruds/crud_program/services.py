@@ -8,11 +8,12 @@ from cruds.crud_course_section_students.models import CourseSectionStudents
 from cruds.crud_course_sections.models import CourseSections
 from sqlalchemy import and_, or_
 from cruds.crud_course_section_students_status.models import CourseSectionStudentsStatus
+from sqlalchemy import func
 
 
 program = Blueprint("program", __name__)
 
-from sqlalchemy import func
+
 @program.route('/programs_courses/<program_id>', methods=['GET'])
 def programs_courses(program_id):
     program = Program.query.get(program_id)
@@ -20,7 +21,7 @@ def programs_courses(program_id):
         return jsonify(result="invalid program id"), 404
     return jsonify(program=program.serialize()), 200
 
-#Need to refactory
+
 @program.route('/students_program_history/<student_id>', methods=['GET'])
 def students_program_history(student_id):
     student = Users.query.get(student_id)
@@ -50,6 +51,7 @@ def students_program_history(student_id):
 
     return jsonify(students_program_history=[program_history for program_history in students_program_history_list], program= program_details)
 
+
 def course_times(course, student):
     course_aggregation = (db.session.query(func.count(CourseSectionStudents.id)).
                                     filter(CourseSectionStudents.course_section_id == CourseSections.id).
@@ -63,6 +65,7 @@ def course_times(course, student):
                                     group_by(Courses.code,Courses.program_section).order_by(Courses.program_section).first())
 
     return course_aggregation[0] if course_aggregation else 0
+
 
 def program_current_progress(student):
     total_hours = 0
@@ -81,6 +84,7 @@ def program_current_progress(student):
         total_credits = total_credits + credits
 
     return total_hours, total_credits
+
 
 def last_course_section_students(course, student):
     course_section_student = (db.session.query(CourseSectionStudents).

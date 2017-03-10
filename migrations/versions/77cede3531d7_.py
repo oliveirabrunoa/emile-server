@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: 24922cf7bc8c
+Revision ID: 77cede3531d7
 Revises: None
-Create Date: 2017-02-21 16:00:20.727062
+Create Date: 2017-03-10 15:05:00.287842
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '24922cf7bc8c'
+revision = '77cede3531d7'
 down_revision = None
 
 from alembic import op
@@ -26,13 +26,15 @@ def upgrade():
     sa.Column('description', sa.String(length=50), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('program',
+    op.create_table('institution',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=50), nullable=True),
-    sa.Column('abbreviation', sa.String(length=10), nullable=True),
-    sa.Column('total_hours', sa.Integer(), nullable=True),
-    sa.Column('total_credits', sa.Integer(), nullable=True),
-    sa.PrimaryKeyConstraint('id')
+    sa.Column('name', sa.String(length=250), nullable=True),
+    sa.Column('abbreviation', sa.String(length=20), nullable=True),
+    sa.Column('cnpj', sa.String(length=18), nullable=True),
+    sa.Column('address', sa.String(length=50), nullable=True),
+    sa.Column('current_program_section', sa.String(length=6), nullable=True),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('cnpj')
     )
     op.create_table('user_type',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -47,6 +49,25 @@ def upgrade():
     sa.Column('users_query', sa.Text(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('program',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=50), nullable=True),
+    sa.Column('abbreviation', sa.String(length=10), nullable=True),
+    sa.Column('total_hours', sa.Integer(), nullable=True),
+    sa.Column('total_credits', sa.Integer(), nullable=True),
+    sa.Column('institution_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['institution_id'], ['institution.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('user_type_destinations_user_type',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_type_id', sa.Integer(), nullable=False),
+    sa.Column('user_type_destination_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['user_type_destination_id'], ['user_type_destinations.id'], ),
+    sa.ForeignKeyConstraint(['user_type_id'], ['user_type.id'], ),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('user_type_id', 'user_type_destination_id', name='user_type_destinations_user_type_uc')
+    )
     op.create_table('courses',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('code', sa.String(length=20), nullable=True),
@@ -60,15 +81,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['program_id'], ['program.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('code')
-    )
-    op.create_table('user_type_destinations_user_type',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('user_type_id', sa.Integer(), nullable=False),
-    sa.Column('user_type_destination_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['user_type_destination_id'], ['user_type_destinations.id'], ),
-    sa.ForeignKeyConstraint(['user_type_id'], ['user_type.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('user_type_id', 'user_type_destination_id', name='user_type_destinations_user_type_uc')
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -165,11 +177,12 @@ def downgrade():
     op.drop_table('course_sections')
     op.drop_table('course_prerequisites')
     op.drop_table('users')
-    op.drop_table('user_type_destinations_user_type')
     op.drop_table('courses')
+    op.drop_table('user_type_destinations_user_type')
+    op.drop_table('program')
     op.drop_table('user_type_destinations')
     op.drop_table('user_type')
-    op.drop_table('program')
+    op.drop_table('institution')
     op.drop_table('course_type')
     op.drop_table('course_section_students_status')
     # ### end Alembic commands ###

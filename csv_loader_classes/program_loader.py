@@ -1,4 +1,5 @@
 from csv_loader import CSVLoader
+from cruds.crud_institution.models import Institution
 
 
 class ProgramLoader(CSVLoader):
@@ -9,6 +10,7 @@ class ProgramLoader(CSVLoader):
             row[2] - abbreviation;
             row[3] - total_hours;
             row[4] - total_credits;
+            row[5] - institution_cnpj
         """
         program_class = self.import_relative_path('cruds.crud_program.models.Program')
 
@@ -23,6 +25,7 @@ class ProgramLoader(CSVLoader):
         obj.abbreviation = row[2]
         obj.total_hours = row[3]
         obj.total_credits = row[4]
+        obj.institution_id = self.session.query(Institution).filter(Institution.cnpj==row[5]).first().id
 
         return obj
 

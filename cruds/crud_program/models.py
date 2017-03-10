@@ -1,6 +1,6 @@
 from backend import db
 from . import models
-from cruds.crud_courses.models import Courses
+from cruds.crud_institution.models import Institution
 
 
 class Program(db.Model):
@@ -10,6 +10,7 @@ class Program(db.Model):
     abbreviation = db.Column(db.String(10))
     total_hours = db.Column(db.Integer)
     total_credits = db.Column(db.Integer)
+    institution_id = db.Column(db.Integer, db.ForeignKey('institution.id'))
     courses = db.relationship('Courses')
 
     def serialize(self):
@@ -19,7 +20,8 @@ class Program(db.Model):
             'abbreviation': self.abbreviation,
             'total_hours': self.total_hours,
             'total_credits':  self.total_credits,
-            'courses': [course.serialize() for course in self.courses]
+            'courses': [course.serialize() for course in self.courses],
+            'institution': Institution.query.get(self.institution_id).serialize()
         }
 
     def set_fields(self, fields):
@@ -27,3 +29,4 @@ class Program(db.Model):
         self.abbreviation = fields['abbreviation']
         self.total_hours = fields['total_hours']
         self.total_credits = fields['total_credits']
+        self.institution_id = fields['institution_id']
