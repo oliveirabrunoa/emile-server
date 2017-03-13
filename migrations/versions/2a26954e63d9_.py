@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: e74cb772c775
+Revision ID: 2a26954e63d9
 Revises: None
-Create Date: 2017-03-10 16:37:07.437896
+Create Date: 2017-03-13 16:32:11.966556
 
 """
 
 # revision identifiers, used by Alembic.
-revision = 'e74cb772c775'
+revision = '2a26954e63d9'
 down_revision = None
 
 from alembic import op
@@ -85,21 +85,20 @@ def upgrade():
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=20), nullable=True),
-    sa.Column('email', sa.String(length=50), nullable=True),
-    sa.Column('password', sa.String(length=50), nullable=True),
+    sa.Column('email', sa.String(length=50), nullable=False),
+    sa.Column('password', sa.String(length=50), nullable=False),
     sa.Column('name', sa.String(length=250), nullable=True),
     sa.Column('birth_date', sa.Date(), nullable=True),
     sa.Column('gender', sa.String(length=1), nullable=True),
     sa.Column('address', sa.String(length=250), nullable=True),
     sa.Column('push_notification_token', sa.Text(), nullable=True),
-    sa.Column('type', sa.Integer(), nullable=True),
+    sa.Column('type', sa.Integer(), nullable=False),
     sa.Column('program_id', sa.Integer(), nullable=True),
     sa.Column('image_path', sa.Text(), nullable=True),
     sa.ForeignKeyConstraint(['program_id'], ['program.id'], ),
     sa.ForeignKeyConstraint(['type'], ['user_type.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email'),
-    sa.UniqueConstraint('username')
+    sa.UniqueConstraint('email')
     )
     op.create_table('course_prerequisites',
     sa.Column('id', sa.Integer(), nullable=False),
