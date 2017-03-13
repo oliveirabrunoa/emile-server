@@ -9,6 +9,7 @@ from cruds.crud_course_sections.models import CourseSections
 from sqlalchemy import and_, or_
 from cruds.crud_course_section_students_status.models import CourseSectionStudentsStatus
 from sqlalchemy import func
+from cruds.crud_institution.models import Institution
 
 
 program = Blueprint("program", __name__)
@@ -17,6 +18,30 @@ program = Blueprint("program", __name__)
 @program.route('/programs', methods=['GET'])
 def programs():
     return jsonify(programs=[dict(id=program.id, name=program.name, abbreviation=program.abbreviation) for program in Program.query.all()])
+
+
+@program.route('/programs_course_sections/<program_id>', methods=['GET'])
+def programs_course_sections(program_id):
+    programs_course_sections = []
+
+    program = Program.query.get(program_id)
+    institution = Institution.query.get(program.institution_id)
+
+    if not program:
+        return jsonify(result="invalid program id"), 404
+
+    programs_course_sections_list = (db.session.query(CourseSections, Courses).
+                                filter(Institution.id==Program.institution_id).
+                                filter(Program.id==Courses.program_id).
+                                filter(Courses.id==CourseSections.course_id).
+                                filter(Courses.program_id==program.id).
+                                filter(CourseSections.course_section_period==Institution.current_program_section).all())
+
+    for course_section, course in programs_course_sections_list:
+        _dict = dict(id=course_section.id, description='{0} - {1}'.format(course_section.code,course.name))
+        programs_course_sections.append(_dict)
+
+    return jsonify(programs_course_sections=[course_section for course_section in programs_course_sections]), 200
 
 
 @program.route('/programs_courses/<program_id>', methods=['GET'])
