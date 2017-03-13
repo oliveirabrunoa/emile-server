@@ -34,7 +34,7 @@ def add_student():
     data = dict(request.get_json())
 
     try:
-        user = models. Users(email=data['email'], password=data['password'], program_id=data['program_id'], type=1)
+        user = models.Users(email=data['email'], password=data['password'], program_id=data['program_id'], type=1)
         db.session.add(user)
         db.session.commit()
 
@@ -51,7 +51,7 @@ def add_student():
         db.session.commit()
         return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(email=user.email)]), 200
     except Exception as e:
-        return jsonify(result='invalid request'), 400
+        return jsonify(result=str('invalid request'), 400
 
 
 @users.route('/user_details/<user_id>', methods=['GET'])
