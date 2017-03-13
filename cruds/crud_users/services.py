@@ -51,7 +51,7 @@ def add_student():
         db.session.commit()
         return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(email=user.email)]), 200
     except Exception as e:
-        return jsonify(result=str('invalid request')), 400
+        return jsonify(result=str(e)), 400
 
 
 @users.route('/user_details/<user_id>', methods=['GET'])
