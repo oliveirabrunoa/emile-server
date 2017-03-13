@@ -11,27 +11,28 @@ from flask import jsonify
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True)
-    email = db.Column(db.String(50), unique=True)
-    password = db.Column(db.String(50))
-    name = db.Column(db.String(250))
-    birth_date = db.Column(db.Date())
-    gender = db.Column(db.String(1))
-    address = db.Column(db.String(250))
+    username = db.Column(db.String(20), nullable=True)
+    email = db.Column(db.String(50), unique=True, nullable=False)
+    password = db.Column(db.String(50), nullable=False)
+    name = db.Column(db.String(250), nullable=True)
+    birth_date = db.Column(db.Date(), nullable=True)
+    gender = db.Column(db.String(1), nullable=True)
+    address = db.Column(db.String(250), nullable=True)
     push_notification_token = db.Column(db.Text(), nullable=True)
-    type = db.Column(db.Integer, db.ForeignKey('user_type.id'))
+    type = db.Column(db.Integer, db.ForeignKey('user_type.id'), nullable=False)
     program_id = db.Column(db.Integer, db.ForeignKey('program.id'), nullable=True)
     image_path = db.Column(db.Text(), nullable=True)
     course_sections = db.relationship('CourseSectionStudents', cascade="save-update, merge, delete")
 
     def serialize(self):
+
         return {
             'id': self.id,
             'username': self.username,
             'email': self.email,
             'name': self.name,
             'password': self.password,
-            'birth_date': datetime.date.strftime(self.birth_date, "%m-%d-%Y"),
+            'birth_date': datetime.date.strftime(self.birth_date, "%m-%d-%Y") if self.birth_date  else self.birth_date,
             'gender': self.gender,
             'address': self.address,
             'program_id': self.program_id,

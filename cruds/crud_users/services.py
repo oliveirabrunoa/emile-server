@@ -2,6 +2,7 @@ from flask import jsonify, Blueprint, request, url_for, send_from_directory
 from . import models
 from backend import db
 from cruds.crud_course_sections.models import CourseSections
+from cruds.crud_course_section_students.models import CourseSectionStudents
 from cruds.crud_program.models import Program
 from cruds.crud_courses.models import Courses
 from cruds.crud_institution.models import Institution
@@ -28,16 +29,29 @@ def get_teachers():
     return jsonify(users=[dict(id=user.id, username=user.username) for user in models.Users.query.filter_by(type=2)])
 
 
-# @users.route('/add_user', methods=['POST'])
-# def add_users():
-#     #This method it was implemented considering that all fields are required in client
-#     user = models.Users()
-#     user.set_fields(dict(request.get_json()))
-#
-#     db.session.add(user)
-#     db.session.commit()
-#
-#     return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(username=user.username)])
+@users.route('/add_student', methods=['POST'])
+def add_student():
+    data = dict(request.get_json())
+
+    try:
+        user = models. Users(email=data['email'], password=data['password'], program_id=data['program_id'], type=1)
+        db.session.add(user)
+        db.session.commit()
+
+        course_sections_ids = data['course_sections']
+
+        for course_sections_id in course_sections_ids:
+            course_section = CourseSections.query.get(course_sections_id)
+            student = models.Users.query.filter_by(email=data['email']).first()
+
+            course_section_students = CourseSectionStudents(course_section_id=course_sections_id, user_id=student.id, grade=0, status=1)
+            course_section_students.course_section = course_section
+            student.course_sections.append(course_section_students)
+
+        db.session.commit()
+        return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(email=user.email)]), 200
+    except Exception as e:
+        return jsonify(result='invalid request'), 400
 
 
 @users.route('/user_details/<user_id>', methods=['GET'])
@@ -56,15 +70,15 @@ def user_details(user_id):
 #     return jsonify(result='invalid user id')
 
 
-# @users.route('/delete_user/<user_id>', methods=['POST'])
-# def delete_user(user_id):
-#     user = models.Users.query.get(user_id)
-#
-#     if user:
-#         db.session.delete(user)
-#         db.session.commit()
-#         return jsonify(users=[user.serialize() for user in models.Users.query.all()])
-#     return jsonify(result='invalid user id')
+@users.route('/delete_user/<user_id>', methods=['POST'])
+def delete_user(user_id):
+    user = models.Users.query.get(user_id)
+
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify(users=[user.serialize() for user in models.Users.query.all()])
+    return jsonify(result='invalid user id')
 
 
 @users.route('/teachers_course_sections/<teacher_id>', methods=['GET'])
