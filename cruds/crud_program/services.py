@@ -14,6 +14,11 @@ from sqlalchemy import func
 program = Blueprint("program", __name__)
 
 
+@program.route('/programs', methods=['GET'])
+def programs():
+    return jsonify(programs=[dict(id=program.id, name=program.name, abbreviation=program.abbreviation) for program in Program.query.all()])
+
+
 @program.route('/programs_courses/<program_id>', methods=['GET'])
 def programs_courses(program_id):
     program = Program.query.get(program_id)
