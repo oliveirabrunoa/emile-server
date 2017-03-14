@@ -34,29 +34,26 @@ def get_teachers():
 def add_student():
     data = dict(request.get_json())
 
-    try:
-        # user = models.Users()
-        # user.set_fields(dict(username=None, gender=None, address=None,birth_date=None,name=data['name'],email=data['email'], password=data['password'], program_id=data['program_id'], type=1))
-        # db.session.add(user)
-        # db.session.commit()
-        user_type = UserType()
-        user_type.set_fields(dict(name="Diretor"))
-        db.session.add(user_type)
-        db.session.commit()
-        # course_sections_ids = data['course_sections']
-        #
-        # for course_sections_id in course_sections_ids:
-        #     course_section = CourseSections.query.get(course_sections_id)
-        #     student = models.Users.query.filter_by(email=data['email']).first()
-        #
-        #     course_section_students = CourseSectionStudents(course_section_id=course_sections_id, user_id=student.id, grade=0, status=1)
-        #     course_section_students.course_section = course_section
-        #     student.course_sections.append(course_section_students)
-        #
-        # db.session.commit()
-        return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(email=user.email)]), 200
-    except Exception as e:
-        return jsonify(result=str(e)), 400
+
+    user = models.Users()
+    user.set_fields(dict(username=None, gender=None, address=None,birth_date=None,name=data['name'],email=data['email'], password=data['password'], program_id=data['program_id'], type=1))
+    db.session.add(user)
+    db.session.commit()
+
+    course_sections_ids = data['course_sections']
+
+    for course_sections_id in course_sections_ids:
+        course_section = CourseSections.query.get(course_sections_id)
+        student = models.Users.query.filter_by(email=data['email']).first()
+
+        course_section_students = CourseSectionStudents(course_section_id=course_sections_id, user_id=student.id, grade=0, status=1)
+        course_section_students.course_section = course_section
+        student.course_sections.append(course_section_students)
+
+    db.session.commit()
+
+    return jsonify(result="ok"), 200
+
 
 
 @users.route('/user_details/<user_id>', methods=['GET'])
