@@ -7,7 +7,7 @@ class CourseSections(db.Model):
     __tablename__ = 'course_sections'
 
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(20), unique=True)
+    code = db.Column(db.String(20))
     name = db.Column(db.String(50))
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
     teacher_id = db.Column(db.Integer, db.ForeignKey('users.id'))
