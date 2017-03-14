@@ -14,7 +14,7 @@ class Users(db.Model):
     username = db.Column(db.String(20), nullable=True)
     email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(50), nullable=False)
-    name = db.Column(db.String(250), nullable=True)
+    name = db.Column(db.String(250), nullable=False)
     birth_date = db.Column(db.Date(), nullable=True)
     gender = db.Column(db.String(1), nullable=True)
     address = db.Column(db.String(250), nullable=True)
