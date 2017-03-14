@@ -34,7 +34,8 @@ def add_student():
     data = dict(request.get_json())
 
     try:
-        user = models.Users(name=data['name'],email=data['email'], password=data['password'], program_id=data['program_id'], type=1)
+        user = models.Users()
+        user.set_fields(dict(username=None, gender=None, address=None,birth_date=None,name=data['name'],email=data['email'], password=data['password'], program_id=data['program_id'], type=1))
         db.session.add(user)
         db.session.commit()
 
