@@ -9,6 +9,7 @@ from cruds.crud_institution.models import Institution
 import os
 from werkzeug.utils import secure_filename
 import settings
+from cruds.crud_user_type.models import UserType
 
 
 users = Blueprint("user", __name__)
@@ -34,11 +35,14 @@ def add_student():
     data = dict(request.get_json())
 
     try:
-        user = models.Users()
-        user.set_fields(dict(username=None, gender=None, address=None,birth_date=None,name=data['name'],email=data['email'], password=data['password'], program_id=data['program_id'], type=1))
-        db.session.add(user)
+        # user = models.Users()
+        # user.set_fields(dict(username=None, gender=None, address=None,birth_date=None,name=data['name'],email=data['email'], password=data['password'], program_id=data['program_id'], type=1))
+        # db.session.add(user)
+        # db.session.commit()
+        user_type = UserType()
+        user_type.set_fields(dict(name="Diretor"))
+        db.session.add(user_type)
         db.session.commit()
-
         # course_sections_ids = data['course_sections']
         #
         # for course_sections_id in course_sections_ids:
