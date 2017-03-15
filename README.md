@@ -44,10 +44,10 @@ export APP_SETTINGS="config.DevelopmentConfig"
 
 ### Running
 
-Execute scripts saved in the migrations directory to create the tables
+Execute script to create the tables
 
 ```
-python manage.py db upgrade
+python create_tables.py
 ```
 
 Load initial data
