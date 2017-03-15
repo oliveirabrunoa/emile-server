@@ -20,7 +20,6 @@ class SectionTimesLoader(CSVLoader):
             return
 
         obj = section_times_class()
-        obj.id = row[0]
         obj.course_section_id = self.session.query(CourseSections).filter(CourseSections.code==row[1], CourseSections.course_section_period==row[2]).first().id
         obj.week_day = row[3]
         obj.section_time_start_time = datetime.datetime.strptime(row[4], "%H:%M:%S").time()

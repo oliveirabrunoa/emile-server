@@ -19,7 +19,6 @@ class InstitutionLoader(CSVLoader):
             return
 
         obj = institution_class()
-        obj.id = row[0]
         obj.name = row[1]
         obj.abbreviation = row[2]
         obj.cnpj = row[3]

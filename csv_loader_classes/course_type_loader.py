@@ -16,7 +16,6 @@ class CourseTypeLoader(CSVLoader):
             return
 
         obj = course_type_class()
-        obj.id = row[0]
         obj.description = row[1]
 
         return obj

@@ -17,7 +17,6 @@ class UserTypeDestinationsLoader(CSVLoader):
             return
 
         obj = user_type_destinations_class()
-        obj.id = row[0]
         obj.name = row[1]
         obj.param_values_service = row[2]
         obj.users_query = row[3]

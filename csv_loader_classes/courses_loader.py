@@ -23,7 +23,6 @@ class CoursesLoader(CSVLoader):
             return
 
         obj = course_class()
-        obj.id = row[0]
         obj.code = row[1]
         obj.name = row[2]
         obj.credits = row[3]

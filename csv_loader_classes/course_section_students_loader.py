@@ -22,7 +22,6 @@ class CourseSectionsStudentsLoader(CSVLoader):
             return
 
         obj = course_sections_students_class()
-        obj.id = row[0]
         obj.course_section_id = self.session.query(CourseSections).filter(CourseSections.code==row[1],
                                                                           CourseSections.course_section_period==row[2]).first().id
         obj.user_id = self.session.query(Users).filter(Users.username==row[3]).first().id

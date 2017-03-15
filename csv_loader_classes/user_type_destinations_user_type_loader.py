@@ -18,7 +18,6 @@ class UserTypeDestinationsUserTypeLoader(CSVLoader):
             return
 
         obj = user_type_destinations_user_type_class()
-        obj.id = row[0]
         obj.user_type_id = self.session.query(UserType).filter(UserType.name==row[1]).first().id
         obj.user_type_destination_id = self.session.query(UserTypeDestinations).filter(UserTypeDestinations.name==row[2]).first().id
 
