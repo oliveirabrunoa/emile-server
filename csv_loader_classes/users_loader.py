@@ -20,13 +20,12 @@ class UsersLoader(CSVLoader):
         """
         users_class = self.import_relative_path('cruds.crud_users.models.Users')
 
-        user = self.session.query(users_class).get(row[0])
+        user = self.session.query(users_class).filter_by(email=row[2]).first()
 
         if user:
             return
 
         obj = users_class()
-        obj.id = row[0]
         obj.username = row[1]
         obj.email = row[2]
         obj.password = row[3]

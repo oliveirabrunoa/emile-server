@@ -34,7 +34,6 @@ def get_teachers():
 def add_student():
     data = dict(request.get_json())
 
-
     user = models.Users()
     user.set_fields(dict(username=None, gender=None, address=None,birth_date=None,name=data['name'],email=data['email'], password=data['password'], program_id=data['program_id'], type=1))
     db.session.add(user)
@@ -52,7 +51,7 @@ def add_student():
 
     db.session.commit()
 
-    return jsonify(result="ok"), 200
+    return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(email=user.email)]), 200
 
 
 
