@@ -1,5 +1,4 @@
 from backend import db
-from . import models
 from cruds.crud_institution.models import Institution
 
 
