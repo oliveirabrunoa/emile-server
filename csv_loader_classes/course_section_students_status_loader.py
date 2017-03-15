@@ -16,7 +16,6 @@ class CourseSectionStudentsStatusLoader(CSVLoader):
             return
 
         obj = course_section_students_status_class()
-        obj.id = row[0]
         obj.description = row[1]
 
         return obj

@@ -15,7 +15,6 @@ class UserTypeLoader(CSVLoader):
             return
 
         obj = user_type_class()
-        obj.id = row[0]
         obj.name = row[1]
 
         return obj

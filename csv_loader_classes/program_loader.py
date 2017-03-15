@@ -20,7 +20,6 @@ class ProgramLoader(CSVLoader):
             return
 
         obj = program_class()
-        obj.id = row[0]
         obj.name = row[1]
         obj.abbreviation = row[2]
         obj.total_hours = row[3]
