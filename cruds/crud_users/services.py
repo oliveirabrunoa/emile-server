@@ -60,15 +60,15 @@ def user_details(user_id):
     return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(id=user_id)])
 
 
-# @users.route('/update_user/<user_id>', methods=['POST'])
-# def update_user(user_id):
-#     user = models.Users.query.get(user_id)
-#
-#     if user:
-#         user.set_fields(dict(request.get_json()))
-#         db.session.commit()
-#         return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(id=user_id)])
-#     return jsonify(result='invalid user id')
+@users.route('/update_user/<user_id>', methods=['POST'])
+def update_user(user_id):
+    user = models.Users.query.get(user_id)
+
+    if user:
+        user.set_fields(dict(request.get_json()))
+        db.session.commit()
+        return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(id=user_id)])
+    return jsonify(result='invalid user id')
 
 
 @users.route('/delete_user/<user_id>', methods=['POST'])
