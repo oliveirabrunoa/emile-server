@@ -49,7 +49,7 @@ class Users(db.Model):
         self.name = fields.get('name')
         self.gender = fields.get('gender')
         self.address = fields.get('address')
-        self.birth_date = datetime.datetime.strptime(fields.get('birth_date'), "%m-%d-%Y").date() if fields.get('birth_date') else fields.get('birth_date')
+        self.birth_date = datetime.datetime.strptime(fields.get('birth_date'), "%m-%d-%Y").date() if fields.get('birth_date') else None
         self.program_id = fields.get('program_id')
         self.type = fields.get('type')
 
