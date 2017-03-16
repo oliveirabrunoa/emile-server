@@ -146,7 +146,7 @@ def update_user_image(user_id):
 
     filename = secure_filename(file.filename)
     if not user.save_image(file):
-        jsonify(user=models.Users.query.get(user_id).serialize()), 400
+        return jsonify(user=models.Users.query.get(user_id).serialize()), 400
 
     db.session.commit()
     return jsonify(user=models.Users.query.get(user_id).serialize()), 200
