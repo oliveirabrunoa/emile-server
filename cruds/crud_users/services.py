@@ -17,17 +17,17 @@ users = Blueprint("user", __name__)
 
 @users.route('/users', methods=['GET'])
 def get_users():
-    return jsonify(users=[dict(id=user.id, username=user.username) for user in models.Users.query.all()])
+    return jsonify(users=[dict(id=user.id, email=user.email) for user in models.Users.query.all()])
 
 
 @users.route('/students', methods=['GET'])
 def get_students():
-    return jsonify(users=[dict(id=user.id, username=user.username) for user in models.Users.query.filter_by(type=1)])
+    return jsonify(users=[dict(id=user.id, email=user.email) for user in models.Users.query.filter_by(type=1)])
 
 
 @users.route('/teachers', methods=['GET'])
 def get_teachers():
-    return jsonify(users=[dict(id=user.id, username=user.username) for user in models.Users.query.filter_by(type=2)])
+    return jsonify(users=[dict(id=user.id, email=user.email) for user in models.Users.query.filter_by(type=2)])
 
 
 @users.route('/add_student', methods=['POST'])
