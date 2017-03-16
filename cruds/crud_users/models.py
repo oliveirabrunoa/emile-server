@@ -43,15 +43,15 @@ class Users(db.Model):
         }
 
     def set_fields(self, fields):
-        self.username = fields['username']
-        self.email = fields['email']
-        self.password = self.password if self.password else fields['password']
-        self.name = fields['name']
-        self.gender = fields['gender']
-        self.address = fields['address']
-        self.birth_date = datetime.datetime.strptime(fields['birth_date'], "%m-%d-%Y").date() if fields['birth_date'] else fields['birth_date']
-        self.program_id = fields['program_id']
-        self.type = fields['type']
+        self.username = fields.get('username')
+        self.email = fields.get('email')
+        self.password = self.password if self.password else fields.get('password')
+        self.name = fields.get('name')
+        self.gender = fields.get('gender')
+        self.address = fields.get('address')
+        self.birth_date = datetime.datetime.strptime(fields['birth_date'], "%m-%d-%Y").date() if fields.get('birth_date') else fields.get('birth_date')
+        self.program_id = fields.get('program_id')
+        self.type = fields.get('type')
 
     def save_image(self, file):
         file_name, _format = str(file.filename).rsplit('.', 1)
