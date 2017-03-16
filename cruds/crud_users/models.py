@@ -39,12 +39,13 @@ class Users(db.Model):
             'push_notification_token': self.push_notification_token,
             'type': UserType.query.filter_by(id=self.type).first().serialize(),
             'image_path': self.image_path,
+            'course_sections':[course_section.course_section_id for course_section in self.course_sections if course_section.status==1]
         }
 
     def set_fields(self, fields):
         self.username = fields['username']
         self.email = fields['email']
-        self.password = fields['password']
+        self.password = self.password if self.password else fields['password']
         self.name = fields['name']
         self.gender = fields['gender']
         self.address = fields['address']
