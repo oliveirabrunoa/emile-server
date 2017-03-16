@@ -54,6 +54,7 @@ class Users(db.Model):
 
     def save_image(self, file):
         file_name, _format = str(file.filename).rsplit('.', 1)
+        user_name, domain = str(self.email).split('@', maxsplit=1)
 
         if not _format in settings.ALLOWED_EXTENSIONS:
             _format = 'jpg'
@@ -64,7 +65,7 @@ class Users(db.Model):
         }
 
         r = requests.post('http://eliakimdjango.pythonanywhere.com/save_profile_image',
-                          files={'file': (self.username + str(random.randint(1000, 10000)) + '.' + _format, file,
+                          files={'file': (user_name + str(random.randint(1000, 10000)) + '.' + _format, file,
                           headers, {'Expires': '0'})},
                           data={'old_file_path': self.image_path})
         # r = requests.post('http://127.0.0.1:2000/save_profile_image',
