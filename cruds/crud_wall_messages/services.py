@@ -38,8 +38,7 @@ def get_wall_messages(user_id):
 
     return jsonify(get_paginated_list([message.serialize() for message in messages],
 		                              '/wall_messages/' + str(user.id),
-                                      start=int(request.args.get('start', 1)),
-                                      limit=int(request.args.get('limit', settings.PAGINATION_SIZE)))), 200
+                                      start=int(request.args.get('start', 1)))), 200
 
 
 @wall_messages.route('/wall_push_notification', methods=['POST'])
