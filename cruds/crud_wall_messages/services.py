@@ -86,8 +86,8 @@ def search_wall_messages(user_id, param):
     wall_messages_list = (db.session.query(models.WallMessages).
                                  filter(models.WallMessages.date >= datetime.date.fromordinal(today-14)).
                                  filter(models.Users.id==models.WallMessages.sender).
-                                 filter(or_(models.WallMessages.message.like('%{0}%'.format(param)),
-                                            models.Users.name.like('%{0}%'.format(param)))).
+                                 filter(or_(models.WallMessages.message.ilike('%{0}%'.format(param)),
+                                            models.Users.name.ilike('%{0}%'.format(param)))).
                                  order_by(desc(models.WallMessages.id)).all())
 
     for message in wall_messages_list:
