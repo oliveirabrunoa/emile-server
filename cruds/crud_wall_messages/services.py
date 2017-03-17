@@ -13,6 +13,7 @@ import settings
 import json
 from pyfcm import FCMNotification
 from sqlalchemy import desc
+from sqlalchemy import or_
 
 
 
@@ -74,3 +75,27 @@ def send_message(users_tokens, body):
         return True
     except Exception as e:
         return False
+
+
+@wall_messages.route('/search_wall_messages/<user_id>/<param>', methods=['GET'])
+def search_wall_messages(user_id, param):
+    user = models.Users.query.get(user_id)
+    messages = []
+    today = datetime.date.today().toordinal()
+    wall_messages_list = (db.session.query(models.WallMessages).
+                                 filter(models.WallMessages.date >= datetime.date.fromordinal(today-14)).
+                                 filter(models.Users.id==models.WallMessages.sender).
+                                 filter(or_(models.WallMessages.message.ilike('%{0}%'.format(param)),
+                                            models.Users.name.ilike('%{0}%'.format(param)))).
+                                 order_by(desc(models.WallMessages.id)).all())
+
+    for message in wall_messages_list:
+        users = set(message.get_destinations() + message.get_sender())
+
+        if user in users:
+            messages.append(message)
+
+    return jsonify(get_paginated_list([message.serialize() for message in messages],
+		                              '/search_wall_messages/{0}/{1}'.format(str(user.id),param),
+                                      start=int(request.args.get('start', 1)),
+                                      limit=int(request.args.get('limit', settings.PAGINATION_SIZE)))), 200
