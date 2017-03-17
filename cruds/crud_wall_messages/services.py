@@ -5,6 +5,7 @@ from cruds.crud_user_type_destinations.models import UserTypeDestinations
 from cruds.crud_user_type_destinations_user_type.models import UserTypeDestinationsUserType
 from cruds.crud_user_type.models import UserType
 from cruds.crud_wall_messages.models import WallMessages
+from cruds import get_paginated_list
 import pytz
 import datetime
 import requests
@@ -12,6 +13,8 @@ import settings
 import json
 from pyfcm import FCMNotification
 from sqlalchemy import desc
+
+
 
 
 wall_messages = Blueprint("wall_messages", __name__)
@@ -33,7 +36,10 @@ def get_wall_messages(user_id):
         if user in users:
             messages.append(message)
 
-    return jsonify(wall_messages=[message.serialize() for message in messages]), 200
+    return jsonify(get_paginated_list([message.serialize() for message in messages],
+		                              '/wall_messages/' + str(user.id),
+                                      start=int(request.args.get('start', 1)),
+                                      limit=int(request.args.get('limit', settings.PAGINATION_SIZE)))), 200
 
 
 @wall_messages.route('/wall_push_notification', methods=['POST'])
