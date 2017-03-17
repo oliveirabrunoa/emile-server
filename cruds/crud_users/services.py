@@ -35,19 +35,12 @@ def add_student():
     data = dict(request.get_json())
 
     user = models.Users()
-    user.set_fields(dict(username=None, gender=None, address=None,birth_date=None,name=data['name'],email=data['email'], password=data['password'], program_id=data['program_id'], type=1))
+    user.set_fields(dict(username=None, gender=None, address=None,birth_date=None,name=data.get('name'),email=data.get('email'), password=data.get('password'), program_id=data.get('program_id'), type=1))
     db.session.add(user)
-    db.session.commit()
 
-    course_sections_ids = data['course_sections']
-
-    for course_sections_id in course_sections_ids:
-        course_section = CourseSections.query.get(course_sections_id)
-        student = models.Users.query.filter_by(email=data['email']).first()
-
-        course_section_students = CourseSectionStudents(course_section_id=course_sections_id, user_id=student.id, grade=0, status=1)
-        course_section_students.course_section = course_section
-        student.course_sections.append(course_section_students)
+    course_sections_ids = data.get('course_sections')
+    if course_sections_ids:
+        user.save_course_sections(course_sections_ids)
 
     db.session.commit()
 
@@ -62,10 +55,18 @@ def user_details(user_id):
 
 @users.route('/update_user/<user_id>', methods=['POST'])
 def update_user(user_id):
+    data = dict(request.get_json())
+
     user = models.Users.query.get(user_id)
 
     if user:
-        user.set_fields(dict(request.get_json()))
+        user.set_fields(data)
+
+        course_sections_ids = data.get('course_sections')
+        if course_sections_ids:
+            user.delete_course_sections()
+            user.save_course_sections(course_sections_ids)
+
         db.session.commit()
         return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(id=user_id)])
     return jsonify(result='invalid user id')

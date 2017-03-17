@@ -2,6 +2,8 @@ import datetime
 from backend import db
 from cruds.crud_user_type.models import UserType
 from cruds.crud_program.models import Program
+from cruds.crud_course_sections.models import CourseSections
+from cruds.crud_course_section_students.models import CourseSectionStudents
 import os
 import settings
 import requests
@@ -41,6 +43,17 @@ class Users(db.Model):
             'image_path': self.image_path,
             'course_sections':[course_section.course_section_id for course_section in self.course_sections if course_section.status==1]
         }
+
+    def delete_course_sections(self):
+        (db.session.query(CourseSectionStudents).filter(CourseSectionStudents.user_id==self.id)
+                                                .filter(CourseSectionStudents.status==1).delete())
+
+    def save_course_sections(self, course_sections_ids):
+        for course_sections_id in course_sections_ids:
+            course_section = CourseSections.query.get(course_sections_id)
+            course_section_students = CourseSectionStudents(grade=0, status=1)
+            course_section_students.course_section = course_section
+            self.course_sections.append(course_section_students)
 
     def set_fields(self, fields):
         self.username = fields.get('username')

@@ -1,6 +1,5 @@
 from backend import db
 from cruds.crud_courses.models import Courses
-from cruds.crud_users.models import Users
 
 
 class CourseSections(db.Model):
