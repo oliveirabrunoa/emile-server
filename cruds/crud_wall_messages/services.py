@@ -12,6 +12,7 @@ import settings
 import json
 from pyfcm import FCMNotification
 from sqlalchemy import desc
+from sqlalchemy import or_
 
 
 wall_messages = Blueprint("wall_messages", __name__)
@@ -69,3 +70,24 @@ def send_message(users_tokens, body):
         return True
     except Exception as e:
         return False
+
+
+@wall_messages.route('/search_wall_messages/<user_id>/<param>', methods=['GET'])
+def search_wall_messages(user_id, param):
+    user = models.Users.query.get(user_id)
+    messages = []
+    today = datetime.date.today().toordinal()
+    wall_messages_list = (db.session.query(models.WallMessages).
+                                 filter(models.WallMessages.date >= datetime.date.fromordinal(today-14)).
+                                 filter(models.Users.id==models.WallMessages.sender).
+                                 filter(or_(models.WallMessages.message.like('%{0}%'.format(param)),
+                                            models.Users.name.like('%{0}%'.format(param)))).
+                                 order_by(desc(models.WallMessages.id)).all())
+
+    for message in wall_messages_list:
+        users = set(message.get_destinations() + message.get_sender())
+
+        if user in users:
+            messages.append(message)
+
+    return jsonify(wall_messages=[message.serialize() for message in messages]), 200
