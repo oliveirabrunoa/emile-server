@@ -96,4 +96,7 @@ def search_wall_messages(user_id, param):
         if user in users:
             messages.append(message)
 
-    return jsonify(wall_messages=[message.serialize() for message in messages]), 200
+    return jsonify(get_paginated_list([message.serialize() for message in messages],
+		                              '/search_wall_messages/{0}/{1}'.format(str(user.id),param),
+                                      start=int(request.args.get('start', 1)),
+                                      limit=int(request.args.get('limit', settings.PAGINATION_SIZE)))), 200
