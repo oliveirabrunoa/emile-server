@@ -83,16 +83,7 @@ def students_program_history(student_id):
 
 
 def course_times(course, student):
-    course_aggregation = (db.session.query(func.count(CourseSectionStudents.id)).
-                                    filter(CourseSectionStudents.course_section_id == CourseSections.id).
-                                    filter(CourseSections.course_id == Courses.id).
-                                    filter(Courses.program_id == Program.id).
-                                    filter(Program.id == student.program_id).
-                                    filter(CourseSectionStudents.user_id == student.id).
-                                    filter(Courses.id == course.id).
-                                    filter(or_ (CourseSectionStudents.status == 2,
-                                                CourseSectionStudents.status == 3)).
-                                    group_by(Courses.code,Courses.program_section).order_by(Courses.program_section).first())
+    course_aggregation = models.Program.manager.course_times_by_student(course, student)
 
     return course_aggregation[0] if course_aggregation else 0
 

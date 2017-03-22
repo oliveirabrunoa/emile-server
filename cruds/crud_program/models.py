@@ -1,5 +1,6 @@
 from backend import db
 from cruds.crud_institution.models import Institution
+from . import manager
 
 
 class Program(db.Model):
@@ -11,6 +12,8 @@ class Program(db.Model):
     total_credits = db.Column(db.Integer)
     institution_id = db.Column(db.Integer, db.ForeignKey('institution.id'))
     courses = db.relationship('Courses')
+    manager = manager.Manager()
+
 
     def serialize(self):
         return {
