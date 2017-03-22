@@ -37,11 +37,11 @@ class Users(db.Model):
             'birth_date': datetime.date.strftime(self.birth_date, "%m-%d-%Y") if self.birth_date  else self.birth_date,
             'gender': self.gender,
             'address': self.address,
-            'program_id': self.program_id,
+            'program_id': [dict(id=program.id, name=program.name) for program in Program.query.filter_by(id=self.program_id)],
             'push_notification_token': self.push_notification_token,
             'type': UserType.query.filter_by(id=self.type).first().serialize(),
             'image_path': self.image_path,
-            'course_sections':[course_section.course_section_id for course_section in self.course_sections if course_section.status==1]
+            'course_sections':[dict(id=course_section_students.course_section.id, code=course_section_students.course_section.code) for course_section_students in self.course_sections if course_section_students.status==1]
         }
 
     def delete_course_sections(self):
