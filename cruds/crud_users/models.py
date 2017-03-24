@@ -1,9 +1,5 @@
 import datetime
 from backend import db
-from cruds.crud_user_type.models import UserType
-from cruds.crud_program.models import Program
-from cruds.crud_course_sections.models import CourseSections
-from cruds.crud_course_section_students.models import CourseSectionStudents
 import os
 import settings
 import requests
@@ -37,9 +33,9 @@ class Users(db.Model):
             'birth_date': datetime.date.strftime(self.birth_date, "%m-%d-%Y") if self.birth_date  else self.birth_date,
             'gender': self.gender,
             'address': self.address,
-            'program_id': [dict(id=program.id, name=program.name) for program in Program.query.filter_by(id=self.program_id)],
+            'program_id': self.program_id,
             'push_notification_token': self.push_notification_token,
-            'type': UserType.query.filter_by(id=self.type).first().serialize(),
+            'type': self.type,
             'image_path': self.image_path,
             'course_sections':[dict(id=course_section_students.course_section.id, code=course_section_students.course_section.code) for course_section_students in self.course_sections if course_section_students.status==1]
         }

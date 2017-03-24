@@ -1,6 +1,7 @@
 from backend import db
 from cruds.crud_courses.models import Courses
 from cruds.crud_course_section_students_status.models import CourseSectionStudentsStatus
+from . import manager
 
 
 class CourseSectionStudents(db.Model):
@@ -11,6 +12,7 @@ class CourseSectionStudents(db.Model):
     status = db.Column(db.Integer, db.ForeignKey('course_section_students_status.id'), nullable=False)
     grade = db.Column(db.Float, nullable=True)
     __table_args__ = (db.UniqueConstraint('course_section_id','user_id', name='course_section_user_uc'),)
+    manager = manager.Manager()
 
     def serialize(self):
         return {
