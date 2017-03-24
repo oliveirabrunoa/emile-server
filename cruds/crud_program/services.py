@@ -66,15 +66,8 @@ def students_program_history(student_id):
     program_details = {"hours_completed":hours_completed, "credits_completed":credits_completed ,"total_credits": program.total_credits, "total_hours": program.total_hours}
     for course in program.courses:
         _dict = {"course": course.serialize()}
-        last_course_section_student = last_course_section_students(course, student)
+        _dict.update(last_status_and_grade(course, student))
         times = course_times(course, student)
-
-        if not last_course_section_student:
-            _dict['status'] = CourseSectionStudentsStatus.query.get(4).serialize()
-            _dict['grade']= 0
-        else:
-            _dict['status']= CourseSectionStudentsStatus.query.get(last_course_section_student.status).serialize()
-            _dict['grade']= last_course_section_student.grade
         _dict['times']= times
 
         students_program_history_list.append(_dict)
@@ -89,32 +82,17 @@ def course_times(course, student):
 
 
 def program_current_progress(student):
-    total_hours = 0
-    total_credits = 0
-    program_progress = (db.session.query(Courses.hours, Courses.credits).
-                                    filter(CourseSectionStudents.course_section_id == CourseSections.id).
-                                    filter(CourseSections.course_id == Courses.id).
-                                    filter(Courses.program_id == Program.id).
-                                    filter(Program.id == student.program_id).
-                                    filter(CourseSectionStudents.user_id == student.id).
-                                    filter(CourseSectionStudents.status == 2).
-                                    order_by(Courses.program_section).all())
-
-    for hours,credits in program_progress:
-        total_hours = total_hours + hours
-        total_credits = total_credits + credits
-
-    return total_hours, total_credits
+    return models.Program.manager.hours_and_credits_completed(student)
 
 
-def last_course_section_students(course, student):
-    course_section_student = (db.session.query(CourseSectionStudents).
-                                    filter(CourseSectionStudents.course_section_id == CourseSections.id).
-                                    filter(CourseSections.course_id == Courses.id).
-                                    filter(Courses.program_id == Program.id).
-                                    filter(Program.id == student.program_id).
-                                    filter(CourseSectionStudents.user_id == student.id).
-                                    filter(Courses.id == course.id).
-                                    order_by(CourseSections.course_section_period.desc()).first())
+def last_status_and_grade(course, student):
+    course_section_student = models.Program.manager.last_course_section_student(course, student)
+    _dict = {}
 
-    return course_section_student
+    if not course_section_student:
+        _dict['status'] = CourseSectionStudentsStatus.query.get(4).serialize()
+        _dict['grade']= 0
+    else:
+        _dict['status']= CourseSectionStudentsStatus.query.get(course_section_student.status).serialize()
+        _dict['grade']= course_section_student.grade
+    return _dict
