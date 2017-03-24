@@ -14,5 +14,5 @@ class Manager:
     def course_sections_students(self, course_sections_list):
         course_section_students=[]
         for course_section in course_sections_list:
-            course_section_students.extend(models.CourseSectionStudents.query.filter_by(course_section_id=course_section.id).all())
+            course_section_students.extend(models.CourseSectionStudents.query.filter_by(course_section_id=course_section.id, status=1).all())
         return [Users.query.get(cs.user_id) for cs in course_section_students]
