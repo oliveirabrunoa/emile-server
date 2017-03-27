@@ -7,7 +7,7 @@ from cruds.crud_user_type_destinations.models import UserTypeDestinations
 
 class WallMessages(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    date = db.Column(db.Date())
+    date = db.Column(db.Integer)
     sender = db.Column(db.Integer, db.ForeignKey("users.id"))
     destination = db.Column(db.Integer, db.ForeignKey("user_type_destinations.id"))
     param_value = db.Column(db.Integer())
@@ -16,7 +16,7 @@ class WallMessages(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'date': datetime.date.strftime(self.date, "%m-%d-%Y"),
+            'date': self.date,
             'sender': Users.query.get(self.sender).serialize(),
             'user_type_destination_id': self.destination,
             'param_value': self.param_value,
@@ -24,7 +24,7 @@ class WallMessages(db.Model):
         }
 
     def set_fields(self, fields):
-        self.date = datetime.datetime.strptime(fields['date'], "%m-%d-%Y").date()
+        self.date = fields['date']
         self.sender = fields['sender']
         self.destination = fields['user_type_destination_id']
         self.param_value = fields['parameter']
