@@ -6,6 +6,7 @@ from cruds.crud_course_section_students.models import CourseSectionStudents
 from cruds.crud_program.models import Program
 from cruds.crud_courses.models import Courses
 from cruds.crud_institution.models import Institution
+from cruds.crud_users.models import Users
 import os
 from werkzeug.utils import secure_filename
 import settings
@@ -50,7 +51,11 @@ def add_student():
 
 @users.route('/user_details/<user_id>', methods=['GET'])
 def user_details(user_id):
-    return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(id=user_id)])
+    user = Users.query.get(user_id)
+    print(user)
+    user_type = UserType.query.get(user.type)
+    program = Program.query.get(user.program_id)
+    return jsonify(user=dict(user.serialize(), type=user_type.serialize(),program_id=dict(id=program.id, abbreviation=program.abbreviation, name=program.name)))
 
 
 @users.route('/update_user/<user_id>', methods=['POST'])

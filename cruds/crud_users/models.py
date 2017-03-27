@@ -33,9 +33,7 @@ class Users(db.Model):
             'birth_date': datetime.date.strftime(self.birth_date, "%m-%d-%Y") if self.birth_date  else self.birth_date,
             'gender': self.gender,
             'address': self.address,
-            'program_id': self.program_id,
             'push_notification_token': self.push_notification_token,
-            'type': self.type,
             'image_path': self.image_path,
             'course_sections':[dict(id=course_section_students.course_section.id, code=course_section_students.course_section.code) for course_section_students in self.course_sections if course_section_students.status==1]
         }
