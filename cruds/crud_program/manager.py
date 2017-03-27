@@ -3,6 +3,7 @@ from . import models
 from cruds.crud_courses.models import Courses
 from cruds.crud_course_section_students.models import CourseSectionStudents
 from cruds.crud_course_sections.models import CourseSections
+from cruds.crud_users.models import Users
 from sqlalchemy import or_, func
 
 
@@ -39,3 +40,9 @@ class Manager:
                                         filter(CourseSectionStudents.user_id == student.id).
                                         filter(Courses.id == course.id).
                                         order_by(CourseSections.course_section_period.desc()).first())
+
+    def programs_users(self, program_id, user_type):
+        return (db.session.query(Users).
+                                        filter(models.Program.id==Users.program_id).
+                                        filter(models.Program.id==program_id).
+                                        filter(Users.type==user_type).all())
