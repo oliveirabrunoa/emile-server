@@ -14,6 +14,7 @@ import json
 from pyfcm import FCMNotification
 from sqlalchemy import desc
 from sqlalchemy import or_
+import calendar
 
 
 
@@ -27,8 +28,9 @@ def get_wall_messages(user_id):
     user = models.Users.query.get(user_id)
     messages = []
     today = datetime.date.today().toordinal()
+    today_time_stamp = calendar.timegm(datetime.datetime.now(tz=pytz.timezone('America/Bahia')).timetuple())
     wall_messages_list = (db.session.query(models.WallMessages).
-                                 filter(models.WallMessages.date >= datetime.date.fromordinal(today-14)).
+                                 filter(models.WallMessages.date >= today_time_stamp - (86400 * 14)).
                                  order_by(desc(models.WallMessages.id)).all())
 
     for message in wall_messages_list:
@@ -52,8 +54,8 @@ def wall_push_notification():
     message = post_message['message']
     sender = post_message['sender']
 
-    today = datetime.datetime.now(tz=pytz.timezone('America/Bahia'))
-    post_message['date'] = datetime.datetime.strftime(today,'%m-%d-%Y')
+    today_time_stamp = calendar.timegm(datetime.datetime.now(tz=pytz.timezone('America/Bahia')).timetuple())
+    post_message['date'] = today_time_stamp
     wall_message = models.WallMessages()
     wall_message.set_fields(post_message)
 
@@ -81,9 +83,9 @@ def send_message(users_tokens, body):
 def search_wall_messages(user_id, param):
     user = models.Users.query.get(user_id)
     messages = []
-    today = datetime.date.today().toordinal()
+    today_time_stamp = calendar.timegm(datetime.datetime.now(tz=pytz.timezone('America/Bahia')).timetuple())
     wall_messages_list = (db.session.query(models.WallMessages).
-                                 filter(models.WallMessages.date >= datetime.date.fromordinal(today-14)).
+                                 filter(models.WallMessages.date >= today_time_stamp - (86400 * 14)).
                                  filter(models.Users.id==models.WallMessages.sender).
                                  filter(or_(models.WallMessages.message.ilike('%{0}%'.format(param)),
                                             models.Users.name.ilike('%{0}%'.format(param)))).
