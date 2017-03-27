@@ -52,7 +52,6 @@ def add_student():
 @users.route('/user_details/<user_id>', methods=['GET'])
 def user_details(user_id):
     user = Users.query.get(user_id)
-    print(user)
     user_type = UserType.query.get(user.type)
     program = Program.query.get(user.program_id)
     return jsonify(user=dict(user.serialize(), type=user_type.serialize(),program_id=dict(id=program.id, abbreviation=program.abbreviation, name=program.name)))
