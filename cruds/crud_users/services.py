@@ -62,6 +62,7 @@ def update_user(user_id):
     data = dict(request.get_json())
 
     user = models.Users.query.get(user_id)
+    user_type = UserType.query.get(user.type)
 
     if user:
         user.set_fields(data)
@@ -72,7 +73,7 @@ def update_user(user_id):
             user.save_course_sections(course_sections_ids)
 
         db.session.commit()
-        return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(id=user_id)])
+        return jsonify(user=dict(user.serialize(), type=user_type.serialize(),program_id=dict(id=program.id, abbreviation=program.abbreviation, name=program.name)))
     return jsonify(result='invalid user id')
 
 
