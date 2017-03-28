@@ -156,7 +156,7 @@ def update_user_image(user_id):
         return jsonify(user=dict(models.Users.query.get(user_id).serialize()),type=user_type.serialize()), 400
 
     db.session.commit()
-    return jsonify(user=dict(models.Users.query.get(user_id).serialize()), type=user_type.serialize()), 200
+    return jsonify(user=dict(models.Users.query.get(user_id).serialize(), type=user_type.serialize()), 200
 
 def allowed_file(filename):
     return '.' in filename and (filename.rsplit('.', 1)[1].lower() in settings.ALLOWED_EXTENSIONS or 'asset.JPG' in filename)
