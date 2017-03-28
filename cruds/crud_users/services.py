@@ -11,6 +11,7 @@ import os
 from werkzeug.utils import secure_filename
 import settings
 from cruds.crud_user_type.models import UserType
+from . import serializer
 
 
 users = Blueprint("user", __name__)
@@ -44,17 +45,21 @@ def add_student():
         user.save_course_sections(course_sections_ids)
 
     db.session.commit()
+    user = models.Users.query.filter_by(email=user.email)
+    user_serialized = serializer.UsersSerializer().serialize([user])
 
-    return jsonify(user=[user.serialize() for user in models.Users.query.filter_by(email=user.email)]), 200
-
+    return jsonify(user=user_serialized), 200
 
 
 @users.route('/user_details/<user_id>', methods=['GET'])
 def user_details(user_id):
     user = Users.query.get(user_id)
-    user_type = UserType.query.get(user.type)
-    program = Program.query.get(user.program_id)
-    return jsonify(user=dict(user.serialize(), type=user_type.serialize(),program_id=dict(id=program.id, abbreviation=program.abbreviation, name=program.name)))
+
+    if not user:
+        return jsonify(result='Invalid user id'), 404
+
+    user_serialized = serializer.UsersSerializer().serialize([user])
+    return jsonify(user=user_serialized), 200
 
 
 @users.route('/update_user/<user_id>', methods=['POST'])
@@ -73,7 +78,8 @@ def update_user(user_id):
             user.save_course_sections(course_sections_ids)
 
         db.session.commit()
-        return jsonify(user=dict(user.serialize(), type=user_type.serialize()))
+        user_serialized = serializer.UsersSerializer().serialize([user])
+        return jsonify(user=user_serialized)
     return jsonify(result='invalid user id')
 
 
@@ -84,7 +90,9 @@ def delete_user(user_id):
     if user:
         db.session.delete(user)
         db.session.commit()
-        return jsonify(users=[user.serialize() for user in models.Users.query.all()])
+        users = models.Users.query.all()
+        users_serialized = serializer.UsersSerializer().serialize([users])
+        return jsonify(users=users_serialized)
     return jsonify(result='invalid user id')
 
 
@@ -130,7 +138,8 @@ def token_register(user_id):
     if user:
         user.push_notification_token = post_message['push_notification_token']
         db.session.commit()
-        return jsonify(user= user.serialize()), 200
+        user_serialized = serializer.UsersSerializer().serialize([user])
+        return jsonify(user= user_serialized), 200
 
     return jsonify(result = 'invalid user id'), 404
 
@@ -138,7 +147,7 @@ def token_register(user_id):
 @users.route('/update_user_image/<user_id>', methods=['POST'])
 def update_user_image(user_id):
     user = models.Users.query.get(user_id)
-    user_type = UserType.query.get(user.type)
+    user_serialized = serializer.UsersSerializer().serialize([user])
     if not user:
         return jsonify(result='invalid user id'), 404
     if 'image_file' not in request.files:
@@ -153,10 +162,11 @@ def update_user_image(user_id):
 
     filename = secure_filename(file.filename)
     if not user.save_image(file):
-        return jsonify(user=dict(models.Users.query.get(user_id).serialize()),type=user_type.serialize()), 400
+        return jsonify(user=user_serialized), 400
 
     db.session.commit()
-    return jsonify(user=dict(models.Users.query.get(user_id).serialize(), type=user_type.serialize())), 200
+    user_serialized = serializer.UsersSerializer().serialize([user])
+    return jsonify(user=user_serialized), 200
 
 def allowed_file(filename):
     return '.' in filename and (filename.rsplit('.', 1)[1].lower() in settings.ALLOWED_EXTENSIONS or 'asset.JPG' in filename)

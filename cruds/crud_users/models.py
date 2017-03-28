@@ -22,22 +22,7 @@ class Users(db.Model):
     image_path = db.Column(db.Text(), nullable=True)
     course_sections = db.relationship('CourseSectionStudents', cascade="save-update, merge, delete")
 
-    def serialize(self):
-
-        return {
-            'id': self.id,
-            'username': self.username,
-            'email': self.email,
-            'name': self.name,
-            'password': self.password,
-            'birth_date': datetime.date.strftime(self.birth_date, "%m-%d-%Y") if self.birth_date  else self.birth_date,
-            'gender': self.gender,
-            'address': self.address,
-            'push_notification_token': self.push_notification_token,
-            'image_path': self.image_path,
-            'course_sections':[dict(id=course_section_students.course_section.id, code=course_section_students.course_section.code) for course_section_students in self.course_sections if course_section_students.status==1]
-        }
-
+    
     def delete_course_sections(self):
         (db.session.query(CourseSectionStudents).filter(CourseSectionStudents.user_id==self.id)
                                                 .filter(CourseSectionStudents.status==1).delete())
