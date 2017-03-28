@@ -17,7 +17,7 @@ class WallMessages(db.Model):
         return {
             'id': self.id,
             'date': self.date,
-            'sender': dict(Users.query.get(self.sender).serialize(), UserType.query.get(Users.query.get(self.sender).type)),
+            'sender': dict(Users.query.get(self.sender).serialize(), type=UserType.query.get(Users.query.get(self.sender).type).serialize()),
             'user_type_destination_id': self.destination,
             'param_value': self.param_value,
             'message': self.message
