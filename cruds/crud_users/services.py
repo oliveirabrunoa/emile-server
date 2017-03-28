@@ -73,7 +73,7 @@ def update_user(user_id):
             user.save_course_sections(course_sections_ids)
 
         db.session.commit()
-        return jsonify(user=dict(user.serialize(), type=user_type.serialize(),program_id=dict(id=program.id, abbreviation=program.abbreviation, name=program.name)))
+        return jsonify(user=dict(user.serialize(), type=user_type.serialize()))
     return jsonify(result='invalid user id')
 
 
