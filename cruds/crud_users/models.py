@@ -22,7 +22,7 @@ class Users(db.Model):
     image_path = db.Column(db.Text(), nullable=True)
     course_sections = db.relationship('CourseSectionStudents', cascade="save-update, merge, delete")
 
-    
+
     def delete_course_sections(self):
         (db.session.query(CourseSectionStudents).filter(CourseSectionStudents.user_id==self.id)
                                                 .filter(CourseSectionStudents.status==1).delete())

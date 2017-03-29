@@ -42,14 +42,22 @@ def add_student():
 
     course_sections_ids = data.get('course_sections')
     if course_sections_ids:
-        user.save_course_sections(course_sections_ids)
+        user = save_course_sections(user, course_sections_ids)
 
     db.session.commit()
-    user = models.Users.query.filter_by(email=user.email)
+    user = models.Users.query.filter_by(email=user.email).first()
     user_serialized = serializer.UsersSerializer().serialize([user])
 
     return jsonify(user=user_serialized), 200
 
+def save_course_sections(user, course_sections_ids):
+    for course_sections_id in course_sections_ids:
+        course_section = CourseSections.query.get(course_sections_id)
+        course_section_students = CourseSectionStudents(grade=0, status=1)
+        course_section_students.course_section = course_section
+        user.course_sections.append(course_section_students)
+
+    return user
 
 @users.route('/user_details/<user_id>', methods=['GET'])
 def user_details(user_id):
