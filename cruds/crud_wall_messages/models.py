@@ -1,8 +1,7 @@
 import datetime
 from backend import db
-from cruds.crud_user_type.models import UserType
-from cruds.crud_users.models import Users
 from cruds.crud_user_type_destinations.models import UserTypeDestinations
+from cruds.crud_users.models import Users
 
 
 class WallMessages(db.Model):
@@ -12,16 +11,6 @@ class WallMessages(db.Model):
     destination = db.Column(db.Integer, db.ForeignKey("user_type_destinations.id"))
     param_value = db.Column(db.Integer())
     message = db.Column(db.String(140))
-
-    def serialize(self):
-        return {
-            'id': self.id,
-            'date': self.date,
-            'sender': dict(Users.query.get(self.sender).serialize(), type=UserType.query.get(Users.query.get(self.sender).type).serialize()),
-            'user_type_destination_id': self.destination,
-            'param_value': self.param_value,
-            'message': self.message
-        }
 
     def set_fields(self, fields):
         self.date = fields['date']

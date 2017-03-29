@@ -15,8 +15,8 @@ from pyfcm import FCMNotification
 from sqlalchemy import desc
 from sqlalchemy import or_
 import calendar
-
-
+from . import serializer
+from cruds.crud_users.models import Users
 
 
 wall_messages = Blueprint("wall_messages", __name__)
@@ -25,7 +25,7 @@ push_service = FCMNotification(api_key=settings.PUSH_NOTIFICATIONS_SETTINGS['API
 
 @wall_messages.route('/wall_messages/<user_id>', methods=['GET'])
 def get_wall_messages(user_id):
-    user = models.Users.query.get(user_id)
+    user = Users.query.get(user_id)
     messages = []
     today = datetime.date.today().toordinal()
     today_time_stamp = calendar.timegm(datetime.datetime.now(tz=pytz.timezone('America/Bahia')).timetuple())
@@ -39,7 +39,8 @@ def get_wall_messages(user_id):
         if user in users:
             messages.append(message)
 
-    return jsonify(get_paginated_list([message.serialize() for message in messages],
+    messages_serialized = serializer.WallMessagesSerializer().serialize(messages)
+    return jsonify(get_paginated_list([messages_serialized],
 		                              '/wall_messages/' + str(user.id),
                                       start=int(request.args.get('start', 1)))), 200
 
