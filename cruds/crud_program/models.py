@@ -12,7 +12,7 @@ class Program(db.Model):
     total_credits = db.Column(db.Integer)
     institution_id = db.Column(db.Integer, db.ForeignKey('institution.id'))
     courses = db.relationship('Courses')
-    coordinator_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    #coordinator_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     manager = manager.Manager()
 
 
