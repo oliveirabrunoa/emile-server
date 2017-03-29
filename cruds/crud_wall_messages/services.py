@@ -66,7 +66,8 @@ def wall_push_notification():
     db.session.add(wall_message)
     db.session.commit()
 
-    return jsonify(wall_message=[message.serialize() for message in models.WallMessages.query.filter_by(sender=sender).all()]), 200
+    message_serialized = serializer.WallMessagesSerializer().serialize(models.WallMessages.query.filter_by(sender=sender).all())
+    return jsonify(wall_messages=message_serialized), 200
 
 
 def send_message(users_tokens, body):
@@ -97,8 +98,7 @@ def search_wall_messages(user_id, param):
 
         if user in users:
             messages.append(message)
-
-    return jsonify(get_paginated_list([message.serialize() for message in messages],
+    messages_serialized = serializer.WallMessagesSerializer().serialize(messages)
+    return jsonify(get_paginated_list([messages_serialized],
 		                              '/search_wall_messages/{0}/{1}'.format(str(user.id),param),
-                                      start=int(request.args.get('start', 1)),
-                                      limit=int(request.args.get('limit', settings.PAGINATION_SIZE)))), 200
+                                      start=int(request.args.get('start', 1)))), 200

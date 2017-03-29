@@ -15,9 +15,9 @@ class WallMessagesSerializer:
             data.append(
             {'id': message.id,
             'date': message.date,
-            'sender': dict(id=sender['id'], name=sender['name'],email=sender['email'],program_id=sender['program_id']),
+            'sender': dict(id=sender['id'], name=sender['name'],email=sender['email'],program_id=sender['program_id'], type=sender['type']),
             #'user_type_destination_id': message.destination,
             'message': message.message
             })
 
-        return data 
+        return data
