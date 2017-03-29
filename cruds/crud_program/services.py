@@ -17,8 +17,7 @@ program = Blueprint("program", __name__)
 
 @program.route('/programs', methods=['GET'])
 def programs():
-    return jsonify(programs=[dict(id=program.id, name=program.name, abbreviation=program.abbreviation,
-                                  coordinator=program.coordinator_id) for program in Program.query.all()])
+    return jsonify(programs=[dict(id=program.id, name=program.name, abbreviation=program.abbreviation) for program in Program.query.all()])
 
 
 @program.route('/programs_course_sections/<program_id>', methods=['GET'])
