@@ -11,6 +11,7 @@ class ProgramLoader(CSVLoader):
             row[3] - total_hours;
             row[4] - total_credits;
             row[5] - institution_cnpj
+            row[6] - coordinator_id
         """
         program_class = self.import_relative_path('cruds.crud_program.models.Program')
 
@@ -25,6 +26,7 @@ class ProgramLoader(CSVLoader):
         obj.total_hours = row[3]
         obj.total_credits = row[4]
         obj.institution_id = self.session.query(Institution).filter(Institution.cnpj==row[5]).first().id
+        obj.coordinator_id = row[6]
 
         return obj
 
