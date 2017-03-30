@@ -11,6 +11,7 @@ from cruds.crud_institution.models import Institution
 import pytz
 import datetime
 from sqlalchemy import and_
+from . import serializer
 
 
 section_times = Blueprint("section_times", __name__)
@@ -18,7 +19,8 @@ section_times = Blueprint("section_times", __name__)
 
 @section_times.route('/section_times', methods=['GET'])
 def get_section_times():
-    return jsonify(section_times=[section_times.serialize() for section_times in models.SectionTimes.query.all()])
+    section_times = serializer.SectionTimeSerializer().serialize(models.SectionTimes.query.all())
+    return jsonify(section_times=section_times)
 
 
 @section_times.route('/teachers_section_times/<teacher_id>', methods=['GET'])
@@ -29,7 +31,9 @@ def teachers_section_times(teacher_id):
                                                             filter(models.SectionTimes.course_section_id == CourseSections.id).
                                                             filter(CourseSections.teacher_id == teacher_id).
                                                             filter(CourseSections.course_section_period == Institution.current_program_section).all())
-    return jsonify(section_times=[section_time.serialize() for section_time in section_times])
+
+    section_times_list = serializer.SectionTimeSerializer().serialize(section_times)
+    return jsonify(section_times=section_times_list)
 
 
 @section_times.route('/section_time_in_progress/<teacher_id>', methods=['GET'])
@@ -46,7 +50,8 @@ def section_time_in_progress(teacher_id):
                        filter(models.SectionTimes.week_day == datetime.datetime.now(tz=pytz.timezone('America/Bahia')).weekday()).
                        filter(CourseSections.course_section_period == Institution.current_program_section).all())
 
-    return jsonify(section_times=[section_time.serialize() for section_time in section_times])
+    section_times_list = serializer.SectionTimeSerializer().serialize(section_times)
+    return jsonify(section_times=section_times_list)
 
 
 @section_times.route('/student_attendance_register/<course_section_id>', methods=['POST'])

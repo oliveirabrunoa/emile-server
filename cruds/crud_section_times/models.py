@@ -12,15 +12,6 @@ class SectionTimes(db.Model):
     student_attendance = db.relationship("StudentAttendance")
 
 
-    def serialize(self):
-        return {
-            'id': self.id,
-            'week_day': self.week_day,
-            'section_time_start_time': self.section_time_start_time.strftime("%H:%M:%S"),
-            'section_time_finish_time':self.section_time_finish_time.strftime("%H:%M:%S"),
-            'course_section': self.course_section.serialize(),
-        }
-
     def set_fields(self, fields):
         self.course_section_id = fields['course_section_id']
         self.section_time_start_time = datetime.datetime.strptime(fields['section_time_start_time'], "%H:%M:%S").time()
