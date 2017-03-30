@@ -14,14 +14,6 @@ class CourseSectionStudents(db.Model):
     __table_args__ = (db.UniqueConstraint('course_section_id','user_id', name='course_section_user_uc'),)
     manager = manager.Manager()
 
-    def serialize(self):
-        return {
-            'course_section_id': self.course_section_id,
-            'user_id': self.user_id,
-            'status': CourseSectionStudentsStatus.query.get(self.status).serialize(),
-            'grade': self.grade
-        }
-
     def set_fields(self, fields):
         self.course_section_id = fields['course_section_id']
         self.user_id = fields['user_id']

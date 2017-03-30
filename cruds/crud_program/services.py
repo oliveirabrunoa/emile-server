@@ -8,6 +8,7 @@ from cruds.crud_course_section_students.models import CourseSectionStudents
 from cruds.crud_course_sections.models import CourseSections
 from sqlalchemy import and_, or_
 from cruds.crud_course_section_students_status.models import CourseSectionStudentsStatus
+from cruds.crud_course_section_students_status.serializer import CourseSectionStudentsStatusSerializer
 from sqlalchemy import func
 from cruds.crud_institution.models import Institution
 
@@ -90,9 +91,9 @@ def last_status_and_grade(course, student):
     _dict = {}
 
     if not course_section_student:
-        _dict['status'] = CourseSectionStudentsStatus.query.get(4).serialize()
+        _dict['status'] = CourseSectionStudentsStatusSerializer().serialize([CourseSectionStudentsStatus.query.get(4)])
         _dict['grade']= 0
     else:
-        _dict['status']= CourseSectionStudentsStatus.query.get(course_section_student.status).serialize()
+        _dict['status']= CourseSectionStudentsStatusSerializer().serialize([CourseSectionStudentsStatus.query.get(course_section_student.status)])
         _dict['grade']= course_section_student.grade
     return _dict
