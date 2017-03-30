@@ -11,14 +11,3 @@ class StudentAttendance(db.Model):
     status = db.Column(db.String(1))
     section_time_date = db.Column(db.Date())
     course_section_student = db.relationship("CourseSectionStudents")
-
-    def serialize(self):
-        return {
-            'id': self.id,
-            'section_time_id': self.section_time_id,
-            'course_section_student_id': self.course_section_student_id,
-            'status': self.status,
-            'section_time_date':  datetime.date.strftime(self.section_time_date, "%m-%d-%Y")
-        }
-
-

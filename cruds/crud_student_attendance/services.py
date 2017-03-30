@@ -4,6 +4,7 @@ from cruds.crud_users.models import Users
 from cruds.crud_course_sections.models import CourseSections
 from cruds.crud_course_section_students.models import CourseSectionStudents
 from backend import db
+from . import serializer
 
 
 student_attendance = Blueprint("student_attendance", __name__)
@@ -17,4 +18,5 @@ def students_attendance(course_section_id, student_id):
                                  filter(CourseSectionStudents.course_section_id == course_section_id).
                                  filter(CourseSectionStudents.user_id == student_id).all())
 
-    return jsonify(students_attendance=[student_attendance.serialize() for student_attendance in students_attendance_list])
+    students_attendance = serializer.StudentAttendanceSerializer().serialize(students_attendance_list)
+    return jsonify(students_attendance=students_attendance)

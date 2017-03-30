@@ -12,6 +12,7 @@ import pytz
 import datetime
 from sqlalchemy import and_
 from . import serializer
+from cruds.crud_student_attendance.serializer import StudentAttendanceSerializer
 
 
 section_times = Blueprint("section_times", __name__)
@@ -76,8 +77,8 @@ def student_attendance_register(course_section_id):
                 section_time.student_attendance.append(student_attendance)
 
         db.session.commit()
-        return jsonify(student_attendance=[student_attendance.serialize() for student_attendance in
-                                           section_time.student_attendance]), 200
+        student_attendance = StudentAttendanceSerializer.serialize(section_time.student_attendance)
+        return jsonify(student_attendance=student_attendance), 200
     except:
         return jsonify(result="Invalid request"), 404
 
