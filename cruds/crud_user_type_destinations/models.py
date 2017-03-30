@@ -11,13 +11,6 @@ class UserTypeDestinations(db.Model):
     user_type_destinations_user_types = db.relationship('UserTypeDestinationsUserType', cascade="save-update, merge, delete")
 
 
-    def serialize(self):
-        return {
-            'id': self.id,
-            'name':self.name,
-            'param_values_service':self.param_values_service
-        }
-
     def set_fields(self, fields):
         self.name = fields['name']
         self.param_values_service = fields['param_values_service']
