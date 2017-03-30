@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from . import models
 from backend import db
 from cruds.crud_courses.models import Courses
+from cruds.crud_courses.serializer import CoursesSerializer
 from cruds.crud_program.models import Program
 from cruds.crud_users.models import Users
 from cruds.crud_course_section_students.models import CourseSectionStudents
@@ -66,7 +67,7 @@ def students_program_history(student_id):
     hours_completed, credits_completed = program_current_progress(student)
     program_details = {"hours_completed":hours_completed, "credits_completed":credits_completed ,"total_credits": program.total_credits, "total_hours": program.total_hours}
     for course in program.courses:
-        _dict = {"course": course.serialize()}
+        _dict = {"course": CoursesSerializer().serialize([course])}
         _dict.update(last_status_and_grade(course, student))
         times = course_times(course, student)
         _dict['times']= times
