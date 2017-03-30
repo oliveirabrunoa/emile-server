@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from . import models
+from . import models, serializer
 from backend import db
 
 
@@ -8,20 +8,10 @@ courses = Blueprint("courses", __name__)
 
 @courses.route('/courses', methods=['GET'])
 def get_courses():
-    return jsonify(courses=[course.serialize() for course in models.Courses.query.all()])
-
-
-# @courses.route('/add_course', methods=['POST'])
-# def add_course():
-#     course = models.Courses()
-#     course.set_fields(dict(request.form.items()))
-#
-#     db.session.add(course)
-#     db.session.commit()
-#
-#     return jsonify(course=[course.serialize() for course in models.Courses.query.filter_by(code=course.code)])
+    return jsonify(courses=[serializer.CoursesSerializer().serialize([course]) for course in models.Courses.query.all()])
 
 
 @courses.route('/course_details/<course_id>', methods=['GET'])
 def course_details(course_id):
-    return jsonify(course=[course.serialize() for course in models.Courses.query.filter_by(id=course_id)])
+    course = models.Courses.query.get(course_id)
+    return jsonify(course=serializer.CoursesSerializer().serialize([course]))

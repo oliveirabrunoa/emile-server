@@ -13,18 +13,6 @@ class Courses(db.Model):
     program_id = db.Column(db.Integer, db.ForeignKey('program.id'), nullable=False)
     course_sections = db.relationship('CourseSections', backref='course', lazy='dynamic')
 
-    def serialize(self):
-        return {
-            'id': self.id,
-            'code': self.code,
-            'name': self.name,
-            'credits':self.credits,
-            'hours':self.hours,
-            'program_section':self.program_section,
-            'course_type_id':CourseType.query.get(self.course_type_id).serialize(),
-            'program_id':self.program_id
-        }
-
     def set_fields(self, fields):
         self.code = fields['code']
         self.name = fields['name']

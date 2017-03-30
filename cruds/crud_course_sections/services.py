@@ -4,6 +4,7 @@ from backend import db
 from cruds.crud_users.models import Users
 from cruds.crud_section_times.models import SectionTimes
 from cruds.crud_course_section_students.models import CourseSectionStudents
+from cruds.crud_course_sections.serializer import CourseSectionsSerializer
 import datetime
 from sqlalchemy import and_, or_
 
@@ -18,7 +19,7 @@ def get_course_section():
 
 @course_sections.route('/course_section_details/<course_section_id>', methods=['GET'])
 def course_section_details(course_section_id):
-    return jsonify(course_section=models.CourseSections.query.get(course_section_id).serialize())
+    return jsonify(course_section=CourseSectionsSerializer().serialize([models.CourseSections.query.get(course_section_id)]))
 
 
 @course_sections.route('/course_sections_students/<course_section_id>', methods=['GET'])

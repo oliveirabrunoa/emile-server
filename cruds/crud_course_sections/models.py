@@ -15,16 +15,6 @@ class CourseSections(db.Model):
 
     __table_args__ = (db.UniqueConstraint('course_id','teacher_id','course_section_period','code', name='course_section_period_uc'),)
 
-    def serialize(self):
-        return {
-            'id': self.id,
-            'code': self.code,
-            'name': self.name,
-            'course': Courses.query.get(self.course_id).serialize(),
-            'teacher_id':  self.teacher_id,
-            'course_section_period': self.course_section_period
-        }
-
     def set_fields(self, fields):
         self.code = fields['code']
         self.name = fields['name']
