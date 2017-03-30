@@ -12,6 +12,7 @@ from werkzeug.utils import secure_filename
 import settings
 from cruds.crud_user_type.models import UserType
 from . import serializer
+from cruds.crud_course_sections.serializer import CourseSectionsSerializer
 
 
 users = Blueprint("user", __name__)
@@ -115,7 +116,7 @@ def teachers_course_sections(teacher_id):
                                     filter(CourseSections.teacher_id==teacher_id).
                                     filter(CourseSections.course_section_period==Institution.current_program_section).all())
 
-        return jsonify(teachers_course_sections=[course_section.serialize() for course_section in teachers_course_sections])
+        return jsonify(teachers_course_sections= CourseSectionsSerializer().serialize(teachers_course_sections))
     return jsonify(result='invalid teacher id')
 
 
@@ -132,10 +133,9 @@ def students_course_sections(student_id):
 
     for course_section_student in students_course_sections_list:
         if course_section_student.status == 1:
-            current_course_sections.append(course_section_student)
+            current_course_sections.append(course_section_student.course_section)
 
-    return jsonify(students_course_sections=[course_sections_students.course_section.serialize() for course_sections_students in current_course_sections])
-
+    return jsonify(students_course_sections=CourseSectionsSerializer().serialize(current_course_sections))
 
 
 @users.route('/token_register/<user_id>', methods=['POST'])
