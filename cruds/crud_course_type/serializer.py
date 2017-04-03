@@ -11,4 +11,4 @@ class CourseTypeSerializer:
                 'description': course_type.description
             })
 
-        return data if len(data) > 1 else data[0]
+        return data 

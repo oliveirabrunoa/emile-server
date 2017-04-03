@@ -18,4 +18,4 @@ class CourseSectionStudentsSerializer:
                 'grade': course_section_student.grade
             })
 
-        return data if len(data) > 1 else data[0]
+        return data

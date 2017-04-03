@@ -19,4 +19,4 @@ class CourseSectionsSerializer:
                 'course_section_period': course_section.course_section_period
             })
 
-        return data if len(data) > 1 else data[0]
+        return data 

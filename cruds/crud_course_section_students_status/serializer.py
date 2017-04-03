@@ -11,4 +11,4 @@ class CourseSectionStudentsStatusSerializer:
                 'description': status.description
             })
 
-        return data if len(data) > 1 else data[0]
+        return data 
