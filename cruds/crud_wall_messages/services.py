@@ -40,7 +40,7 @@ def get_wall_messages(user_id):
             messages.append(message)
 
     messages_serialized = serializer.WallMessagesSerializer().serialize(messages)
-    return jsonify(get_paginated_list([messages_serialized],
+    return jsonify(get_paginated_list(messages_serialized,
 		                              '/wall_messages/' + str(user.id),
                                       start=int(request.args.get('start', 1)))), 200
 
@@ -99,6 +99,6 @@ def search_wall_messages(user_id, param):
         if user in users:
             messages.append(message)
     messages_serialized = serializer.WallMessagesSerializer().serialize(messages)
-    return jsonify(get_paginated_list([messages_serialized],
+    return jsonify(get_paginated_list(messages_serialized,
 		                              '/search_wall_messages/{0}/{1}'.format(str(user.id),param),
                                       start=int(request.args.get('start', 1)))), 200
