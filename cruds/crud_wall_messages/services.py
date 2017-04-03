@@ -61,8 +61,10 @@ def wall_push_notification():
     wall_message.set_fields(post_message)
 
     users = set(wall_message.get_destinations())
-    send_message([user.push_notification_token for user in users], message)
-
+    send_message([user.push_notification_token for user in users],
+                          message,
+                          wall_message.get_sender()[0],
+                          serializer.WallMessagesSerializer().serialize([wall_message])[0])
     db.session.add(wall_message)
     db.session.commit()
 
@@ -70,16 +72,15 @@ def wall_push_notification():
     return jsonify(wall_messages=message_serialized), 200
 
 
-def send_message(users_tokens, body):
+def send_message(users_tokens, body, sender, data_message=None):
     try:
         registration_ids = users_tokens
-        message_title = 'Nova mensagem do Émile'
+        message_title = 'Nova mensagem de {0}'.format(sender.name)
         message_body = body
-        result = push_service.notify_multiple_devices(registration_ids=registration_ids, message_title=message_title, message_body=message_body)
+        result = push_service.notify_multiple_devices(registration_ids=registration_ids, message_title=message_title, message_body=message_body, data_message=data_message)
         return True
-    except Exception as e:
+    except:
         return False
-
 
 @wall_messages.route('/search_wall_messages/<user_id>/<param>', methods=['GET'])
 def search_wall_messages(user_id, param):
