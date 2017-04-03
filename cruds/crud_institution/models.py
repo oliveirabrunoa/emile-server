@@ -10,15 +10,6 @@ class Institution(db.Model):
     current_program_section = db.Column(db.String(6))
     programs = db.relationship('Program', backref='institution', lazy='dynamic')
 
-    def serialize(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'abbreviation': self.abbreviation,
-            'cnpj':self.cnpj,
-            'address':self.address,
-            'current_program_section':self.current_program_section
-        }
 
     def set_fields(self, fields):
         self.name = fields['name']
