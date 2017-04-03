@@ -12,7 +12,8 @@ from cruds.crud_course_section_students_status.models import CourseSectionStuden
 from cruds.crud_course_section_students_status.serializer import CourseSectionStudentsStatusSerializer
 from sqlalchemy import func
 from cruds.crud_institution.models import Institution
-
+from . import serializer
+from cruds.crud_program.serializer import ProgramSerializer
 
 program = Blueprint("program", __name__)
 
@@ -51,7 +52,7 @@ def programs_courses(program_id):
     program = Program.query.get(program_id)
     if not program:
         return jsonify(result="invalid program id"), 404
-    return jsonify(program=program.serialize()), 200
+    return jsonify(program=ProgramSerializer().serialize([program])), 200
 
 
 @program.route('/students_program_history/<student_id>', methods=['GET'])

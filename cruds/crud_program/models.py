@@ -16,17 +16,6 @@ class Program(db.Model):
     manager = manager.Manager()
 
 
-    def serialize(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'abbreviation': self.abbreviation,
-            'total_hours': self.total_hours,
-            'total_credits':  self.total_credits,
-            'courses': [course.serialize() for course in self.courses],
-            'institution': Institution.query.get(self.institution_id).serialize()
-        }
-
     def set_fields(self, fields):
         self.name = fields['name']
         self.abbreviation = fields['abbreviation']

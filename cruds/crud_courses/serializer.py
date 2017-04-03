@@ -21,4 +21,4 @@ class CoursesSerializer:
                 'program_id':course.program_id
             })
 
-        return data if len(data) > 1 else data[0]
+        return data 
