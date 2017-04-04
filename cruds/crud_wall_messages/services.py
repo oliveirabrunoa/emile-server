@@ -61,10 +61,11 @@ def wall_push_notification():
     wall_message.set_fields(post_message)
 
     users = set(wall_message.get_destinations())
-    send_message([user.push_notification_token for user in users],
+    result = send_message([user.push_notification_token for user in users],
                           message,
                           wall_message.get_sender()[0],
                           serializer.WallMessagesSerializer().serialize([wall_message])[0])
+    print(result)
     db.session.add(wall_message)
     db.session.commit()
 
@@ -78,6 +79,7 @@ def send_message(users_tokens, body, sender, data_message=None):
         message_title = 'Nova mensagem de {0}'.format(sender.name)
         message_body = body
         result = push_service.notify_multiple_devices(registration_ids=registration_ids, message_title=message_title, message_body=message_body, data_message=data_message)
+        print(result)
         return True
     except:
         return False
