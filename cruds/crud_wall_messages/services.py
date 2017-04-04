@@ -78,7 +78,7 @@ def send_message(users_tokens, body, sender, data_message=None):
         registration_ids = users_tokens
         message_title = 'Nova mensagem de {0}'.format(sender.name)
         message_body = body
-        result = push_service.notify_multiple_devices(registration_ids=registration_ids, message_title=message_title, message_body=message_body, data_message=data_message)
+        result = push_service.notify_multiple_devices(registration_ids=registration_ids, message_title=message_title,message_body=message_body, data_message=data_message)
         print(result)
         return True
     except:
