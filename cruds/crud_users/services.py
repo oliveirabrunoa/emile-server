@@ -43,26 +43,25 @@ def add_student():
 
     course_sections_ids = data.get('course_sections')
     if course_sections_ids:
-        user = save_course_sections(user, course_sections_ids)
+        save_course_sections(user, course_sections_ids)
 
-    db.session.commit()
     user = models.Users.query.filter_by(email=user.email).first()
     user_serialized = serializer.UsersSerializer().serialize([user])
 
     return jsonify(user=user_serialized), 200
 
 def save_course_sections(user, course_sections_ids):
-    for course_sections_id in course_sections_ids:
-        course_section = CourseSections.query.get(course_sections_id)
-        course_section_students = CourseSectionStudents(grade=0, status=1)
-        course_section_students.course_section = course_section
-        user.course_sections.append(course_section_students)
-
-    return user
+    with db.session.no_autoflush:
+        for course_sections_id in course_sections_ids:
+            course_section = CourseSections.query.get(course_sections_id)
+            course_section_students = CourseSectionStudents(grade=0, status=1)
+            course_section_students.course_section = course_section
+            user.course_sections.append(course_section_students)
+    db.session.commit()
 
 @users.route('/user_details/<user_id>', methods=['GET'])
 def user_details(user_id):
-    user = Users.query.get(user_id)
+    user = models.Users.query.get(user_id)
 
     if not user:
         return jsonify(result='Invalid user id'), 404
@@ -74,22 +73,23 @@ def user_details(user_id):
 @users.route('/update_user/<user_id>', methods=['POST'])
 def update_user(user_id):
     data = dict(request.get_json())
-
     user = models.Users.query.get(user_id)
-    user_type = UserType.query.get(user.type)
 
     if user:
         user.set_fields(data)
-
         course_sections_ids = data.get('course_sections')
         if course_sections_ids:
-            user.delete_course_sections()
-            user.save_course_sections(course_sections_ids)
+            delete_course_sections(user)
+            save_course_sections(user,course_sections_ids)
 
-        db.session.commit()
         user_serialized = serializer.UsersSerializer().serialize([user])
-        return jsonify(user=user_serialized)
+        return jsonify(user='ok')
     return jsonify(result='invalid user id')
+
+def delete_course_sections(user):
+    (db.session.query(CourseSectionStudents).filter(CourseSectionStudents.user_id==user.id)
+                                        .filter(CourseSectionStudents.status==1).delete())
+    db.session.commit()
 
 
 @users.route('/delete_user/<user_id>', methods=['POST'])

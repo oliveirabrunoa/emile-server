@@ -8,7 +8,7 @@ class CourseSectionStudentsSerializer:
     def serialize(self, course_section_students):
         data=[]
         for course_section_student in course_section_students:
-            status = CourseSectionStudentsStatus.query.get(course_section_student.status),
+            status = CourseSectionStudentsStatus.query.get(course_section_student.status)
 
             data.append({
                 'id': course_section_student.id,

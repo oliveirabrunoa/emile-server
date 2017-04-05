@@ -8,5 +8,5 @@ CSV_LOADER_CLASSES = ['csv_loader_classes.institution_loader.InstitutionLoader',
                       'csv_loader_classes.course_sections_loader.CourseSectionsLoader',
                       'csv_loader_classes.section_times_loader.SectionTimesLoader',
                       'csv_loader_classes.user_type_destinations_loader.UserTypeDestinationsLoader',
-                      'csv_loader_classes.user_type_destinations_user_type_loader.UserTypeDestinationsUserTypeLoader',
-                      'csv_loader_classes.course_section_students_loader.CourseSectionsStudentsLoader']
+                      'csv_loader_classes.user_type_destinations_user_type_loader.UserTypeDestinationsUserTypeLoader']
+                      #'csv_loader_classes.course_section_students_loader.CourseSectionsStudentsLoader']

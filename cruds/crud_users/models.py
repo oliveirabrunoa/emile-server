@@ -23,17 +23,6 @@ class Users(db.Model):
     course_sections = db.relationship('CourseSectionStudents', cascade="save-update, merge, delete")
 
 
-    def delete_course_sections(self):
-        (db.session.query(CourseSectionStudents).filter(CourseSectionStudents.user_id==self.id)
-                                                .filter(CourseSectionStudents.status==1).delete())
-
-    def save_course_sections(self, course_sections_ids):
-        for course_sections_id in course_sections_ids:
-            course_section = CourseSections.query.get(course_sections_id)
-            course_section_students = CourseSectionStudents(grade=0, status=1)
-            course_section_students.course_section = course_section
-            self.course_sections.append(course_section_students)
-
     def set_fields(self, fields):
         self.username = fields.get('username')
         self.email = fields.get('email')
@@ -43,7 +32,7 @@ class Users(db.Model):
         self.address = fields.get('address')
         self.birth_date = datetime.datetime.strptime(fields.get('birth_date'), "%m-%d-%Y").date() if fields.get('birth_date') else None
         self.program_id = fields.get('program_id')
-        self.type = fields.get('type')
+        self.type = self.type if self.type else fields.get('type')
 
     def save_image(self, file):
         file_name, _format = str(file.filename).rsplit('.', 1)
