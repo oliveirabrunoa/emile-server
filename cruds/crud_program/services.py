@@ -20,8 +20,9 @@ program = Blueprint("program", __name__)
 
 @program.route('/programs', methods=['GET'])
 def programs():
-    return jsonify(programs=[dict(id=program.id, name=program.name, abbreviation=program.abbreviation,
-                                  coordinator=([dict(id=user.id, name=user.name, email=user.email) for user in Users.query.filter(Users.id==program.coordinator_id).all()])) for program in Program.query.all()])
+    return jsonify(programs=[dict(id=program.id, name=program.name, abbreviation=program.abbreviation) for program in Program.query.all()])
+    # return jsonify(programs=[dict(id=program.id, name=program.name, abbreviation=program.abbreviation,
+    #                               coordinator=([dict(id=user.id, name=user.name, email=user.email) for user in Users.query.filter(Users.id==program.coordinator_id).all()])) for program in Program.query.all()])
 
 
 @program.route('/programs_course_sections/<program_id>', methods=['GET'])
