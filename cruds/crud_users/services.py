@@ -83,7 +83,7 @@ def update_user(user_id):
             save_course_sections(user,course_sections_ids)
 
         user_serialized = serializer.UsersSerializer().serialize([user])
-        return jsonify(user='ok')
+        return jsonify(user=user_serialized)
     return jsonify(result='invalid user id')
 
 def delete_course_sections(user):
