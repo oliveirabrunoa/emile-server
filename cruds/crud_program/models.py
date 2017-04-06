@@ -1,5 +1,6 @@
 from backend import db
 from cruds.crud_institution.models import Institution
+from cruds.crud_users.models import Users
 from . import manager
 
 
