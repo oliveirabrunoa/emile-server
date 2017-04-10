@@ -81,8 +81,10 @@ def update_coordinator(program_id, coordinator_id):
     coordinator = Users.query.get(coordinator_id)
     program = models.Program.query.get(program_id)
 
-    if not program:
-        return jsonify(result="invalid program id"), 404
+    if not program or not coordinator:
+        return jsonify(result="invalid program or coordinator id"), 404
+    if coordinator.type!=3:
+        return jsonify(result="user is not a coordinator"), 400
 
     program.coordinator_id = coordinator.id
     db.session.commit()
