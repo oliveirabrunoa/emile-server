@@ -81,7 +81,7 @@ def students_program_history(student_id):
 def update_coordinator(program_id, coordinator_id):
     coordinator = Users.query.get(coordinator_id)
     program = models.Program.query.get(program_id)
-
+    print(coordinator.name, program.name)
     if not coordinator and not coordinator.type==3:
         return jsonify(result="invalid coordinator id"), 404
     if not program:
