@@ -1,6 +1,4 @@
 from backend import db
-from cruds.crud_institution.models import Institution
-from cruds.crud_users.models import Users
 from . import manager
 
 
@@ -13,7 +11,7 @@ class Program(db.Model):
     total_credits = db.Column(db.Integer)
     institution_id = db.Column(db.Integer, db.ForeignKey('institution.id'))
     courses = db.relationship('Courses')
-    # coordinator_id = db.Column(db.Integer, nullable=True)
+    coordinator_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     manager = manager.Manager()
 
     def __str__(self):
@@ -25,4 +23,4 @@ class Program(db.Model):
         self.total_hours = fields['total_hours']
         self.total_credits = fields['total_credits']
         self.institution_id = fields['institution_id']
-        # self.coordinator_id = fields['coordinator_id']
+        self.coordinator_id = fields['coordinator_id']

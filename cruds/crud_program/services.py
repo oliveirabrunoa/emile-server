@@ -3,7 +3,6 @@ from . import models
 from backend import db
 from cruds.crud_courses.models import Courses
 from cruds.crud_courses.serializer import CoursesSerializer
-from cruds.crud_program.models import Program
 from cruds.crud_users.models import Users
 from cruds.crud_course_section_students.models import CourseSectionStudents
 from cruds.crud_course_sections.models import CourseSections
@@ -15,29 +14,27 @@ from cruds.crud_institution.models import Institution
 from . import serializer
 from cruds.crud_program.serializer import ProgramSerializer
 
+
 program = Blueprint("program", __name__)
 
 
 @program.route('/programs', methods=['GET'])
 def programs():
-    return jsonify(programs=[dict(id=program.id, name=program.name, abbreviation=program.abbreviation) for program in Program.query.all()])
-    # return jsonify(programs=[dict(id=program.id, name=program.name, abbreviation=program.abbreviation,
-    #                               coordinator=([dict(id=user.id, name=user.name, email=user.email) for user in Users.query.filter(Users.id==program.coordinator_id).all()])) for program in Program.query.all()])
-
+    return jsonify(programs=[dict(id=program.id, name=program.name, abbreviation=program.abbreviation) for program in models.Program.query.all()])
 
 @program.route('/programs_course_sections/<program_id>', methods=['GET'])
 def programs_course_sections(program_id):
     programs_course_sections = []
 
-    program = Program.query.get(program_id)
+    program = models.Program.query.get(program_id)
     institution = Institution.query.get(program.institution_id)
 
     if not program:
         return jsonify(result="invalid program id"), 404
 
     programs_course_sections_list = (db.session.query(CourseSections, Courses).
-                                filter(Institution.id==Program.institution_id).
-                                filter(Program.id==Courses.program_id).
+                                filter(Institution.id==models.Program.institution_id).
+                                filter(models.Program.id==Courses.program_id).
                                 filter(Courses.id==CourseSections.course_id).
                                 filter(Courses.program_id==program.id).
                                 filter(CourseSections.course_section_period==Institution.current_program_section).all())
@@ -51,7 +48,7 @@ def programs_course_sections(program_id):
 
 @program.route('/programs_courses/<program_id>', methods=['GET'])
 def programs_courses(program_id):
-    program = Program.query.get(program_id)
+    program = models.Program.query.get(program_id)
     if not program:
         return jsonify(result="invalid program id"), 404
     return jsonify(program=ProgramSerializer().serialize([program])), 200
@@ -60,7 +57,7 @@ def programs_courses(program_id):
 @program.route('/students_program_history/<student_id>', methods=['GET'])
 def students_program_history(student_id):
     student = Users.query.get(student_id)
-    program = Program.query.get(student.program_id)
+    program = models.Program.query.get(student.program_id)
 
     students_program_history_list = []
 
@@ -78,6 +75,22 @@ def students_program_history(student_id):
         students_program_history_list.append(_dict)
 
     return jsonify(students_program_history=[program_history for program_history in students_program_history_list], program= program_details)
+
+
+@program.route('/update_coordinator/<program_id>/<coordinator_id>', methods=['POST'])
+def update_coordinator(program_id, coordinator_id):
+    coordinator = Users.query.get(coordinator_id)
+    program = models.Program.query.get(program_id)
+
+    if not coordinator and not coordinator.type==3:
+        return jsonify(result="invalid coordinator id"), 404
+    if not program:
+        return jsonify(result="invalid program id"), 404
+
+    program.coordinator_id = coordinator.id
+    db.session.commit()
+
+    return jsonify(program=ProgramSerializer().serialize([program])), 200
 
 
 def course_times(course, student):

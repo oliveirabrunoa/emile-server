@@ -26,7 +26,7 @@ class ProgramLoader(CSVLoader):
         obj.total_hours = row[3]
         obj.total_credits = row[4]
         obj.institution_id = self.session.query(Institution).filter(Institution.cnpj==row[5]).first().id
-        obj.coordinator_id = row[6]
+        obj.coordinator_id = row[6] if row[6] else None
 
         return obj
 
