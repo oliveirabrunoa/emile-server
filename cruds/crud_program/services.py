@@ -86,6 +86,7 @@ def update_coordinator(program_id, coordinator_id):
     if coordinator.type!=3:
         return jsonify(result="user is not a coordinator"), 400
 
+    print(coordinator.id)
     program.coordinator_id = coordinator.id
     db.session.commit()
 
