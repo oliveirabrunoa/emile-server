@@ -50,7 +50,7 @@ def programs_courses(program_id):
     program = models.Program.query.get(program_id)
     if not program:
         return jsonify(result="invalid program id"), 404
-    return jsonify(program=ProgramSerializer().serialize([program])), 200
+    return jsonify(program=serializer.ProgramSerializer().serialize([program])), 200
 
 
 @program.route('/students_program_history/<student_id>', methods=['GET'])
