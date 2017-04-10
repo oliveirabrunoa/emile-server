@@ -12,7 +12,6 @@ from cruds.crud_course_section_students_status.serializer import CourseSectionSt
 from sqlalchemy import func
 from cruds.crud_institution.models import Institution
 from . import serializer
-from cruds.crud_program.serializer import ProgramSerializer
 
 
 program = Blueprint("program", __name__)
@@ -88,7 +87,7 @@ def update_coordinator(program_id, coordinator_id):
     program.coordinator_id = coordinator.id
     db.session.commit()
 
-    return jsonify(program=ProgramSerializer().serialize([program])), 200
+    return jsonify(program=serializer.ProgramSerializer().serialize([program])), 200
 
 
 def course_times(course, student):
