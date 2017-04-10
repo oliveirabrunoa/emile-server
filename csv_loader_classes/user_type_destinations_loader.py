@@ -8,6 +8,8 @@ class UserTypeDestinationsLoader(CSVLoader):
             row[1] - name;
             row[2] - param_values_service;
             row[3] - users_query;
+            row[4] - group;
+            row[5] - group_module;
         """
         user_type_destinations_class = self.import_relative_path('cruds.crud_user_type_destinations.models.UserTypeDestinations')
 
@@ -20,6 +22,8 @@ class UserTypeDestinationsLoader(CSVLoader):
         obj.name = row[1]
         obj.param_values_service = row[2]
         obj.users_query = row[3]
+        obj.group = row[4]
+        obj.group_module = row[5]
 
         return obj
 

@@ -16,6 +16,8 @@ class Program(db.Model):
     # coordinator_id = db.Column(db.Integer, nullable=True)
     manager = manager.Manager()
 
+    def __str__(self):
+        return str('{0}').format(self.abbreviation)
 
     def set_fields(self, fields):
         self.name = fields['name']

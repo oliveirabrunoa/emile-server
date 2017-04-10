@@ -27,11 +27,10 @@ push_service = FCMNotification(api_key=settings.PUSH_NOTIFICATIONS_SETTINGS['API
 def get_wall_messages(user_id):
     user = Users.query.get(user_id)
     messages = []
-    today = datetime.date.today().toordinal()
     today_time_stamp = calendar.timegm(datetime.datetime.now(tz=pytz.timezone('America/Bahia')).timetuple())
     wall_messages_list = (db.session.query(models.WallMessages).
                                  filter(models.WallMessages.date >= today_time_stamp - (86400 * 14)).
-                                 order_by(desc(models.WallMessages.id)).all())
+                                 order_by(desc(models.WallMessages.date)).all())
 
     for message in wall_messages_list:
         users = set(message.get_destinations() + message.get_sender())

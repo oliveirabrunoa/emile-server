@@ -15,6 +15,9 @@ class CourseSections(db.Model):
 
     __table_args__ = (db.UniqueConstraint('course_id','teacher_id','course_section_period','code', name='course_section_period_uc'),)
 
+    def __str__(self):
+        return str('{0} - {1}').format(str(Courses.query.get(self.course_id).code), str(self.course_section_period))
+
     def set_fields(self, fields):
         self.code = fields['code']
         self.name = fields['name']
