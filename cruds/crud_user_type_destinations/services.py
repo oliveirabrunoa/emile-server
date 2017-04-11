@@ -16,4 +16,4 @@ def destinations_by_user_type(user_type):
                                  filter(models.UserTypeDestinations.id == UserTypeDestinationsUserType.user_type_destination_id).
                                  filter(UserTypeDestinationsUserType.user_type_id == UserType.id).
                                  filter(UserType.id == user_type).all())
-    return jsonify(destinations_by_user_type=serializer.UserTypeDestinationsSerializer().serialize(destinations))
+    return jsonify(destinations_by_user_type=serializer.UserTypeDestinationsSerializer().serialize(destinations, user_type))
