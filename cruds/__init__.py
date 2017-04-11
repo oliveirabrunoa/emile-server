@@ -1,5 +1,6 @@
 from flask import abort
 import settings
+import validators
 
 
 def get_paginated_list(results, url, start, page_size=settings.PAGINATION_SIZE):
@@ -27,3 +28,19 @@ def get_paginated_list(results, url, start, page_size=settings.PAGINATION_SIZE):
     # finally extract result according to bounds
     obj['results'] = results[(start - 1):(start - 1 + page_size)]
     return obj
+
+
+def format_urls_in_text(text):
+    new_text = []
+
+    for word in str(text).split():
+        new_word = word.replace('http://', '')
+        new_word = 'http://{0}'.format(new_word)
+
+        if validators.url(new_word)==True:
+            new_word = '<a href="{0}"></a>'.format(new_word)
+        else:
+            new_word = word
+
+        new_text.append(new_word)
+    return ' '.join(new_text)

@@ -5,7 +5,7 @@ from cruds.crud_user_type_destinations.models import UserTypeDestinations
 from cruds.crud_user_type_destinations_user_type.models import UserTypeDestinationsUserType
 from cruds.crud_user_type.models import UserType
 from cruds.crud_wall_messages.models import WallMessages
-from cruds import get_paginated_list
+from cruds import get_paginated_list, format_urls_in_text
 import pytz
 import datetime
 import requests

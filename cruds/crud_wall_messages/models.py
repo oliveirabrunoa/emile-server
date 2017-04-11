@@ -2,6 +2,7 @@ import datetime
 from backend import db
 from cruds.crud_user_type_destinations.models import UserTypeDestinations
 from cruds.crud_users.models import Users
+from cruds import format_urls_in_text
 
 
 class WallMessages(db.Model):
@@ -17,7 +18,7 @@ class WallMessages(db.Model):
         self.sender = fields['sender']
         self.destination = fields['user_type_destination_id']
         self.param_value = fields['parameter']
-        self.message = fields['message']
+        self.message = format_urls_in_text(fields['message'])
 
     def get_sender(self):
         return Users.query.filter_by(id=self.sender).all()
