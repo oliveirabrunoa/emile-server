@@ -77,13 +77,16 @@ def update_user(user_id):
 
     if user:
         user.set_fields(data)
-        course_sections_ids = data.get('course_sections')
-        if course_sections_ids:
-            delete_course_sections(user)
-            save_course_sections(user,course_sections_ids)
+        if user.type==2:
+            course_sections_ids = data.get('course_sections')
+            if course_sections_ids:
+                delete_course_sections(user)
+                save_course_sections(user,course_sections_ids)
 
         user_serialized = serializer.UsersSerializer().serialize([user])
+        db.session.commit()
         return jsonify(user=user_serialized)
+
     return jsonify(result='invalid user id')
 
 def delete_course_sections(user):
