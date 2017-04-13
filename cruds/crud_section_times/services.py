@@ -77,8 +77,8 @@ def student_attendance_register(course_section_id):
                 section_time.student_attendance.append(student_attendance)
 
         db.session.commit()
-        student_attendance = StudentAttendanceSerializer.serialize(section_time.student_attendance)
-        return jsonify(student_attendance=student_attendance), 200
+        student_attendance_serialized = StudentAttendanceSerializer().serialize(section_time.student_attendance)
+        return jsonify(student_attendance=student_attendance_serialized), 200
     except:
         return jsonify(result="Invalid request"), 404
 
