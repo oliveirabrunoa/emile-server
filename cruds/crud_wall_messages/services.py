@@ -26,6 +26,10 @@ push_service = FCMNotification(api_key=settings.PUSH_NOTIFICATIONS_SETTINGS['API
 @wall_messages.route('/wall_messages/<user_id>', methods=['GET'])
 def get_wall_messages(user_id):
     user = Users.query.get(user_id)
+
+    if not user:
+        return jsonify(result="Invalid user id")
+
     messages = []
     today_time_stamp = calendar.timegm(datetime.datetime.now(tz=pytz.timezone('America/Bahia')).timetuple())
     wall_messages_list = (db.session.query(models.WallMessages).
@@ -86,6 +90,10 @@ def send_message(users_tokens, body, sender, data_message=None):
 @wall_messages.route('/search_wall_messages/<user_id>/<param>', methods=['GET'])
 def search_wall_messages(user_id, param):
     user = models.Users.query.get(user_id)
+
+    if not user:
+        return jsonify(result="Invalid user id")
+        
     messages = []
     today_time_stamp = calendar.timegm(datetime.datetime.now(tz=pytz.timezone('America/Bahia')).timetuple())
     wall_messages_list = (db.session.query(models.WallMessages).
