@@ -22,7 +22,6 @@ class UsersSerializer:
             'username': user.username,
             'email': user.email,
             'name': user.name,
-            'password': user.password,
             'birth_date': datetime.date.strftime(user.birth_date, "%m-%d-%Y") if user.birth_date  else user.birth_date,
             'gender': user.gender,
             'address': user.address,

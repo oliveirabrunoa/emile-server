@@ -102,9 +102,7 @@ def delete_user(user_id):
     if user:
         db.session.delete(user)
         db.session.commit()
-        users = models.Users.query.all()
-        users_serialized = serializer.UsersSerializer().serialize([users])
-        return jsonify(users=users_serialized)
+        return jsonify(users="Deleted user successfully")
     return jsonify(result='invalid user id')
 
 
