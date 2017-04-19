@@ -63,7 +63,7 @@ def student_attendance_register(course_section_id):
     section_time = models.SectionTimes.query.filter_by(week_day=datetime.datetime.strptime(section_time_date, "%m-%d-%Y").date().weekday(), course_section_id=course_section_id).first()
 
     if not section_time:
-        return jsonify(result="Invalid request"), 404
+        return jsonify(result="Invalid request - Section time not found"), 404
 
     student_attendance_registered = StudentAttendance.query.filter_by(section_time_date=datetime.datetime.strptime(section_time_date, "%m-%d-%Y").date()).all()
     if student_attendance_registered:
