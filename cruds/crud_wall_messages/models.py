@@ -11,7 +11,7 @@ class WallMessages(db.Model):
     sender = db.Column(db.Integer, db.ForeignKey("users.id"))
     destination = db.Column(db.Integer, db.ForeignKey("user_type_destinations.id"))
     param_value = db.Column(db.Integer())
-    message = db.Column(db.String(140))
+    message = db.Column(db.Text())
 
     def set_fields(self, fields):
         self.date = fields['date']

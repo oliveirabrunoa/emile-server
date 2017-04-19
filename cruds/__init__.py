@@ -34,11 +34,12 @@ def format_urls_in_text(text):
     new_text = []
 
     for word in str(text).split():
-        new_word = word.replace('http://', '')
+        new_word = word
+        new_word.replace('http://', '')
         new_word = 'http://{0}'.format(new_word)
 
         if validators.url(new_word)==True:
-            new_word = '<a href="{0}"></a>'.format(new_word)
+            new_word = '<a href="{0}">{1}</a>'.format(new_word, word)
         else:
             new_word = word
 
