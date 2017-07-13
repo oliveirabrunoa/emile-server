@@ -23,9 +23,12 @@ wall_messages = Blueprint("wall_messages", __name__)
 push_service = FCMNotification(api_key=settings.PUSH_NOTIFICATIONS_SETTINGS['API_NOTIFICATION_KEY'])
 
 
-@wall_messages.route('/wall_messages/<user_id>', methods=['GET'])
-def get_wall_messages(user_id):
-    user = Users.query.get(user_id)
+@wall_messages.route('/wall_messages/<param>', methods=['GET'])
+def get_wall_messages(param):
+    #param can be email or user id
+    #user = Users.query.get(user_id)
+
+    user = (db.session.query(Users).filter(or_(Users.id==param, Users.email==param)).first())
 
     if not user:
         return jsonify(result="Invalid user id")
@@ -93,7 +96,7 @@ def search_wall_messages(user_id, param):
 
     if not user:
         return jsonify(result="Invalid user id")
-        
+
     messages = []
     today_time_stamp = calendar.timegm(datetime.datetime.now(tz=pytz.timezone('America/Bahia')).timetuple())
     wall_messages_list = (db.session.query(models.WallMessages).
