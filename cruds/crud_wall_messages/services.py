@@ -29,7 +29,7 @@ def get_wall_messages(param):
     if isinstance(param, int):
         user = Users.query.get(param)
     elif isinstance(param,str):
-        user = Users.query.filter_by(email=param)
+        user = Users.query.filter_by(email=param).first()
 
     if not user:
         return jsonify(result="Invalid user id")
