@@ -26,7 +26,7 @@ push_service = FCMNotification(api_key=settings.PUSH_NOTIFICATIONS_SETTINGS['API
 @wall_messages.route('/wall_messages/<param>', methods=['GET'])
 def get_wall_messages(param):
     #param can be email or user id
-    if param.isdigit()
+    if param.isdigit():
         user = Users.query.get(param)
     else:
         user = Users.query.filter_by(email=param).first()
