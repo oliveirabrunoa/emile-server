@@ -26,12 +26,12 @@ push_service = FCMNotification(api_key=settings.PUSH_NOTIFICATIONS_SETTINGS['API
 @wall_messages.route('/wall_messages/<param>', methods=['GET'])
 def get_wall_messages(param):
     #param can be email or user id
-    #user = Users.query.get(user_id)
-
-    user = (db.session.query(Users).filter(or_(Users.id==param, Users.email==param)).first())
+    user = Users.query.get(param)
 
     if not user:
-        return jsonify(result="Invalid user id")
+        user = Users.query.filter_by(email=param)
+    else:
+        return jsonify(result="Invalid email or user id")
 
     messages = []
     today_time_stamp = calendar.timegm(datetime.datetime.now(tz=pytz.timezone('America/Bahia')).timetuple())
