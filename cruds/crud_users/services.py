@@ -110,20 +110,30 @@ def delete_user(user_id):
     return jsonify(result='invalid user id')
 
 
-@users.route('/teachers_course_sections/<teacher_id>', methods=['GET'])
-def teachers_course_sections(teacher_id):
-    teacher = models.Users.query.filter_by(id=teacher_id, type=2).first()
-    if teacher:
-        teachers_course_sections = (db.session.query(CourseSections).
+@users.route('/teachers_course_sections/<user_id>', methods=['GET'])
+def teachers_course_sections(user_id):
+    user = models.Users.query.filter_by(id=user_id).first()
+
+    if not user:
+        return jsonify(result='invalid user id')
+
+    course_sections = []
+    if user.type==2:
+        course_sections = (db.session.query(CourseSections).
                                     filter(Institution.id==Program.institution_id).
                                     filter(Program.id==Courses.program_id).
                                     filter(Courses.id==CourseSections.course_id).
-                                    filter(CourseSections.teacher_id==teacher_id).
+                                    filter(CourseSections.teacher_id==user_id).
                                     filter(CourseSections.course_section_period==Institution.current_program_section).all())
+    elif user.type==3:
+        course_sections = (db.session.query(CourseSections).
+                                    filter(Institution.id==Program.institution_id).
+                                    filter(Program.id==Courses.program_id).
+                                    filter(Courses.id==CourseSections.course_id).
+                                    filter(CourseSections.course_section_period==Institution.current_program_section).
+                                    filter(Program.id==user.program_id).all())
 
-        return jsonify(teachers_course_sections= CourseSectionsSerializer().serialize(teachers_course_sections))
-    return jsonify(result='invalid teacher id')
-
+    return jsonify(teachers_course_sections=CourseSectionsSerializer().serialize(course_sections))
 
 @users.route('/students_course_sections/<student_id>', methods=['GET'])
 def students_course_sections(student_id):
