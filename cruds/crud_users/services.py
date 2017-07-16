@@ -59,12 +59,16 @@ def save_course_sections(user, course_sections_ids):
             user.course_sections.append(course_section_students)
     db.session.commit()
 
-@users.route('/user_details/<user_id>', methods=['GET'])
-def user_details(user_id):
-    user = models.Users.query.get(user_id)
+@users.route('/user_details/<user_param>', methods=['GET'])
+def user_details(user_param):
+    user = None
+    if str(user_param).isdigit():
+        user = models.Users.query.get(user_param)
+    else:
+        user = models.Users.query.filter_by(email=user_param).first()
 
     if not user:
-        return jsonify(result='Invalid user id'), 404
+        return jsonify(result='Invalid user parameter'), 404
 
     user_serialized = serializer.UsersSerializer().serialize([user])
     return jsonify(user=user_serialized), 200
