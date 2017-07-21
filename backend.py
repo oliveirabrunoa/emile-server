@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
 
 
-db = "dsd"
+db = "teste"
 
 engine = create_engine('sqlite:///test.db', convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False,
