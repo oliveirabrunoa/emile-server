@@ -11,7 +11,7 @@ def create_app():
     app.config.from_object(os.environ['APP_SETTINGS'])
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    backend.db.init_app(app)
+    # backend.db.init_app(app)
     return app
 
 
