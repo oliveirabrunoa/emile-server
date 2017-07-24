@@ -1,4 +1,4 @@
-from dbconfig import Base
+from MapToRest.db_config import Base
 from sqlalchemy import Column, Integer, String
 
 #Models que serão gerados dinamicamente
