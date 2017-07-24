@@ -22,7 +22,7 @@ class LoadModelClasses:
 
 if __name__ == '__main__':
     l = LoadModelClasses()
-    l.teste()
+    l.table_names()
 
 
 
