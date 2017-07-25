@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 from jinja2 import Environment, FileSystemLoader
-import json
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_ENVIRONMENT = Environment(

@@ -1,6 +1,7 @@
 import importlib
 from MapToRest.db_config import Base, db_session, engine, meta
 from MapToRest.render_template import render_to_template
+import json
 
 LOADER_MODEL_CLASSES = ['cruds.crud_course_type.models.CourseType']
 
@@ -31,12 +32,25 @@ class LoadModelClasses:
                 attributes.append(attribute.get('name'))
             data['attributes']= attributes
             data_to_render.append(data)
-        render_to_template("seraaaa.json", data)
+        render_to_template("model.json", data)
+
+
+    def generate_new_models(self):
+        data_config = self.open_config_file()
+        
+
+
+    def open_config_file(self):
+        with open('model.json') as data_file:
+            data = json.load(data_file)
+        return data
+
+
 
 
 if __name__ == '__main__':
     l = LoadModelClasses()
-    l.generate_base_file()
+    l.generate_new_models()
 
 
 
