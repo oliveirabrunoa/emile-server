@@ -16,7 +16,3 @@ def render_to_template(file_name_arg, template_name, data):
     with open(file_name, 'a+') as file:
         data_to_render = render_template(template_name, data)
         file.write(data_to_render)
-
-
-if __name__ == "__main__":
-    create_index_html()
