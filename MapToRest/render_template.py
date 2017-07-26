@@ -11,10 +11,10 @@ TEMPLATE_ENVIRONMENT = Environment(
 def render_template(template, data):
     return TEMPLATE_ENVIRONMENT.get_template(template).render(data)
 
-def render_to_template(file_name_arg, data):
+def render_to_template(file_name_arg, template_name, data):
     file_name = file_name_arg
-    with open(file_name, 'w') as file:
-        data_to_render = render_template('configuration_file.html', data)
+    with open(file_name, 'a+') as file:
+        data_to_render = render_template(template_name, data)
         file.write(data_to_render)
 
 

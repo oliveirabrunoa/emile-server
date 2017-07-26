@@ -26,18 +26,32 @@ class LoadModelClasses:
         data_to_render = []
 
         for att_classs in models_list:
-            data = {"model_name": att_classs.__modelname__, "table_name": "table name on database"}
+            data = {"model_name": att_classs.__modelname__, "table_name": att_classs.__tablename__}
             attributes = []
             for attribute in att_classs.__attributes__:
-                attributes.append(attribute.get('name'))
+                attributes.append(attribute)
             data['attributes']= attributes
             data_to_render.append(data)
-        render_to_template("model.json", data)
+        render_to_template("model.json", "configuration_file.html",data)
 
 
     def generate_new_models(self):
         data_config = self.open_config_file()
-        
+        list_models=[]
+        for data in data_config:
+            a = {
+                "model_name": data.get('model_name')+'Base',
+                "table_name": data.get('table_name'),
+                "attributes": [data.get('attributes')]
+                }
+            list_models.append(a)
+        #Montar o model que herda de base, de acordo com as configurações do dicionário retornado.
+        #falta aplicar a todos os modelos!!!!
+        print(list_models)
+        render_to_template("new_model.py", "template_model.py",a)
+
+
+
 
 
     def open_config_file(self):
@@ -51,6 +65,7 @@ class LoadModelClasses:
 if __name__ == '__main__':
     l = LoadModelClasses()
     l.generate_new_models()
+    #l.generate_new_models()
 
 
 
