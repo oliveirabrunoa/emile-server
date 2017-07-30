@@ -11,4 +11,4 @@ class CourseType(CourseTypeBase):
                      {"name":"description", "type":"String", "max_lenght": 50}]
 
     def __init__(self, description):
-        CourseTypeBase.__init__(self, id, description)
+        super().__init__(self, id, description)

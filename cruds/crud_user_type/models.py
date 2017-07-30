@@ -11,4 +11,4 @@ class UserType(UserTypeBase):
                      {"name":"name", "type":"String", "max_lenght": 20}]
 
     def __init__(self, description):
-        UserTypeBase.__init__(self, id, name)
+        super().__init__(self, id, name)
