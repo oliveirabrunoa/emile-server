@@ -2,7 +2,7 @@ import importlib
 from MapToRest.db_config import Base, db_session, engine, meta
 from MapToRest.render_template import render_to_template
 import json
-
+import pdb
 
 class LoadModelClasses(object):
 
@@ -28,15 +28,14 @@ class LoadModelClasses(object):
         models_list = self.import_modules()
         data_to_render = []
 
-        for att_classs in models_list:
-            data = {"model_name": att_classs.__modelname__, "table_name": att_classs.__tablename__}
+        for model in models_list:
+            model_data = {"model_name": model.__modelname__, "table_name": model.__tablename__}
             attributes = []
-            for attribute in att_classs.__attributes__:
+            for attribute in model.__attributes__:
                 attributes.append(attribute)
-            data['attributes']= attributes
-            data_to_render.append(data)
-        render_to_template("MapToRest/model.json", "configuration_file.html",data)
-        return True
+            model_data['attributes']= attributes
+            data_to_render.append(model_data)
+        render_to_template("MapToRest/model.json", "configuration_file.html",data_to_render)
 
 
     def generate_new_models(self):
@@ -50,7 +49,7 @@ class LoadModelClasses(object):
                 }
             list_models.append(dict_model)
             render_to_template("MapToRest/new_model.py", "template_model.py",dict_model)
-        
+
 
     def open_config_file(self):
         with open('MapToRest/model.json') as data_file:
